@@ -6,7 +6,10 @@ https://github.com/AmazingAng/maze_learning/blob/main/Behav_maze.py
 The working flow should be like this:
 
     - Requirement: A sample video, position
-    - Fetch a frame of the sample video and generate a frame.
+      1. mean_frame = get_meanframe(video_name)
+         equ_meanframe = cv2.equalizeHist(np.uint8(mean_frame)) 
+      2. pd = PolygonDrawer(equ_meanframe,ori_positions, maxHeight = 960, maxWidth = 960)
+         warped_image, warped_positions, M  = pd.run()
 '''
 
 try:
