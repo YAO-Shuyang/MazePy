@@ -125,7 +125,7 @@ def pvl_to_loc(prec_value_loc:np.ndarray, xmax:float, ymax:float, xbin:int = 10,
     except:
         return np.array([int(prec_value_loc[0] / xmax * xbin), int(prec_value_loc[1] / ymax * ybin)])
 
-def loc_to_idx(cell_x:int|np.ndarray, cell_y:int|np.ndarray, xbin:int = 10):
+def loc_to_idx(cell_x:np.ndarray, cell_y:np.ndarray, xbin:int = 10):
     '''
     Parameter
     ---------
@@ -149,7 +149,7 @@ def loc_to_idx(cell_x:int|np.ndarray, cell_y:int|np.ndarray, xbin:int = 10):
     return idx
 
 
-def idx_to_loc(idx:int, xbin:int = 10):
+def idx_to_loc(idx:np.ndarray, xbin:int = 10):
     '''
     Parameter
     ---------
