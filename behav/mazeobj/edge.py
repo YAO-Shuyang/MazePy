@@ -13,7 +13,10 @@ Edges should have several properties:
 # importing pyglet module
 import pyglet
 from pyglet import shapes
+
 import time
+import numpy as np
+import copy as cp
 
 from mazepy.behav.gridbin import GridBasic
 from mazepy.behav.transloc import loc_to_idx
@@ -114,8 +117,15 @@ class MazeInnerWall(Edge):
         Find the two bins that on the two side of the edge.
         '''
         if self._direction == 'v':
-            self.bin1 = loc_to_idx(cell_x = self._col-1, cell_y = self._row, xbin = self.xbin) if self._col >= 1 else None
-            self.bin2 = loc_to_idx(cell_x = self._col, cell_y = self._row, xbin = self.xbin) if self._col <= self.xbin-1 else None
+            self._bin1 = loc_to_idx(cell_x = self._col-1, cell_y = self._row, xbin = self.xbin) if self._col >= 1 else None
+            self._bin2 = loc_to_idx(cell_x = self._col, cell_y = self._row, xbin = self.xbin) if self._col <= self.xbin-1 else None
+        elif self._direction == 'h':
+            self._bin1 = loc_to_idx(cell_x = self._col, cell_y = self._row-1, xbin = self.xbin) if self._row >= 1 else None
+            self._bin2 = loc_to_idx(cell_x = self._col, cell_y = self._row, xbin = self.xbin) if self._row <= self.ybin-1 else None
+
+    @property
+    def bin(self):
+        return self._bin1, self._bin2
 
     def _calc_two_ends_xy(self):
         '''
@@ -144,6 +154,10 @@ class MazeInnerWall(Edge):
         self._x2 = x2
         self._y1 = y1
         self._y2 = y2
+    
+    @property
+    def two_ends(self):
+        return (self._x1, self._y1), (self._x2, self._y2)
 
     def plot_line_on_batch(self, 
                            batch: pyglet.graphics.Batch
@@ -165,7 +179,7 @@ class MazeInnerWall(Edge):
 
     def state_change(self, 
                      batch: pyglet.graphics.Batch,
-                     Graph: dict = {}
+                     Graph: dict
                     ) -> dict:
         '''
         Parameter
@@ -175,14 +189,167 @@ class MazeInnerWall(Edge):
         Graph: dict, required
             Each mouse event will probably change the state of a certain edge which will cause
               a change of the connection between the two bins that on the two side of the edge.
-
+            
         Return
         ------
-        A dict
+        A pyglet.shapes.Line object
         '''
         if time.time() - self.time >= 0.5:
             self._state = 1 - self._state
             self._color = UNSELECTED_COLOR if self._state == 0 else SELECTED_COLOR
             self.time = time.time()
-            return self.plot_line_on_batch(batch = batch)
+            Graph = self._modify_graph(Graph=Graph)
+            line = self.plot_line_on_batch(batch = batch)
+            return Graph
+        else:
+            return Graph
+        
+    def _modify_graph(self,
+                     Graph: dict
+                    ) -> dict:
+        '''
+        Parameter
+        ---------
+        Graph: dict, required
+            Each mouse event will probably change the state of a certain edge which will cause
+              a change of the connection between the two bins that on the two side of the edge.
+
+        Return
+        ------
+        A graph dict.
+        '''
+        if self._bin1 is None or self._bin2 is None:
+            return Graph
+        else:
+            if self._state == 1:
+                return self._break_connection(Graph, self._bin1, self._bin2)
+            elif self._state == 0:
+                return self._reconnection(Graph, self._bin1, self._bin2)
+            else:
+                raise ValueError(f"{self._state} is not a valid state value.")
+        
+    def _break_connection(self,
+                          Graph: dict,
+                          bin1: int,
+                          bin2: int
+                         ) -> dict:
+        '''
+        Parameter
+        ---------
+        Graph: dict, required
+            Each mouse event will probably change the state of a certain edge which will cause
+              a change of the connection between the two bins that on the two side of the edge.
+        bin1: int, required
+        bin2: int, required
+            bin1 and bin2 are the two bin that at the two sides of the line.
+        '''
+        d1 = np.where(Graph[bin1] == bin2)[0]
+        d2 = np.where(Graph[bin2] == bin1)[0]
+
+        Graph[bin1] = np.delete(Graph[bin1], d1)
+        Graph[bin2] = np.delete(Graph[bin2], d2)
+        return Graph
     
+    def _reconnection(self,
+                      Graph: dict,
+                      bin1: int,
+                      bin2: int
+                     ) -> dict:
+        '''
+        Parameter
+        ---------
+        Graph: dict, required
+            Each mouse event will probably change the state of a certain edge which will cause
+              a change of the connection between the two bins that on the two side of the edge.
+        bin1: int, required
+        bin2: int, required
+            bin1 and bin2 are the two bin that at the two sides of the line.
+        '''
+        Graph = cp.deepcopy(Graph)
+        Graph[bin1] = np.append(Graph[bin1], bin2)
+        Graph[bin2] = np.append(Graph[bin2], bin1)
+        return Graph
+
+
+class MazeBin(GridBasic):
+    def __init__(self,
+                 xbin: int,
+                 ybin: int,
+                 x: int,
+                 y: int
+                ) -> None:
+        '''
+        Defines class Bins.
+
+        Parameter
+        ---------
+        x: int, required
+        y: int, required
+        '''
+        super().__init__(xbin = xbin, ybin = ybin)
+        self._x = x
+        self._y = y
+        self._id = loc_to_idx(x, y, xbin = xbin)
+        self._find_four_corner()
+        self._find_four_edge()
+        self._state = 1  
+        self.time = time.time()
+        # 0 -> (This bin is) selected to be abandoned; 
+        # 1 -> (This bin is) kept as a part of the environment.
+
+    @property
+    def position(self):
+        return (self._x, self._y)
+    
+    @property
+    def id(self):
+        return self._id
+
+    def _find_four_edge(self) -> dict:
+        '''
+        Find the four edge of the bin.
+        '''
+        x, y = self._x, self._y
+        self.four_edge =  {'North':('h', x, y+1),
+                           'South':('h', x, y),
+                           'East': ('v', x+1, y),
+                           'West': ('v', x, y)}
+        return self.four_edge
+    
+    def _find_four_corner(self) -> dict:
+        '''
+        Find the four corner of the bin.
+        '''
+        x, y = self._x, self._y
+        self.four_corner = {'bottom left': (x, y),
+                            'bottom right': (x+1, y),
+                            'upper left': (x, y+1),
+                            'upper right': (x+1, y+1)}
+        return self.four_corner
+    
+    def state_change(self, 
+                     batch: pyglet.graphics.Batch,
+                     occu_map: np.ndarray
+                    ):
+        if time.time() - self.time >= 0.5:
+            self._state = 1 - self._state
+            if self._state == 0:
+                self._plot_diagonal(batch=batch)
+                occu_map[self._id-1] = np.nan
+            elif self._state == 1:
+                self._erase_diagonal()
+                occu_map[self._id-1] = 0
+            return occu_map
+        
+    def _plot_diagonal(self, batch: pyglet.graphics.Batch):
+        x1, y1 = self.four_corner['bottom left'][0], self.four_corner['bottom left'][1]
+        x2, y2 = self.four_corner['upper right'][0], self.four_corner['upper right'][1]
+        self.Line1 = shapes.Line(x1, y1, x2, y2, width = 5, batch = batch, color = SELECTED_COLOR)
+
+        x1, y1 = self.four_corner['bottom right'][0], self.four_corner['bottom right'][1]
+        x2, y2 = self.four_corner['upper left'][0], self.four_corner['upper left'][1]
+        self.Line2 = shapes.Line(x1, y1, x2, y2, width = 5, batch = batch, color = SELECTED_COLOR)
+
+    def _erase_diagonal(self):
+        self.Line1.delete()
+        self.Line2.delete()

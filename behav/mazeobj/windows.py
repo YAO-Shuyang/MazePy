@@ -3,15 +3,18 @@ from pyglet.window import key, mouse
 from pyglet import shapes
 
 import numpy as np
+import copy as cp
 import time
 
-from . import WINDOW
-from .guiasset import BACKGROUND_IMG
-from .chessboard import ChessBoard
+from mazepy.behav.mazeobj.guiasset import BACKGROUND_IMG
+from mazepy.behav.mazeobj.chessboard import ChessBoard
+from mazepy.behav.mazeobj import WINDOW
 from mazepy.behav.gridbin import GridBasic
-from mazepy.behav.transloc import pvl_to_edge
+from mazepy.behav.transloc import pvl_to_edge, pvl_to_loc, pvl_to_idx
+
 
 MOUSE_STATE = {'x': None, 'y': None, 'button': None, 'modifiers': None}
+KEY_STATE = set()
 
 class Background(pyglet.sprite.Sprite):
     def __init__(self, *args, **kwargs):
@@ -29,13 +32,33 @@ class MainWindow(GridBasic):
     def __init__(self,
                  xbin: int,
                  ybin: int,
-                 aspect: str = 'equal'
+                 Graph: dict,
+                 occu_map: np.ndarray, 
+                 aspect: str or float = 'equal'
                 ) -> None:
-        # # Init label
+        ''''
+        Parameter
+        ---------
+        xbin: int, required
+            The total bin number of dimension x
+        ybin: int, required
+            The total bin number of dimension y
+        Graph: dict, required
+            The graph of the picture
+        occu_map: np.ndarray 1d vector, optional, 
+            Occupation map contains only 0 and np.nan.
+            0 -> this bin will posibly be covered by animals; 1 -> this bin will never be 
+              covered by animals (for it is even not a part of the environment.)
+        aspect: str, {'equal', 'auto', float}
+            The shape of the bin that projected on the GUI.
+        '''
         super().__init__(xbin = xbin, ybin = ybin)
         self.bg = Background()
+        self.Graph = cp.deepcopy(Graph)
+        self.occu_map = cp.deepcopy(occu_map)
         self.cb = ChessBoard(xbin = xbin, ybin = ybin, aspect = aspect)
-        self.cb.create_chessboard()
+        self.cb.create_chessboard_edge()
+        self.cb.create_chessboard_bin()
 
     @WINDOW.event
     def on_mouse_press(x, y, button, modifiers):
@@ -51,8 +74,16 @@ class MainWindow(GridBasic):
         MOUSE_STATE['button'] = None
         MOUSE_STATE['modifiers'] = None
 
-    def _state_change(self, x, y) -> None:
-        if x >= self.cb.four_corner['bottom right'][0] or x <= self.cb.four_corner['bottom left'][0] or y >= self.cb.four_corner['upper left'][1] or y <= self.cb.four_corner['bottom left'][1]:
+    @WINDOW.event
+    def on_key_press(symbol, modifiers):
+        if symbol in [key.ENTER, key.RETURN]:
+            WINDOW.close()
+
+    def _is_out_of_range(self, x, y):
+        return x >= self.cb.four_corner['bottom right'][0] or x <= self.cb.four_corner['bottom left'][0] or y >= self.cb.four_corner['upper left'][1] or y <= self.cb.four_corner['bottom left'][1]
+
+    def _edge_state_change(self, x, y) -> None:
+        if self._is_out_of_range(x, y):
             return
         
         dirc, xb, yb = pvl_to_edge(prec_value_loc = np.array([x - self.cb.four_corner['bottom left'][0], 
@@ -61,11 +92,24 @@ class MainWindow(GridBasic):
                                  ymax = self.cb.four_corner['upper left'][1] - self.cb.four_corner['bottom left'][1],
                                  xbin = self.xbin, ybin = self.ybin)
         nearest_edge = self.cb.index[dirc][xb][yb]
-        line = nearest_edge.state_change(self.cb.batch)
+        self.Graph = nearest_edge.state_change(self.cb.batch, Graph = self.Graph)
+
+    def _bin_state_change(self, x, y) -> None:
+        if self._is_out_of_range(x, y):
+            return
+
+        idx = pvl_to_idx(prec_value_loc = np.array([x - self.cb.four_corner['bottom left'][0], 
+                                                     y - self.cb.four_corner['bottom left'][1]]), 
+                         xmax = self.cb.four_corner['bottom right'][0] - self.cb.four_corner['bottom left'][0],
+                         ymax = self.cb.four_corner['upper left'][1] - self.cb.four_corner['bottom left'][1],
+                         xbin = self.xbin, ybin = self.ybin)
+        self.cb.Bins[idx-1].state_change(self.cb.batch, self.occu_map)
 
     def update(self, dt):
         if MOUSE_STATE['button'] == mouse.LEFT:
-            self._state_change(MOUSE_STATE['x'], MOUSE_STATE['y'])
+            self._edge_state_change(MOUSE_STATE['x'], MOUSE_STATE['y'])
+        elif MOUSE_STATE['button'] == mouse.RIGHT:
+            self._bin_state_change(MOUSE_STATE['x'], MOUSE_STATE['y'])
         self.draw()
 
     def draw(self):

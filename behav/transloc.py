@@ -80,9 +80,17 @@ def pvl_to_idx(prec_value_loc: np.ndarray, xmax: float or int, ymax: float or in
     ----
     Transform precise value location into bin index.
     '''
-    Res = pvl_to_loc(prec_value_loc = prec_value_loc, xmax = xmax, ymax = ymax, xbin = xbin, ybin = ybin)
-    return loc_to_idx(cell_x = Res[0, :], cell_y = Res[1, :], xbin = xbin)
-
+    assert prec_value_loc.shape[0] == 2
+    try:
+        prec_value_loc.shape[1]
+        loc = np.zeros_like(prec_value_loc)
+        loc[0, :] = prec_value_loc[0, :] / xmax * xbin // 1
+        loc[1, :] = prec_value_loc[1, :] / ymax * ybin // 1
+        loc = loc.astype(dtype = np.int64)
+        return loc_to_idx(loc[0, :], loc[1, :], xbin = xbin)
+    except:
+        return loc_to_idx(int(prec_value_loc[0] / xmax * xbin), int(prec_value_loc[1] / ymax * ybin), xbin=xbin)
+    
 # transform 960cm position data into nx*nx form
 def pvl_to_loc(prec_value_loc: np.ndarray, xmax: float or int, ymax: float or int, xbin: int = 10, ybin: int = 10):
     '''

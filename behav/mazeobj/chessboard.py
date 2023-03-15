@@ -9,9 +9,10 @@ import pyglet
 
 import numpy as np
 
-from . import WINDOW,HEIGHT, WIDTH
+from . import HEIGHT, WIDTH
 from mazepy.behav.gridbin import GridBasic
-from .edge import MazeInnerWall
+from mazepy.behav.transloc import idx_to_loc, loc_to_idx
+from .edge import MazeInnerWall, MazeBin
 
 
 class ChessBoard(GridBasic):
@@ -37,6 +38,7 @@ class ChessBoard(GridBasic):
         super().__init__(xbin = xbin, ybin = ybin)
         self._aspect = aspect
         self._calc_place_area()
+        self._generate_batch()
 
     def _calc_place_area(self):
         f'''
@@ -70,18 +72,18 @@ class ChessBoard(GridBasic):
                             'upper right': np.array([rig, top]),
                             'bottom left': np.array([lef, bot]),
                             'bottom right': np.array([rig, bot])}
-        
-    def create_chessboard(self) -> pyglet.graphics.Batch:
-        # creating a batch object
-        batch = pyglet.graphics.Batch()
+    
+    def _generate_batch(self):
+        self.batch = pyglet.graphics.Batch()
 
+    def create_chessboard_edge(self) -> None:
         # horizontal
         h = []
         for x in range(self.xbin):
             l = []
             for y in range(self.ybin+1):
                 Edge = MazeInnerWall(self.xbin, self.ybin, row_val=y, col_val=x, four_corner=self.four_corner, dirc='h')
-                Line = Edge.plot_line_on_batch(batch=batch)
+                Line = Edge.plot_line_on_batch(batch=self.batch)
                 l.append(Edge)
             h.append(l)
 
@@ -91,10 +93,16 @@ class ChessBoard(GridBasic):
             l = []
             for y in range(self.ybin):
                 Edge = MazeInnerWall(self.xbin, self.ybin, row_val=y, col_val=x, four_corner=self.four_corner, dirc='v')
-                Line = Edge.plot_line_on_batch(batch=batch)
+                Line = Edge.plot_line_on_batch(batch=self.batch)
                 l.append(Edge)
             v.append(l)
         
-        self.batch = batch
         self.index = {'v':v, 'h':h}
-        return batch
+    
+    def create_chessboard_bin(self) -> None:
+        self.Bins = []
+        for i in range(self.xbin*self.ybin):
+            x, y = idx_to_loc(i+1, self.xbin)
+            node = MazeBin(self.xbin, self.ybin, x=x, y=y)
+            self.Bins.append(node)
+        

@@ -10,13 +10,9 @@ or a combination of different variables like time and location.
 import numpy as np
 import scipy.stats
 
-from transloc import pvl_to_idx
+from mazepy.behav.transloc import pvl_to_idx
 from dataclasses import dataclass
 
-
-@dataclass
-class Object():
-    pass
 
 @dataclass
 class GridBasic(object):

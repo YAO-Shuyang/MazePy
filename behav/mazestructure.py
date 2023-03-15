@@ -6,10 +6,9 @@ We provide some tools for users to define the internal structure. It contains a
   Walls or objects)
 '''
 
-import pyglet
-from mazepy.behav.mazeobj.windows import MainWindow
+from mazepy.plot.mazeprofile import MazeProfile
+from mazepy.behav.graph import DIYGraph
 
 if __name__ == '__main__':
-    main = MainWindow(12, 12)
-    pyglet.clock.schedule_interval(main.update, 1 / 60)
-    pyglet.app.run()
+    G = DIYGraph(xbin=12, ybin=12)
+    mazeprof = MazeProfile(xbin=12, ybin=12, Graph=G.Graph)

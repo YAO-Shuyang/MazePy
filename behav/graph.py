@@ -20,8 +20,11 @@ Note that bin ID (as we have defined in /behav/trasloc.py) belongs to {1, 2, ...
 '''
 
 import numpy as np
-from dataclasses import dataclass
-from behav.gridbin import GridBasic
+import copy as cp
+import pyglet
+
+from mazepy.behav.gridbin import GridBasic
+from mazepy.behav.mazeobj.windows import MainWindow
 
 
 def isNorthBorder(BinID, xbin = 12, ybin = 12):
@@ -48,14 +51,18 @@ def isSouthBorder(BinID, xbin = 12):
     else:
         return False
 
-@dataclass
+
 class OpenFieldGraph(GridBasic):
     '''
     Generate the graph of open field. The basic information of the grids should be given.
     '''
-    Graph:dict = {}
+    def __init__(self, xbin: int, ybin: int) -> None:
+        super().__init__(xbin = xbin, ybin = ybin)
+        self.Graph = {}
+        self._generate_graph()
+        self.occu_map = np.zeros(xbin*ybin, dtype=np.float64)
     
-    def generate_graph(self):
+    def _generate_graph(self) -> None:
         '''
         Note
         ----
@@ -71,14 +78,21 @@ class OpenFieldGraph(GridBasic):
                 self.Graph[ID].append(ID + 1)
             if isWestBorder(ID, xbin=self.xbin) == False:
                 self.Graph[ID].append(ID - 1)
-        return self.Graph
-    
+
+            self.Graph[ID] = np.array(self.Graph[ID], dtype = np.int)
 
 class DIYGraph(OpenFieldGraph):
     '''
     A do-it-yourself graph via GUI
     '''
+    def __init__(self, xbin: int, ybin: int) -> None:
+        super().__init__(xbin, ybin)
+        self._setup_gui()
 
-    def setup_gui(self):
-        self.generate_graph()
-        
+    def _setup_gui(self):
+        MAIN = MainWindow(self.xbin, self.ybin, Graph = self.Graph, occu_map = self.occu_map)
+        pyglet.clock.schedule_interval(MAIN.update, 1 / 60)
+        pyglet.app.run()
+
+        self.Graph = cp.deepcopy(MAIN.Graph)
+        self.occu_map = cp.deepcopy(MAIN.occu_map)
