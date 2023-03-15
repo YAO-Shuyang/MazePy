@@ -85,12 +85,12 @@ class DIYGraph(OpenFieldGraph):
     '''
     A do-it-yourself graph via GUI
     '''
-    def __init__(self, xbin: int, ybin: int) -> None:
+    def __init__(self, xbin: int, ybin: int, **kwargs) -> None:
         super().__init__(xbin, ybin)
-        self._setup_gui()
+        self._setup_gui(**kwargs)
 
-    def _setup_gui(self):
-        MAIN = MainWindow(self.xbin, self.ybin, Graph = self.Graph, occu_map = self.occu_map)
+    def _setup_gui(self, **kwargs):
+        MAIN = MainWindow(self.xbin, self.ybin, Graph = self.Graph, occu_map = self.occu_map, **kwargs)
         pyglet.clock.schedule_interval(MAIN.update, 1 / 60)
         pyglet.app.run()
 
