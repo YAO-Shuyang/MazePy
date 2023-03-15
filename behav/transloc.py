@@ -52,15 +52,10 @@ For this reason, only 4 function:
   are available.
 '''
 
-
-try:
-    import numpy as np
-except:
-    print("There's no package named 'numpy'.")
-    assert False
+import numpy as np
 
 
-def pvl_to_idx(prec_value_loc:np.ndarray, xmax:float, ymax:float, xbin:int = 10, ybin:int = 10):
+def pvl_to_idx(prec_value_loc: np.ndarray, xmax: float or int, ymax: float or int, xbin: int = 10, ybin: int = 10):
     '''
     Parameter
     ---------
@@ -89,7 +84,7 @@ def pvl_to_idx(prec_value_loc:np.ndarray, xmax:float, ymax:float, xbin:int = 10,
     return loc_to_idx(cell_x = Res[0, :], cell_y = Res[1, :], xbin = xbin)
 
 # transform 960cm position data into nx*nx form
-def pvl_to_loc(prec_value_loc:np.ndarray, xmax:float, ymax:float, xbin:int = 10, ybin:int = 10):
+def pvl_to_loc(prec_value_loc: np.ndarray, xmax: float or int, ymax: float or int, xbin: int = 10, ybin: int = 10):
     '''
     Parameter
     ---------
@@ -125,7 +120,7 @@ def pvl_to_loc(prec_value_loc:np.ndarray, xmax:float, ymax:float, xbin:int = 10,
     except:
         return np.array([int(prec_value_loc[0] / xmax * xbin), int(prec_value_loc[1] / ymax * ybin)])
 
-def loc_to_idx(cell_x:np.ndarray, cell_y:np.ndarray, xbin:int = 10):
+def loc_to_idx(cell_x: np.ndarray or int, cell_y: np.ndarray or int, xbin: int = 10):
     '''
     Parameter
     ---------
@@ -149,7 +144,7 @@ def loc_to_idx(cell_x:np.ndarray, cell_y:np.ndarray, xbin:int = 10):
     return idx
 
 
-def idx_to_loc(idx:np.ndarray, xbin:int = 10):
+def idx_to_loc(idx: np.ndarray or int, xbin: int = 10):
     '''
     Parameter
     ---------
@@ -171,6 +166,75 @@ def idx_to_loc(idx:np.ndarray, xbin:int = 10):
     cell_x = (idx-1) % xbin
     cell_y = (idx-1) // xbin
     return cell_x, cell_y
+
+
+def idx_to_edge(idx: np.ndarray or int, xbin: int):
+    '''
+    Parameter
+    ---------
+    idx: np.ndarray or int object, required
+        The bin ID
+
+    xbin: int, required
+        The total bin number of dimension x
+    
+    Return
+    ------
+    A dict contains information of four edges that suround the bin.
+
+    Note
+    ----
+    Find the four edge of a certain bin.
+    '''
+    x, y = idx_to_loc(idx, xbin = xbin)
+
+    return {'north': np.array([x, y+1], dtype = np.int), 
+            'south': np.array([x, y], dtype = np.int), 
+            'east': np.array([x+1, y], dtype = np.int),
+            'west': np.array([x, y], dtype = np.int)}
+
+
+def pvl_to_edge(prec_value_loc: np.ndarray, xmax: float or int, ymax: float or int, xbin: int = 10, ybin: int = 10) -> tuple:
+    '''
+    Parameter
+    ---------
+    prec_value_loc: np.ndarray, required.
+        with size of (2,).
+    xmax: float, required
+        the max value of xmax
+    ymax: float, required
+        the max value of ymax
+    xbin: int, optional
+        The total bin number of dimension x
+        default: 10
+    ybin: int, optional
+        The total bin number of dimension y
+        default: 10
+
+    Return
+    ------
+    tuple: (direction, x, y) of the edge
+
+    Note
+    ----
+    Find the nearest edge to a precise value point.
+    '''
+    x, y = pvl_to_loc(prec_value_loc=prec_value_loc, xmax=xmax, ymax=ymax, xbin=xbin, ybin=ybin)
+    xp, yp = prec_value_loc[0]/xmax*xbin, prec_value_loc[1]/ymax*ybin
+
+    dy = yp - y - 0.5
+    dx = xp - x - 0.5
+    
+    if np.abs(dx) <= np.abs(dy):
+        if dy >= 0:
+            return ('h', x, y+1)  # North
+        else: # dy < 0
+            return ('h', x, y)  # South
+    else: # np.abs(dx) > np.abs(dy):
+        if dx >= 0:  
+            return ('v', x+1, y) # East
+        else: # dx < 0
+            return ('v', x, y) # West
 
 
 if __name__ == '__main__':
