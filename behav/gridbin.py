@@ -7,17 +7,8 @@ It could be used to divided recording data space into bins. The parameters can b
 or a combination of different variables like time and location.
 '''
 
-try:
-    import numpy as np
-except:
-    print("There's no package named 'numpy'.")
-    assert False
-
-try:
-    import scipy.stats
-except:
-    print("There's no package named 'scipy'.")
-    assert False
+import numpy as np
+import scipy.stats
 
 from transloc import pvl_to_idx
 from dataclasses import dataclass
@@ -28,7 +19,22 @@ class Object():
     pass
 
 @dataclass
-class GridInfo(Object):
+class GridBasic(object):
+    '''
+    Parameter
+    ---------
+    xbin: int, optional
+        The total bin number of dimension x
+        default: 10
+    ybin: int, optional
+        The total bin number of dimension y
+        default: 10
+    '''
+    xbin: int
+    ybin: int
+
+@dataclass
+class GridSize(GridBasic):
     '''
     Note
     ----
@@ -39,23 +45,19 @@ class GridInfo(Object):
     xmax: float, required
         The top limit of recorded data on dimension x.
     ymax: float, required
-        The top limit of recorded data on dimension x.
-    xbin: int, optional
-        The total bin number of dimension x
-        default: 10
-    ybin: int, optional
-        The total bin number of dimension y
-        default: 10
+        The top limit of recorded data on dimension y.
+    xmin: float, required
+        The bottom limit of recorded data on dimension x.
+    ymin: float, required
+        The bottom limit of recorded data on dimension y.
     '''
     xmax: float
     ymax: float
     xmin: float = 0
     ymin: float = 0
-    xbin: int = 10
-    ybin: int = 10
 
 @dataclass
-class GridBin(GridInfo):
+class GridBin(GridSize):
     '''
     Parameter
     ---------
