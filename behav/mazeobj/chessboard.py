@@ -76,14 +76,14 @@ class ChessBoard(GridBasic):
     def _generate_batch(self):
         self.batch = pyglet.graphics.Batch()
 
-    def create_chessboard_edge(self) -> None:
+    def create_chessboard_edge(self, **kwargs) -> None:
         # horizontal
         h = []
         for x in range(self.xbin):
             l = []
             for y in range(self.ybin+1):
                 Edge = MazeInnerWall(self.xbin, self.ybin, row_val=y, col_val=x, four_corner=self.four_corner, dirc='h')
-                Line = Edge.plot_line_on_batch(batch=self.batch)
+                Line = Edge.plot_line_on_batch(batch=self.batch, **kwargs)
                 l.append(Edge)
             h.append(l)
 
@@ -93,7 +93,7 @@ class ChessBoard(GridBasic):
             l = []
             for y in range(self.ybin):
                 Edge = MazeInnerWall(self.xbin, self.ybin, row_val=y, col_val=x, four_corner=self.four_corner, dirc='v')
-                Line = Edge.plot_line_on_batch(batch=self.batch)
+                Line = Edge.plot_line_on_batch(batch=self.batch, **kwargs)
                 l.append(Edge)
             v.append(l)
         

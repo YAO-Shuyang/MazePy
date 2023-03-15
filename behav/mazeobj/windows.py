@@ -34,7 +34,8 @@ class MainWindow(GridBasic):
                  ybin: int,
                  Graph: dict,
                  occu_map: np.ndarray, 
-                 aspect: str or float = 'equal'
+                 aspect: str or float = 'equal',
+                 **kwargs
                 ) -> None:
         ''''
         Parameter
@@ -57,8 +58,9 @@ class MainWindow(GridBasic):
         self.Graph = cp.deepcopy(Graph)
         self.occu_map = cp.deepcopy(occu_map)
         self.cb = ChessBoard(xbin = xbin, ybin = ybin, aspect = aspect)
-        self.cb.create_chessboard_edge()
+        self.cb.create_chessboard_edge(**kwargs)
         self.cb.create_chessboard_bin()
+        self.keys = kwargs
 
     @WINDOW.event
     def on_mouse_press(x, y, button, modifiers):
@@ -92,7 +94,7 @@ class MainWindow(GridBasic):
                                  ymax = self.cb.four_corner['upper left'][1] - self.cb.four_corner['bottom left'][1],
                                  xbin = self.xbin, ybin = self.ybin)
         nearest_edge = self.cb.index[dirc][xb][yb]
-        self.Graph = nearest_edge.state_change(self.cb.batch, Graph = self.Graph)
+        self.Graph = nearest_edge.state_change(self.cb.batch, Graph = self.Graph, **self.keys)
 
     def _bin_state_change(self, x, y) -> None:
         if self._is_out_of_range(x, y):
@@ -103,7 +105,7 @@ class MainWindow(GridBasic):
                          xmax = self.cb.four_corner['bottom right'][0] - self.cb.four_corner['bottom left'][0],
                          ymax = self.cb.four_corner['upper left'][1] - self.cb.four_corner['bottom left'][1],
                          xbin = self.xbin, ybin = self.ybin)
-        self.cb.Bins[idx-1].state_change(self.cb.batch, self.occu_map)
+        self.cb.Bins[idx-1].state_change(self.cb.batch, self.occu_map, **self.keys)
 
     def update(self, dt):
         if MOUSE_STATE['button'] == mouse.LEFT:

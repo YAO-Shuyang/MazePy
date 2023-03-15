@@ -10,5 +10,5 @@ from mazepy.plot.mazeprofile import MazeProfile
 from mazepy.behav.graph import DIYGraph
 
 if __name__ == '__main__':
-    G = DIYGraph(xbin=12, ybin=12)
-    mazeprof = MazeProfile(xbin=12, ybin=12, Graph=G.Graph)
+    G = DIYGraph(xbin=48, ybin=48, width = 2)
+    mazeprof = MazeProfile(xbin=48, ybin=48, Graph=G.Graph)

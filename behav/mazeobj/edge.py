@@ -82,7 +82,8 @@ class MazeInnerWall(Edge):
                  row_val: int,
                  col_val: int,
                  four_corner: dict,
-                 dirc: str = 'v'
+                 dirc: str = 'v',
+                 **kwargs
                 ) -> None:
         '''
         Parameter
@@ -160,7 +161,8 @@ class MazeInnerWall(Edge):
         return (self._x1, self._y1), (self._x2, self._y2)
 
     def plot_line_on_batch(self, 
-                           batch: pyglet.graphics.Batch
+                           batch: pyglet.graphics.Batch,
+                           **kwargs
                           ) -> shapes.Line:
         '''
         Parameter
@@ -172,14 +174,15 @@ class MazeInnerWall(Edge):
         ----
         To plot the line on the GUI.
         '''
-        line = shapes.Line(self._x1, self._y1, self._x2, self._y2, width = 5, color = self._color, batch = batch)
+        line = shapes.Line(self._x1, self._y1, self._x2, self._y2, color = self._color, batch = batch, **kwargs)
         line.opacity = 255
         self.line = line
         return line
 
     def state_change(self, 
                      batch: pyglet.graphics.Batch,
-                     Graph: dict
+                     Graph: dict,
+                     **kwargs
                     ) -> dict:
         '''
         Parameter
@@ -199,7 +202,7 @@ class MazeInnerWall(Edge):
             self._color = UNSELECTED_COLOR if self._state == 0 else SELECTED_COLOR
             self.time = time.time()
             Graph = self._modify_graph(Graph=Graph)
-            line = self.plot_line_on_batch(batch = batch)
+            line = self.plot_line_on_batch(batch = batch, **kwargs)
             return Graph
         else:
             return Graph
@@ -329,26 +332,27 @@ class MazeBin(GridBasic):
     
     def state_change(self, 
                      batch: pyglet.graphics.Batch,
-                     occu_map: np.ndarray
+                     occu_map: np.ndarray,
+                     **kwargs
                     ):
         if time.time() - self.time >= 0.5:
             self._state = 1 - self._state
             if self._state == 0:
-                self._plot_diagonal(batch=batch)
+                self._plot_diagonal(batch=batch, **kwargs)
                 occu_map[self._id-1] = np.nan
             elif self._state == 1:
                 self._erase_diagonal()
                 occu_map[self._id-1] = 0
             return occu_map
         
-    def _plot_diagonal(self, batch: pyglet.graphics.Batch):
+    def _plot_diagonal(self, batch: pyglet.graphics.Batch, **kwargs):
         x1, y1 = self.four_corner['bottom left'][0], self.four_corner['bottom left'][1]
         x2, y2 = self.four_corner['upper right'][0], self.four_corner['upper right'][1]
-        self.Line1 = shapes.Line(x1, y1, x2, y2, width = 5, batch = batch, color = SELECTED_COLOR)
+        self.Line1 = shapes.Line(x1, y1, x2, y2, batch = batch, color = SELECTED_COLOR, **kwargs)
 
         x1, y1 = self.four_corner['bottom right'][0], self.four_corner['bottom right'][1]
         x2, y2 = self.four_corner['upper left'][0], self.four_corner['upper left'][1]
-        self.Line2 = shapes.Line(x1, y1, x2, y2, width = 5, batch = batch, color = SELECTED_COLOR)
+        self.Line2 = shapes.Line(x1, y1, x2, y2, batch = batch, color = SELECTED_COLOR, **kwargs)
 
     def _erase_diagonal(self):
         self.Line1.delete()
