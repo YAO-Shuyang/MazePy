@@ -12,7 +12,7 @@ import numpy as np
 from . import HEIGHT, WIDTH
 from mazepy.behav.gridbin import GridBasic
 from mazepy.behav.transloc import idx_to_loc, loc_to_idx
-from .edge import MazeInnerWall, MazeInnerBin
+from .windowobj import WindowsBin, WindowsWall, WindowsCalculator
 
 
 class ChessBoard(GridBasic):
@@ -67,11 +67,10 @@ class ChessBoard(GridBasic):
             bot = HEIGHT/2 - board_height*0.5
             lef = 0.1*WIDTH
             rig = 0.9*WIDTH
-            
-        self.four_corner = {'upper left': np.array([lef, top]),
-                            'upper right': np.array([rig, top]),
-                            'bottom left': np.array([lef, bot]),
-                            'bottom right': np.array([rig, bot])}
+        
+        self.wcalc = WindowsCalculator(xbin=self.xbin, ybin=self.ybin, 
+                                       ur_val=(rig, top), ul_val=(lef, top),
+                                       br_val=(rig, bot), bl_val=(lef, bot))
     
     def _generate_batch(self):
         self.batch = pyglet.graphics.Batch()
@@ -82,7 +81,7 @@ class ChessBoard(GridBasic):
         for x in range(self.xbin):
             l = []
             for y in range(self.ybin+1):
-                Edge = MazeInnerWall(self.xbin, self.ybin, row_val=y, col_val=x, four_corner=self.four_corner, dirc='h')
+                Edge = WindowsWall(self.xbin, self.ybin, x=x, y=y, calculator=self.wcalc, dirc='h')
                 Line = Edge.plot_line_on_batch(batch=self.batch, **kwargs)
                 l.append(Edge)
             h.append(l)
@@ -92,7 +91,7 @@ class ChessBoard(GridBasic):
         for x in range(self.xbin+1):
             l = []
             for y in range(self.ybin):
-                Edge = MazeInnerWall(self.xbin, self.ybin, row_val=y, col_val=x, four_corner=self.four_corner, dirc='v')
+                Edge = WindowsWall(self.xbin, self.ybin, x=x, y=y, calculator=self.wcalc, dirc='v')
                 Line = Edge.plot_line_on_batch(batch=self.batch, **kwargs)
                 l.append(Edge)
             v.append(l)
@@ -103,6 +102,5 @@ class ChessBoard(GridBasic):
         self.Bins = []
         for i in range(self.xbin*self.ybin):
             x, y = idx_to_loc(i+1, self.xbin)
-            node = MazeInnerBin(self.xbin, self.ybin, x=x, y=y, four_corner=self.four_corner)
+            node = WindowsBin(self.xbin, self.ybin, x=x, y=y, calculator=self.wcalc)
             self.Bins.append(node)
-        
