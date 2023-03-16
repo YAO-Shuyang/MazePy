@@ -274,12 +274,12 @@ class MazeInnerWall(Edge):
         return Graph
 
 
-class MazeBin(GridBasic):
+class Bin(GridBasic):
     def __init__(self,
                  xbin: int,
                  ybin: int,
                  x: int,
-                 y: int
+                 y: int,
                 ) -> None:
         '''
         Defines class Bins.
@@ -293,22 +293,33 @@ class MazeBin(GridBasic):
         self._x = x
         self._y = y
         self._id = loc_to_idx(x, y, xbin = xbin)
-        self._find_four_corner()
-        self._find_four_edge()
         self._state = 1  
-        self.time = time.time()
         # 0 -> (This bin is) selected to be abandoned; 
         # 1 -> (This bin is) kept as a part of the environment.
 
     @property
-    def position(self):
+    def coordinate(self):
         return (self._x, self._y)
     
     @property
     def id(self):
         return self._id
 
-    def _find_four_edge(self) -> dict:
+class MazeInnerBin(Bin):
+    def __init__(self, 
+                 xbin: int, 
+                 ybin: int, 
+                 x: int, 
+                 y: int, 
+                 four_corner: dict
+                ) -> None:
+        super().__init__(xbin, ybin, x, y)
+
+        self._find_four_corner(four_corner)
+        self._find_four_edge(four_corner)
+        self.time = time.time()
+
+    def _find_four_edge(self, four_corner: dict) -> dict:
         '''
         Find the four edge of the bin.
         '''
@@ -319,22 +330,27 @@ class MazeBin(GridBasic):
                            'West': ('v', x, y)}
         return self.four_edge
     
-    def _find_four_corner(self) -> dict:
+    def _find_four_corner(self,
+                          four_corner: dict
+                         ) -> dict:
         '''
         Find the four corner of the bin.
         '''
+        anchr_x, anchr_y = four_corner['bottom left'][0], four_corner['bottom left'][1]
+        binlen_x = (four_corner['bottom right'][0] - four_corner['bottom left'][0])/self.xbin
+        binlen_y = (four_corner['upper left'][1] - four_corner['bottom left'][1])/self.ybin
         x, y = self._x, self._y
-        self.four_corner = {'bottom left': (x, y),
-                            'bottom right': (x+1, y),
-                            'upper left': (x, y+1),
-                            'upper right': (x+1, y+1)}
+        self.four_corner = {'bottom left': (x*binlen_x + anchr_x, y*binlen_y + anchr_y),
+                            'bottom right': ((x+1)*binlen_x + anchr_x, y*binlen_y + anchr_y),
+                            'upper left': (x*binlen_x + anchr_x, (y+1)*binlen_y + anchr_y),
+                            'upper right': ((x+1)*binlen_x + anchr_x, (y+1)*binlen_y + anchr_y)}
         return self.four_corner
     
     def state_change(self, 
                      batch: pyglet.graphics.Batch,
                      occu_map: np.ndarray,
                      **kwargs
-                    ):
+                    ) -> np.ndarray:
         if time.time() - self.time >= 0.5:
             self._state = 1 - self._state
             if self._state == 0:
@@ -343,6 +359,9 @@ class MazeBin(GridBasic):
             elif self._state == 1:
                 self._erase_diagonal()
                 occu_map[self._id-1] = 0
+            self.time = time.time()
+            return occu_map
+        else:
             return occu_map
         
     def _plot_diagonal(self, batch: pyglet.graphics.Batch, **kwargs):

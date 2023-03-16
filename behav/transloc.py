@@ -20,8 +20,8 @@ xbins represents the number of bins on dimension x, while ybins represents the n
     xbin+1  xbin+2  ...    xbin*2
        1      2     ...     xbin
 
-2. Bin location (abbreviated as loc):
-    The x, y location of where a certain bin locates at.
+2. Bin coordinate (abbreviated as loc):
+    The x, y coordinate of where a certain bin locates at.
 
   (0, ybin-1) (1, ybin-1) ... (xbin-1, ybin-1)
        .           .      ...        .
@@ -30,13 +30,13 @@ xbins represents the number of bins on dimension x, while ybins represents the n
     (0, 1)      (1, 1)    ...   (xbin-1, 1)
     (0, 0)      (1, 0)    ...   (xbin-1, 0)
 
-3. Precise value location (termed as PVL/pvl)
+3. Precise value coordinate (termed as PVL/pvl)
     The precise recorded data (usually 2 dimension)
 
-    For example, if the data is 2D spatial location, it might be (10.843 cm, 85.492 cm)
+    For example, if the data is 2D spatial coordinate, it might be (10.843 cm, 85.492 cm)
 
     If the data is a kind of conjunctively paired data, such as data that jointly combined 
-      voice frequencies and 1D spatial location together, it might be (43.154 cm, 5185 Hz)
+      voice frequencies and 1D spatial coordinate together, it might be (43.154 cm, 5185 Hz)
 
     It represents precise value of recorded data.
 
