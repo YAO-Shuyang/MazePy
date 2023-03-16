@@ -82,17 +82,14 @@ class MainWindow(GridBasic):
             WINDOW.close()
 
     def _is_out_of_range(self, x, y):
-        return x >= self.cb.four_corner['bottom right'][0] or x <= self.cb.four_corner['bottom left'][0] or y >= self.cb.four_corner['upper left'][1] or y <= self.cb.four_corner['bottom left'][1]
+        return x >= self.cb.wcalc.br[0] or x <= self.cb.wcalc.bl[0] or y >= self.cb.wcalc.ul[1] or y <= self.cb.wcalc.bl[1]
 
     def _edge_state_change(self, x, y) -> None:
         if self._is_out_of_range(x, y):
             return
         
-        dirc, xb, yb = pvl_to_edge(prec_value_loc = np.array([x - self.cb.four_corner['bottom left'][0], 
-                                                            y - self.cb.four_corner['bottom left'][1]]), 
-                                 xmax = self.cb.four_corner['bottom right'][0] - self.cb.four_corner['bottom left'][0],
-                                 ymax = self.cb.four_corner['upper left'][1] - self.cb.four_corner['bottom left'][1],
-                                 xbin = self.xbin, ybin = self.ybin)
+        dirc, xb, yb = pvl_to_edge(prec_value_loc = np.array([x - self.cb.wcalc.bl[0], y - self.cb.wcalc.bl[1]]), 
+                                 xmax = self.cb.wcalc.xrange, ymax = self.cb.wcalc.yrange, xbin = self.xbin, ybin = self.ybin)
         nearest_edge = self.cb.index[dirc][xb][yb]
         self.Graph = nearest_edge.state_change(self.cb.batch, Graph = self.Graph, **self.keys)
 
@@ -100,11 +97,8 @@ class MainWindow(GridBasic):
         if self._is_out_of_range(x, y):
             return
 
-        idx = pvl_to_idx(prec_value_loc = np.array([x - self.cb.four_corner['bottom left'][0], 
-                                                    y - self.cb.four_corner['bottom left'][1]]), 
-                         xmax = self.cb.four_corner['bottom right'][0] - self.cb.four_corner['bottom left'][0],
-                         ymax = self.cb.four_corner['upper left'][1] - self.cb.four_corner['bottom left'][1],
-                         xbin = self.xbin, ybin = self.ybin)
+        idx = pvl_to_idx(prec_value_loc = np.array([x - self.cb.wcalc.bl[0], y - self.cb.wcalc.bl[1]]), 
+                         xmax = self.cb.wcalc.xrange, ymax = self.cb.wcalc.yrange, xbin = self.xbin, ybin = self.ybin)
         self.occu_map = self.cb.Bins[idx-1].state_change(self.cb.batch, self.occu_map, **self.keys)
 
     def update(self, dt):

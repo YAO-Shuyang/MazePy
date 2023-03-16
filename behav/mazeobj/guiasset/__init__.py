@@ -14,5 +14,4 @@ def load_image(file, *args, **kwargs):
 working_dir = os.path.dirname(os.path.realpath(__file__))
 pyglet.resource.path = [working_dir]
 pyglet.resource.reindex()
-print(pyglet.resource.path)
 BACKGROUND_IMG = load_image("Background.png")

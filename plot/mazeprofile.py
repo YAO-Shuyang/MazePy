@@ -111,7 +111,6 @@ class MazeProfile(GridBasic):
             fig = plt.figure(figsize = (6,6))
             ax = plt.axes()
             ax.set_aspect('equal')
-            ax.invert_yaxis()
 
         if rate_map is None and self.occu_map is not None:
             ax.imshow(np.reshape(self.occu_map, [self.xbin, self.ybin]), **imshow_kwgs)
@@ -121,6 +120,8 @@ class MazeProfile(GridBasic):
         elif rate_map is not None and self.occu_map is None:
             ax.imshow(np.reshape(rate_map, [self.xbin, self.ybin]), **imshow_kwgs)
             warnings.warn("Note that we do not recommend you to draw rate map without occu_map.")
+
+        ax.invert_yaxis()
 
         for i in range(v.shape[0]):
             for j in range(v.shape[1]):

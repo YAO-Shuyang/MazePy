@@ -14,7 +14,6 @@ from mazepy.behav.transloc import pvl_to_idx
 from dataclasses import dataclass
 
 
-@dataclass
 class GridBasic(object):
     '''
     Parameter
@@ -26,10 +25,18 @@ class GridBasic(object):
         The total bin number of dimension y
         default: 10
     '''
-    xbin: int
-    ybin: int
+    def __init__(self, xbin: int, ybin: int) -> None:
+        self._xbin = xbin
+        self._ybin = ybin
 
-@dataclass
+    @property
+    def xbin(self):
+        return self._xbin
+    
+    @property
+    def ybin(self):
+        return self._ybin
+
 class GridSize(GridBasic):
     '''
     Note
@@ -47,12 +54,36 @@ class GridSize(GridBasic):
     ymin: float, required
         The bottom limit of recorded data on dimension y.
     '''
-    xmax: float
-    ymax: float
-    xmin: float = 0
-    ymin: float = 0
+    def __init__(self, 
+                 xbin: int, 
+                 ybin: int, 
+                 xmax: float, 
+                 ymax: float, 
+                 xmin: int or float = 0, 
+                 ymin: int or float = 0
+                ) -> None:
+        super().__init__(xbin, ybin)
+        self._xmax = xmax
+        self._ymax = ymax
+        self._xmin = xmin
+        self._ymin = ymin
 
-@dataclass
+    @property
+    def xmax(self):
+        return self._xmax
+    
+    @property
+    def ymax(self):
+        return self._ymax
+    
+    @property
+    def xmin(self):
+        return self._xmin
+    
+    @property
+    def ymin(self):
+        return self._ymin
+
 class GridBin(GridSize):
     '''
     Parameter
@@ -69,6 +100,9 @@ class GridBin(GridSize):
         default: 10
     '''
     # We only accept dimension n = 2 to divide variables into different bins.
+    def __init__(self, xbin: int, ybin: int, xmax: float, ymax: float, 
+                 xmin: int or float = 0, ymin: int or float = 0) -> None:
+        super().__init__(xbin, ybin, xmax, ymax, xmin, ymin)
 
     def _pre_process(self, MAT):
         '''
