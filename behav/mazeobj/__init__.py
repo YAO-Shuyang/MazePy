@@ -1,5 +1,5 @@
 '''
-These files contain several objects to make up the GUI.
+The directory contains several objects that are necessary to make up the GUI.
 '''
 import pyglet
 

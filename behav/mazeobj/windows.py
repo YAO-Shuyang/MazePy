@@ -101,11 +101,11 @@ class MainWindow(GridBasic):
             return
 
         idx = pvl_to_idx(prec_value_loc = np.array([x - self.cb.four_corner['bottom left'][0], 
-                                                     y - self.cb.four_corner['bottom left'][1]]), 
+                                                    y - self.cb.four_corner['bottom left'][1]]), 
                          xmax = self.cb.four_corner['bottom right'][0] - self.cb.four_corner['bottom left'][0],
                          ymax = self.cb.four_corner['upper left'][1] - self.cb.four_corner['bottom left'][1],
                          xbin = self.xbin, ybin = self.ybin)
-        self.cb.Bins[idx-1].state_change(self.cb.batch, self.occu_map, **self.keys)
+        self.occu_map = self.cb.Bins[idx-1].state_change(self.cb.batch, self.occu_map, **self.keys)
 
     def update(self, dt):
         if MOUSE_STATE['button'] == mouse.LEFT:

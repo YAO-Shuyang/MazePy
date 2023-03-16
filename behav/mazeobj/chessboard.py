@@ -12,7 +12,7 @@ import numpy as np
 from . import HEIGHT, WIDTH
 from mazepy.behav.gridbin import GridBasic
 from mazepy.behav.transloc import idx_to_loc, loc_to_idx
-from .edge import MazeInnerWall, MazeBin
+from .edge import MazeInnerWall, MazeInnerBin
 
 
 class ChessBoard(GridBasic):
@@ -103,6 +103,6 @@ class ChessBoard(GridBasic):
         self.Bins = []
         for i in range(self.xbin*self.ybin):
             x, y = idx_to_loc(i+1, self.xbin)
-            node = MazeBin(self.xbin, self.ybin, x=x, y=y)
+            node = MazeInnerBin(self.xbin, self.ybin, x=x, y=y, four_corner=self.four_corner)
             self.Bins.append(node)
         
