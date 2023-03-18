@@ -137,7 +137,7 @@ def loc_to_idx(cell_x: np.ndarray or int, cell_y: np.ndarray or int, xbin: int =
     cell_y: int or np.ndarray 1d vector, required
         y index of bin location
     xbin: int, optional
-        The total bin number of dimension x
+        The total bin number of dimension xcoordinate
         default: 10
 
     Return
@@ -201,6 +201,14 @@ def idx_to_edge(idx: np.ndarray or int, xbin: int):
             'east': np.array([x+1, y], dtype = np.int),
             'west': np.array([x, y], dtype = np.int)}
 
+def loc_to_edge(x: float, y: float):
+    if x != int(x) and y == int(y):
+        return ('h', int(x), int(y))
+    elif x == int(x) and y != int(y):
+        return ('v', int(x), int(y))
+    else: 
+        return None
+
 
 def pvl_to_edge(prec_value_loc: np.ndarray, xmax: float or int, ymax: float or int, xbin: int = 10, ybin: int = 10) -> tuple:
     '''
@@ -244,6 +252,32 @@ def pvl_to_edge(prec_value_loc: np.ndarray, xmax: float or int, ymax: float or i
         else: # dx < 0
             return ('v', x, y) # West
 
+"""
+Check whether a bin locates at the border of a maze.
+"""
+def isNorthBorder(BinID, xbin = 12, ybin = 12):
+    if (BinID-1) // xbin == ybin - 1:
+        return True
+    else:
+        return False
+
+def isEastBorder(BinID, xbin = 12):
+    if BinID % xbin == 0:
+        return True
+    else:
+        return False
+
+def isWestBorder(BinID, xbin = 12):
+    if BinID % xbin == 1:
+        return True
+    else:
+        return False
+
+def isSouthBorder(BinID, xbin = 12):
+    if BinID <= xbin:
+        return True
+    else:
+        return False
 
 if __name__ == '__main__':
     # for test

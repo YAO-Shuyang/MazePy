@@ -20,7 +20,7 @@ import copy as cp
 
 from mazepy.behav.gridbin import GridBasic
 from mazepy.behav.transloc import loc_to_idx
-from mazepy.behav.mazeobj.element import Bin, Point, Edge
+from mazepy.behav.element import Bin, Point, Edge
 
 UNSELECTED_COLOR = (204, 255, 204)
 SELECTED_COLOR = (0, 0, 0)
@@ -39,12 +39,12 @@ class WindowsCalculator(GridBasic):
         Parameter
         ---------
         ur, ul, br, bl: tuple, 
-            The precise (x, y) cordinate of the four corners on the screen of the GUI.
+            The precise (x, y) coordinate of the four corners on the screen of the GUI.
             ur: upper right     ul: upper left      br: bottom right    bf: bottom left
 
         Note
         ----
-        Bridge the cordinate of Bin, Point, Edge and the precise cordinate on the GUI screen.
+        Bridge the coordinate of Bin, Point, Edge and the precise coordinate on the GUI screen.
         Provide functions to realize this transformation.
         """
         super().__init__(xbin=xbin, ybin=ybin)
@@ -98,7 +98,7 @@ class WindowsCalculator(GridBasic):
         Parameter
         ---------
         x, y: int, required
-            The cordinate that need to transform.
+            The coordinate that need to transform.
         """
         return x*self.xlen + self.bl[0], y*self.ylen + self.bl[1]
 
@@ -130,7 +130,7 @@ class WindowsWall(Edge):
         y: int, required
             The column that the edge lays on.
         calculator: WindowsCalculator calss:
-            For the convience of cordinate transformation.
+            For the convience of coordinate transformation.
         dirc: str, optional
             Values in {'v', 'h'} are available. 'v' represents vertical edges, while 'h' represents
               horizontal ones.
@@ -141,10 +141,10 @@ class WindowsWall(Edge):
         self._color = UNSELECTED_COLOR
         self._time = time.time()
         self._two_bins_id_on_gui()
-        self._two_ends_cordinate_on_gui()
+        self._two_ends_coordinate_on_gui()
 
     def _two_bins_id_on_gui(self):
-        """(x,y) cordinate to bin id.
+        """(x,y) coordinate to bin id.
         """
         self._id1 = loc_to_idx(cell_x=self._bin1[0], cell_y=self._bin1[1], xbin=self.xbin) if self._bin1 is not None else None
         self._id2 = loc_to_idx(cell_x=self._bin2[0], cell_y=self._bin2[1], xbin=self.xbin) if self._bin2 is not None else None
@@ -157,9 +157,9 @@ class WindowsWall(Edge):
     def id2(self):
         return self._id2
 
-    def _two_ends_cordinate_on_gui(self):
+    def _two_ends_coordinate_on_gui(self):
         """
-        Calculate the precise (x,y) cordinate of the two ends of the edge on the screen of 
+        Calculate the precise (x,y) coordinate of the two ends of the edge on the screen of 
           the GUI.
         """
         self._x1, self._y1 = self._calculator.cor_to_scr(self.p1[0], self.p1[1])
