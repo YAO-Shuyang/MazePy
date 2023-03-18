@@ -5,6 +5,7 @@ import warnings
 
 from mazepy.behav.gridbin import GridBasic
 from mazepy.behav.transloc import loc_to_idx, idx_to_loc
+from mazepy.behav.graph import WallMatrix
 
 # plot environment profile
 class MazeProfile(GridBasic):
@@ -35,6 +36,10 @@ class MazeProfile(GridBasic):
             If it is not None, it should be a valid directory that to save the figure.
         """
         super().__init__(xbin = xbin, ybin = ybin)
+
+        if occu_map is None:
+            occu_map = np.zeros(xbin*ybin)
+
         if len(Graph.keys()) != xbin*ybin:
             raise IndexError(f"""The Graph has {Graph.keys()} keys and thus doesn't suit the 
                              environment which has {xbin*ybin} bins. The number of keys must be
@@ -54,32 +59,17 @@ class MazeProfile(GridBasic):
             plt.savefig(save_loc+'.svg', dpi = 600)
             plt.close()
 
-    def _WallMatrix(self) -> None:
-        """
-        Return
-        ------
-        numpy.ndarray Matrix * 2
-        Wall matrix will return 2 matrix: vertical_walls represents verticle walls which has a 
-          shape of (xbin+1, ybin) and horizont_walls with a shape of (xbin, ybin+1).
-        """
-        self.vertical_walls = np.ones((self.ybin, self.xbin+1), dtype = np.int64)
-        self.horizont_walls = np.ones((self.ybin+1, self.xbin), dtype = np.int64)
+    def _WallMatrix(self):
+        self._vertical_walls, self._horizont_walls = WallMatrix(self.Graph, self.xbin, self.ybin)
+        return self._vertical_walls, self._horizont_walls
 
-        for i in range(1, self.xbin*self.ybin):
-            x, y = idx_to_loc(i, xbin=self.xbin)
-
-            surr = self.Graph[i]
-            for s in surr:
-                if s == i + 1:
-                    self.vertical_walls[y, x+1] = 0
-                elif s == i - 1:
-                    self.vertical_walls[y, x] = 0
-                elif s == i + self.xbin:
-                    self.horizont_walls[y+1, x] = 0
-                elif s == i - self.xbin:
-                    self.horizont_walls[y, x] = 0
-                else:
-                    raise ValueError(f"Bin {s} is not connected with Bin {i}.")
+    @property
+    def vertical_wall(self):
+        return self._vertical_walls
+    
+    @property
+    def horizont_wall(self):
+        return self._horizont_walls
 
     def DrawMazeProfile(self, 
                         ax: Axes = None,
@@ -105,7 +95,7 @@ class MazeProfile(GridBasic):
                                  ({self.xbin*self.ybin},).""")
 
         self._WallMatrix()
-        v, h = self.vertical_walls, self.horizont_walls
+        v, h = self._vertical_walls, self._horizont_walls
 
         if ax is None:
             fig = plt.figure(figsize = (6,6))

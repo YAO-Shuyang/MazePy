@@ -7,7 +7,7 @@ We provide some tools for users to define the internal structure. It contains a
 '''
 
 from mazepy.plot.mazeprofile import MazeProfile
-from mazepy.behav.graph import DIYGraph
+from mazepy.behav.mazeobj.maze_design import DIYGraph
 
 if __name__ == '__main__':
     G = DIYGraph(xbin=12, ybin=12, width = 5)
