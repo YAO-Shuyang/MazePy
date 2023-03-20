@@ -11,78 +11,7 @@ import numpy as np
 import scipy.stats
 
 from mazepy.behav.transloc import pvl_to_idx
-from dataclasses import dataclass
-
-
-class GridBasic(object):
-    '''
-    Parameter
-    ---------
-    xbin: int, optional
-        The total bin number of dimension x
-        default: 10
-    ybin: int, optional
-        The total bin number of dimension y
-        default: 10
-    '''
-    def __init__(self, xbin: int, ybin: int) -> None:
-        self._xbin = xbin
-        self._ybin = ybin
-
-    @property
-    def xbin(self):
-        return self._xbin
-    
-    @property
-    def ybin(self):
-        return self._ybin
-
-class GridSize(GridBasic):
-    '''
-    Note
-    ----
-    The basic parameter to bin the value space into grid-like bins.
-
-    Parameter
-    ---------
-    xmax: float, required
-        The top limit of recorded data on dimension x.
-    ymax: float, required
-        The top limit of recorded data on dimension y.
-    xmin: float, required
-        The bottom limit of recorded data on dimension x.
-    ymin: float, required
-        The bottom limit of recorded data on dimension y.
-    '''
-    def __init__(self, 
-                 xbin: int, 
-                 ybin: int, 
-                 xmax: float, 
-                 ymax: float, 
-                 xmin: int or float = 0, 
-                 ymin: int or float = 0
-                ) -> None:
-        super().__init__(xbin, ybin)
-        self._xmax = xmax
-        self._ymax = ymax
-        self._xmin = xmin
-        self._ymin = ymin
-
-    @property
-    def xmax(self):
-        return self._xmax
-    
-    @property
-    def ymax(self):
-        return self._ymax
-    
-    @property
-    def xmin(self):
-        return self._xmin
-    
-    @property
-    def ymin(self):
-        return self._ymin
+from mazepy.behav.grid import GridSize
 
 class GridBin(GridSize):
     '''
@@ -136,8 +65,8 @@ class GridBin(GridSize):
         ------
         1d numpy.ndarray object, with a length of T.
         '''
-        self._pre_process(MAT = MAT)
-        self.behav_nodes = pvl_to_idx(prec_value_loc = self.MAT, xbin = self.xbin, ybin = self.ybin, 
+        self._pre_process()
+        self.behav_nodes = pvl_to_idx(x = self.MAT[0, :], y = self.MAT[1, :], xbin = self.xbin, ybin = self.ybin, 
                                       xmax = self.xmax, ymax = self.ymax)
         return self.behav_nodes
 

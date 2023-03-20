@@ -9,8 +9,8 @@ import time
 from mazepy.behav.mazeobj.guiasset import BACKGROUND_IMG
 from mazepy.behav.mazeobj.chessboard import ChessBoard
 from mazepy.behav.mazeobj import WINDOW
-from mazepy.behav.gridbin import GridBasic
-from mazepy.behav.transloc import pvl_to_edge, pvl_to_loc, pvl_to_idx
+from mazepy.behav.grid import GridBasic
+from mazepy.behav.transloc import nearest_edge, pvl_to_loc, pvl_to_idx
 
 
 MOUSE_STATE = {'x': None, 'y': None, 'button': None, 'modifiers': None}
@@ -88,17 +88,26 @@ class MainWindow(GridBasic):
         if self._is_out_of_range(x, y):
             return
         
-        dirc, xb, yb = pvl_to_edge(prec_value_loc = np.array([x - self.cb.wcalc.bl[0], y - self.cb.wcalc.bl[1]]), 
-                                 xmax = self.cb.wcalc.xrange, ymax = self.cb.wcalc.yrange, xbin = self.xbin, ybin = self.ybin)
-        nearest_edge = self.cb.index[dirc][xb][yb]
-        self.Graph = nearest_edge.state_change(self.cb.batch, Graph = self.Graph, **self.keys)
+        dirc, xb, yb = nearest_edge(x, y,
+                                    xbin = self.xbin, ybin = self.ybin,
+                                    xmax = self.cb.wcalc.ur[0], 
+                                    ymax = self.cb.wcalc.ur[1],
+                                    xmin = self.cb.wcalc.bl[0],
+                                    ymin = self.cb.wcalc.bl[1])
+        E = self.cb.index[dirc][xb][yb]
+        self.Graph = E.state_change(self.cb.batch, Graph = self.Graph, **self.keys)
 
     def _bin_state_change(self, x, y) -> None:
         if self._is_out_of_range(x, y):
             return
 
-        idx = pvl_to_idx(prec_value_loc = np.array([x - self.cb.wcalc.bl[0], y - self.cb.wcalc.bl[1]]), 
-                         xmax = self.cb.wcalc.xrange, ymax = self.cb.wcalc.yrange, xbin = self.xbin, ybin = self.ybin)
+        idx = pvl_to_idx(x, y, 
+                         xbin = self.xbin, 
+                         ybin = self.ybin, 
+                         xmax = self.cb.wcalc.ur[0], 
+                         ymax = self.cb.wcalc.ur[1],
+                         xmin = self.cb.wcalc.bl[0], 
+                         ymin = self.cb.wcalc.bl[1])
         self.occu_map = self.cb.Bins[idx-1].state_change(self.cb.batch, self.occu_map, **self.keys)
 
     def update(self, dt):

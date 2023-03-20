@@ -30,12 +30,14 @@ import copy as cp
 import networkx as nx
 import matplotlib.pyplot as plt
 
-from mazepy.behav.gridbin import GridBasic
-from mazepy.behav.transloc import loc_to_idx, idx_to_loc, pvl_to_idx, pvl_to_loc, loc_to_edge
+from matplotlib.axes._axes import Axes
+
+from mazepy.behav.grid import GridBasic
+from mazepy.behav.transloc import idx_to_loc, pvl_to_idx
 from mazepy.behav.transloc import isNorthBorder, isSouthBorder, isEastBorder, isWestBorder
 from mazepy.behav.element import Point, Edge, Bin
 
-def WallMatrix(Graph: dict, xbin: int, ybin: int, ) -> None:
+def WallMatrix(Graph: dict, xbin: int, ybin: int) -> None:
     """
     Return
     ------
@@ -48,7 +50,7 @@ def WallMatrix(Graph: dict, xbin: int, ybin: int, ) -> None:
     horizont_walls = np.ones((ybin+1, xbin), dtype = np.int64)
 
     for i in range(1, xbin*ybin):
-        x, y = idx_to_loc(i, xbin=xbin)
+        x, y = idx_to_loc(i, xbin=xbin, ybin=ybin)
 
         surr = Graph[i]
         for s in surr:
@@ -200,43 +202,144 @@ class Graph(GridBasic):
             return False
 
         else:
-            id1 = pvl_to_idx(np.array([x1, y1]), xmax=self.xbin, ymax=self.ybin, xbin=self.xbin, ybin=self.ybin)
-            id2 = pvl_to_idx(np.array([x2, y2]), xmax=self.xbin, ymax=self.ybin, xbin=self.xbin, ybin=self.ybin)
-
-            if id1 == id2:
-                return False
+            id1 = pvl_to_idx(x1, y1, xbin=self.xbin, ybin=self.ybin, xmax=self.xbin, ymax=self.ybin)
+            id2 = pvl_to_idx(x2, y2, xbin=self.xbin, ybin=self.ybin, xmax=self.xbin, ymax=self.ybin)
 
             if x1 == x2 and x1 == int(x1):
-                if self._is_on_point(p1):
-                    p = p1
-                elif self._is_on_point(p2):
-                    p = p2
-                else:
-                    p = (x1, np.max([int(p1[1]), int(p2[1])]))
+                if self._is_on_point(p1) and self._is_on_point(p2):
+                    P1 = Point(self.xbin, self.ybin, x1, y1)
+                    P2 = Point(self.xbin, self.ybin, x2, y2)
+                    E = Edge(self.xbin, self.ybin, x1, np.min([int(y1), int(y2)]), 'v')
+                    P1.place_wall(self.Graph)
+                    P2.place_wall(self.Graph)
+                    E.place_wall(self.Graph)
+
+                    if E.Wall == False:
+                        return False
+                    else:
+                        if P1.EWall == False and P2.EWall == False and left_or_right == 'r':
+                            return False
+                        elif P1.WWall == False and P2.WWall == False and left_or_right == 'l':
+                            return False
+                        else:
+                            return True
+
+                elif self._is_on_point(p1) == True and self._is_on_point(p2) == False:
+                    P1 = Point(self.xbin, self.ybin, x1, y1)
+                    E = Edge(self.xbin, self.ybin, x1, np.min([int(y1), int(y2)]), 'v')
+                    P1.place_wall(self.Graph)
+                    E.place_wall(self.Graph)
+
+                    if E.Wall == False:
+                        return False
+                    else:
+                        if P1.EWall == False and left_or_right == 'r':
+                            return False
+                        elif P1.WWall == False and left_or_right == 'l':
+                            return False
+                        else:
+                            return True
                 
-                P = Point(self.xbin, self.ybin, p[0], p[1])
-                P.place_wall(self.Graph)
-                if (P.EWall and left_or_right == 'r') or (P.WWall and left_or_right == 'l'):
-                    return True
-                else:
-                    return False
+                elif self._is_on_point(p1) == False and self._is_on_point(p2) == True:
+                    P2 = Point(self.xbin, self.ybin, x2, y2)
+                    E = Edge(self.xbin, self.ybin, x1, np.min([int(y1), int(y2)]), 'v')
+                    P2.place_wall(self.Graph)
+                    E.place_wall(self.Graph)
+
+                    if E.Wall == False:
+                        return False
+                    else:
+                        if P2.EWall == False and left_or_right == 'r':
+                            return False
+                        elif P2.WWall == False and left_or_right == 'l':
+                            return False
+                        else:
+                            return True         
+
+                else: # Both of p1 and p2 are on edges instead of points.
+                    if id1 == id2:
+                        return False
+                    else:                
+                        P = Point(self.xbin, self.ybin, x1, np.max([int(y1), int(y2)]))
+                        P.place_wall(self.Graph)
+
+                        if P.EWall == False and left_or_right == 'r':
+                            return False
+                        if P.WWall == False and left_or_right == 'l':
+                            return False
+                        else:
+                            return True
             
             elif y1 == y2 and y1 == int(y1):
-                if self._is_on_point(p1):
-                    p = p1
-                elif self._is_on_point(p2):
-                    p = p2
-                else:
-                    p = (np.max([int(p1[0]), int(p2[0])]), y1)
+
+                if self._is_on_point(p1) and self._is_on_point(p2):
+                    P1 = Point(self.xbin, self.ybin, x1, y1)
+                    P2 = Point(self.xbin, self.ybin, x2, y2)
+                    E = Edge(self.xbin, self.ybin, np.min([int(x1), int(x2)]), y1, 'h')
+                    P1.place_wall(self.Graph)
+                    P2.place_wall(self.Graph)
+                    E.place_wall(self.Graph)
+
+                    if E.Wall == False:
+                        return False
+                    else:
+                        if P1.NWall == False and P2.NWall == False and up_and_down == 'u':
+                            return False
+                        elif P1.SWall == False and P2.SWall == False and up_and_down == 'd':
+                            return False
+                        else:
+                            return True
+
+                elif self._is_on_point(p1) == True and self._is_on_point(p2) == False:
+                    P1 = Point(self.xbin, self.ybin, x1, y1)
+                    E = Edge(self.xbin, self.ybin, np.min([int(x1), int(x2)]), y1, 'h')
+                    P1.place_wall(self.Graph)
+                    E.place_wall(self.Graph)
+
+                    if E.Wall == False:
+                        return False
+                    else:
+                        if P1.NWall == False and up_and_down == 'u':
+                            return False
+                        elif P1.SWall == False and up_and_down == 'd':
+                            return False
+                        else:
+                            return True
                 
-                P = Point(self.xbin, self.ybin, p[0], p[1])
-                P.place_wall(self.Graph)
-                if (P.NWall and up_and_down == 'u') or (P.SWall and up_and_down == 'd'):
-                    return True
-                else:
-                    return False                
+                elif self._is_on_point(p1) == False and self._is_on_point(p2) == True:
+                    P2 = Point(self.xbin, self.ybin, x2, y2)
+                    E = Edge(self.xbin, self.ybin, np.min([int(x1), int(x2)]), y1, 'h')
+                    P2.place_wall(self.Graph)
+                    E.place_wall(self.Graph)
+
+                    if E.Wall == False:
+                        return False
+                    else:
+                        if P2.NWall == False and up_and_down == 'u':
+                            return False
+                        elif P2.SWall == False and up_and_down == 'd':
+                            return False
+                        else:
+                            return True    
+
+                else: # Both of p1 and p2 are on edges instead of points.
+                    if id1 == id2:
+                        return False
+                    else:                
+                        P = Point(self.xbin, self.ybin, np.max([int(x1), int(x2)]), y1)
+                        P.place_wall(self.Graph)
+
+                        if P.NWall == False and up_and_down == 'u':
+                            return False
+                        if P.SWall == False and up_and_down == 'd':
+                            return False
+                        else:
+                            return True             
                 
             else:
+                if id1 == id2:
+                    return False
+                
                 if self._is_on_point(p1):
                     P = Point(self.xbin, self.ybin, x1, y1)
                     return True ^ P.is_passable(self.Graph, x2, y2)
@@ -245,19 +348,6 @@ class Graph(GridBasic):
                     P = Point(self.xbin, self.ybin, x2, y2)
                     return True ^ P.is_passable(self.Graph, x1, y1)
                 
-                """
-                if self._is_on_edge(p1):
-                    dirc, x, y = loc_to_edge(x1, y1)
-                    E = Edge(self.xbin, self.ybin, x=x, y=y, dirc=dirc)
-                    E.place_wall(self.Graph)
-                    return E.Wall
-                
-                if self._is_on_edge(p2):
-                    dirc, x, y = loc_to_edge(x2, y2)
-                    E = Edge(self.xbin, self.ybin, x=x, y=y, dirc=dirc)
-                    E.place_wall(self.Graph)
-                    return E.Wall
-                """
                 if id1 not in self.OFGraph.Graph[id2]:
                     P = Point(self.xbin, self.ybin, np.max([int(x2), int(x1)]), np.max([int(y2), int(y1)]))
                     P.place_wall(Graph=self.Graph)
@@ -334,6 +424,7 @@ class Graph(GridBasic):
         """
         G = cp.deepcopy(self.CornerGraph)
         nodes = len(G.nodes)
+
         G.add_node(nodes)
         G.add_node(nodes+1)
         for i in range(nodes):
@@ -344,9 +435,8 @@ class Graph(GridBasic):
             if self.iscross_wall(p2, (self.Ps[i, 0], self.Ps[i, 1])) == False:
                 if self.Points[i].is_passable(self.Graph, p2[0], p2[1]):
                     G.add_edge(i, nodes+1, weight = self._cartesian(p2, (self.Ps[i, 0], self.Ps[i, 1])))
-        nx.draw(G)
-        plt.show()
-        return nx.shortest_path_length(G=G, source=nodes, target=nodes, **kwargs)
+
+        return nx.shortest_path_length(G=G, source=nodes, target=nodes+1, **kwargs)
     
     def shortest_path(self, p1: tuple, p2: tuple, **kwargs):
         G = cp.deepcopy(self.CornerGraph)
@@ -360,4 +450,14 @@ class Graph(GridBasic):
             if self.iscross_wall(p2, (self.Ps[i, 0], self.Ps[i, 1])) == False:
                 if self.Points[i].is_passable(self.Graph, p2[0], p2[1]):
                     G.add_edge(i, nodes+1, weight = self._cartesian(p2, (self.Ps[i, 0], self.Ps[i, 1])))
-        return nx.shortest_path(G=G, source=nodes, target=nodes, **kwargs)
+        return nx.shortest_path(G=G, source=nodes, target=nodes+1, **kwargs)
+
+    def plot_shortest_path(self, p1: tuple, p2:tuple, ax: Axes = None, figsize: tuple = (6, 6), save_loc: str = None, **kwargs):
+        if ax == None:
+            fig = plt.figure(figsize = figsize)
+            ax = plt.axes()
+        
+        path = self.shortest_path(p1, p2)
+
+        for i in range(len(path)):
+

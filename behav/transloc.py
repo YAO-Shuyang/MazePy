@@ -53,204 +53,10 @@ For this reason, only 4 function:
 '''
 
 import numpy as np
+import warnings
 
+from mazepy.behav.grid import GridSize, GridBasic
 
-def pvl_to_idx(prec_value_loc: np.ndarray, xmax: float or int, ymax: float or int, xbin: int = 10, ybin: int = 10):
-    '''
-    Parameter
-    ---------
-    prec_value_loc: numpy.ndarray object, required.
-        with size of (2, T). If the first dimension is not 2, it will raise an error.
-    xmax: float, required
-        the max value of xmax
-    ymax: float, required
-        the max value of ymax
-    xbin: int, optional
-        The total bin number of dimension x
-        default: 10
-    ybin: int, optional
-        The total bin number of dimension y
-        default: 10
-
-    Return
-    ------
-    idx: int or numpy.ndarray 1d vector, containing index/indices of a collection of bin(s)
-
-    Note
-    ----
-    Transform precise value location into bin index.
-    '''
-    assert prec_value_loc.shape[0] == 2
-    try:
-        prec_value_loc.shape[1]
-        loc = np.zeros_like(prec_value_loc)
-        loc[0, :] = prec_value_loc[0, :] / xmax * xbin // 1
-        loc[1, :] = prec_value_loc[1, :] / ymax * ybin // 1
-        loc = loc.astype(dtype = np.int64)
-        return loc_to_idx(loc[0, :], loc[1, :], xbin = xbin)
-    except:
-        return loc_to_idx(int(prec_value_loc[0] / xmax * xbin), int(prec_value_loc[1] / ymax * ybin), xbin=xbin)
-    
-# transform 960cm position data into nx*nx form
-def pvl_to_loc(prec_value_loc: np.ndarray, xmax: float or int, ymax: float or int, xbin: int = 10, ybin: int = 10):
-    '''
-    Parameter
-    ---------
-    prec_value_loc: numpy.ndarray object, required.
-        with size of (2, T). If the first dimension is not 2, it will raise an error.
-    xmax: float, required
-        the max value of xmax
-    ymax: float, required
-        the max value of ymax
-    xbin: int, optional
-        The total bin number of dimension x
-        default: 10
-    ybin: int, optional
-        The total bin number of dimension y
-        default: 10
-
-    Return
-    ------
-    loc: int or numpy.ndarray object with a shape of (2, T), containing bin location(s) of a collection of bin(s)
-
-    Note
-    ----
-    Transform precise value location into bin location.
-    '''
-    assert prec_value_loc.shape[0] == 2
-    try:
-        prec_value_loc.shape[1]
-        loc = np.zeros_like(prec_value_loc)
-        loc[0, :] = prec_value_loc[0, :] / xmax * xbin // 1
-        loc[1, :] = prec_value_loc[1, :] / ymax * ybin // 1
-        loc = loc.astype(dtype = np.int64)
-        return loc
-    except:
-        return np.array([int(prec_value_loc[0] / xmax * xbin), int(prec_value_loc[1] / ymax * ybin)])
-
-def loc_to_idx(cell_x: np.ndarray or int, cell_y: np.ndarray or int, xbin: int = 10):
-    '''
-    Parameter
-    ---------
-    cell_x: int or np.ndarray 1d vector, required
-        x index of bin location
-    cell_y: int or np.ndarray 1d vector, required
-        y index of bin location
-    xbin: int, optional
-        The total bin number of dimension xcoordinate
-        default: 10
-
-    Return
-    ------
-    idx: int or numpy.ndarray 1d vector, the bin index
-
-    Note
-    ----
-    Transform bin location into bin index.
-    '''
-    idx = cell_x + cell_y * xbin + 1
-    return idx
-
-
-def idx_to_loc(idx: np.ndarray or int, xbin: int = 10):
-    '''
-    Parameter
-    ---------
-    idx: int or np.ndarray 1d vector, required
-        the bin index
-    xbin: int, optional
-        The total bin number of dimension x
-        default: 10
-
-    Return
-    ------
-    cell_x, cell_y: int or np.ndarray 1d vector, respectively. 
-        Elements of the bin location -- (cell_x, cell_y)
-
-    Note
-    ----
-    Transform bin index into bin location. 
-    '''
-    cell_x = (idx-1) % xbin
-    cell_y = (idx-1) // xbin
-    return cell_x, cell_y
-
-
-def idx_to_edge(idx: np.ndarray or int, xbin: int):
-    '''
-    Parameter
-    ---------
-    idx: np.ndarray or int object, required
-        The bin ID
-
-    xbin: int, required
-        The total bin number of dimension x
-    
-    Return
-    ------
-    A dict contains information of four edges that suround the bin.
-
-    Note
-    ----
-    Find the four edge of a certain bin.
-    '''
-    x, y = idx_to_loc(idx, xbin = xbin)
-
-    return {'north': np.array([x, y+1], dtype = np.int), 
-            'south': np.array([x, y], dtype = np.int), 
-            'east': np.array([x+1, y], dtype = np.int),
-            'west': np.array([x, y], dtype = np.int)}
-
-def loc_to_edge(x: float, y: float):
-    if x != int(x) and y == int(y):
-        return ('h', int(x), int(y))
-    elif x == int(x) and y != int(y):
-        return ('v', int(x), int(y))
-    else: 
-        return None
-
-
-def pvl_to_edge(prec_value_loc: np.ndarray, xmax: float or int, ymax: float or int, xbin: int = 10, ybin: int = 10) -> tuple:
-    '''
-    Parameter
-    ---------
-    prec_value_loc: np.ndarray, required.
-        with size of (2,).
-    xmax: float, required
-        the max value of xmax
-    ymax: float, required
-        the max value of ymax
-    xbin: int, optional
-        The total bin number of dimension x
-        default: 10
-    ybin: int, optional
-        The total bin number of dimension y
-        default: 10
-
-    Return
-    ------
-    tuple: (direction, x, y) of the edge
-
-    Note
-    ----
-    Find the nearest edge to a precise value point.
-    '''
-    x, y = pvl_to_loc(prec_value_loc=prec_value_loc, xmax=xmax, ymax=ymax, xbin=xbin, ybin=ybin)
-    xp, yp = prec_value_loc[0]/xmax*xbin, prec_value_loc[1]/ymax*ybin
-
-    dy = yp - y - 0.5
-    dx = xp - x - 0.5
-    
-    if np.abs(dx) <= np.abs(dy):
-        if dy >= 0:
-            return ('h', x, y+1)  # North
-        else: # dy < 0
-            return ('h', x, y)  # South
-    else: # np.abs(dx) > np.abs(dy):
-        if dx >= 0:  
-            return ('v', x+1, y) # East
-        else: # dx < 0
-            return ('v', x, y) # West
 
 """
 Check whether a bin locates at the border of a maze.
@@ -278,6 +84,512 @@ def isSouthBorder(BinID, xbin = 12):
         return True
     else:
         return False
+
+
+"""
+Define BinID class, BinCoordinate class, RawCoordinate class, NormCoordinate class
+"""
+
+class BinIDArray(GridBasic):
+    def __init__(self, 
+                 input_val: int or list or tuple or np.ndarray,
+                 xbin: int, 
+                 ybin: int
+                ) -> None:
+        super().__init__(xbin=xbin, ybin=ybin)
+        self._values = None
+
+        try:
+            l = len(input)
+            if type(input_val) is list or type(input_val) is tuple:
+                self.values = np.array(input_val, dtype = np.int64)
+            elif type(input_val) is np.ndarray:
+                self.values = input_val.astype(np.int64)
+            else:
+                warnings.warn(f"Only int, list, tuple and np.ndarray object instead of {type(input_val)} are supported.")
+        except:
+            self.values = input_val
+
+    @property
+    def values(self):
+        return self._value
+    
+    @values.setter
+    def values(self, val):
+        if type(val) is int:
+            if val > self.xbin*self.ybin or val < 1:
+                raise ValueError(f"{val} contains invalid value(s). Valid values belong to list [1, ..., {self.xbin*self.ybin}]")
+            else:
+                self._value = val
+        else:
+            if len(np.where((val > self.xbin*self.ybin)|(val < 1))[0]) != 0:
+                raise ValueError(f"{val} contains invalid value(s). Valid values belong to list [1, ..., {self.xbin*self.ybin}]")
+            else:
+                self._value = val
+
+    def __repr__(self):
+        return 'BinIDArray ({}) at GridBasic ({} {})'.format(self._value, self.xbin, self.ybin)
+        
+    def __eq__(self, others) -> bool:
+        return self._value == others.value
+    
+    def __ne__(self, others) -> bool:
+        return self._value != others.value
+    
+    def __lt__(self, other) -> bool:
+        return self._value < other.value
+    
+    def __gt__(self, other) -> bool:
+        return self._value > other.value
+    
+    def to_binxy(self):
+        return (self.values - 1) % self.xbin, (self.values - 1) // self.xbin
+
+class BinCoordinateArray(GridBasic):
+    def __init__(self, 
+                 x: float or np.ndarray,
+                 y: float or np.ndarray,
+                 xbin: int, 
+                 ybin: int
+                ) -> None:
+        super().__init__(xbin, ybin)
+        self._x, self._y = None, None
+        self.x = x
+        self.y = y
+
+    @property
+    def x(self):
+        return self._x
+    
+    @x.setter
+    def x(self, input_val: int or float or list or tuple or np.ndarray):
+        try:
+            l = len(input_val)
+            if type(input_val) is list or type(input_val) is tuple:
+                x = np.array(input_val, dtype = np.int64)
+            elif type(input_val) is np.ndarray:
+                x = input_val.astype(np.int64)
+            else:
+                warnings.warn(f"Only int, list, tuple and np.ndarray object instead of {type(input_val)} are supported.")
+                return
+
+            if len(np.where((x > self.xbin-1)|(x < 0))[0]) != 0:
+                warnings.warn(f"{x} contains invalid value(s). Valid values belong to list [0, ..., {self.xbin-1}]")
+                return
+            else:
+                self._x = x
+        except:
+            x = input_val
+            if x > self.xbin-1 or x < 0:
+                warnings.warn(f"{x} contains invalid value(s). Valid values belong to list [0, ..., {self.xbin-1}]")
+                return
+            else:
+                self._x = x
+                
+    @property
+    def y(self):
+        return self._y
+    
+    @y.setter
+    def y(self, input_val):
+        try:
+            l = len(input_val)
+            if type(input_val) is list or type(input_val) is tuple:
+                y = np.array(input_val, dtype = np.int64)
+            elif type(input_val) is np.ndarray:
+                y = input_val.astype(np.int64)
+            else:
+                warnings.warn(f"Only int, list, tuple and np.ndarray object instead of {type(input_val)} are supported.")
+                return
+
+            if len(np.where((y > self.ybin-1)|(y < 0))[0]) != 0:
+                warnings.warn(f"{y} contains invalid value(s). Valid values belong to list [0, ..., {self.ybin-1}]")
+                return
+            else:
+                self._y = y
+        except:
+            y = input_val
+            if y > self.ybin-1 or y < 0:
+                warnings.warn(f"{y} contains invalid value(s). Valid values belong to list [0, ..., {self.ybin-1}]")
+                return
+            else:
+                self._y = y
+        
+    def to_binid(self):
+        return self.x + self.y*self.ybin + 1
+        
+
+class RawCoordinateArray(GridSize):
+    def __init__(self, 
+                 x: float or np.ndarray,
+                 y: float or np.ndarray,
+                 xbin: int, 
+                 ybin: int, 
+                 xmax: float, 
+                 ymax: float, 
+                 xmin: int or float = 0, 
+                 ymin: int or float = 0
+                ) -> None:
+        super().__init__(xbin, ybin, xmax, ymax, xmin, ymin)
+        self._x, self._y = None, None
+        self.x = x
+        self.y = y
+
+    @property
+    def x(self):
+        return self._x
+    
+    @x.setter
+    def x(self, input_val: int or float or tuple or np.ndarray):
+        try:
+            l = len(input_val)
+            if type(input_val) is list or type(input_val) is tuple:
+                x = np.array(input_val, dtype = np.float64)
+            elif type(input_val) is np.ndarray:
+                x = input_val.astype(np.float64)
+            else:
+                warnings.warn(f"Only int, float, list, tuple and np.ndarray object instead of {type(input_val)} are supported.")
+                return
+
+            if len(np.where((x >= self.xmax)|(x < 0))[0]) != 0:
+                warnings.warn(f"{x} contains invalid value(s). Valid values belong to list [0, ..., {self.xmax})")
+                return
+            else:
+                self._x = x
+
+        except:
+            x = input_val
+            if x >= self.xmax or x < 0:
+                warnings.warn(f"{x} contains invalid value(s). Valid values belong to list [0, ..., {self.xmax})")
+                return
+            else:
+                self._x = x          
+    
+    @property
+    def y(self):
+        return self._y
+    
+    @y.setter
+    def y(self, input_val):
+        try:
+            l = len(input_val)
+            if type(input_val) is list or type(input_val) is tuple:
+                y = np.array(input_val, dtype = np.float64)
+            elif type(input_val) is np.ndarray:
+                y = input_val.astype(np.float64)
+            else:
+                warnings.warn(f"Only int, float, list, tuple and np.ndarray object instead of {type(input_val)} are supported.")
+                return
+
+            if len(np.where((y >= self.ymax)|(y < 0))[0]) != 0:
+                warnings.warn(f"{y} contains invalid value(s). Valid values belong to list [0, ..., {self.ymax})")
+                return
+            else:
+                self._y = y
+
+        except:
+            y = input_val
+            if y >= self.ymax or y < 0:
+                warnings.warn(f"{y} contains invalid value(s). Valid values belong to list [0, ..., {self.ymax})")
+                return
+            else:
+                self._y = y
+    
+    @property
+    def Norm(self):
+        return NormCoordinateArray((self.x - self.xmin) / (self.xmax + 0.0001 - self.xmin) * self.xbin, 
+                                   (self.y - self.ymin) / (self.ymax + 0.0001 - self.ymin) * self.ybin, 
+                                   xbin = self.xbin, ybin = self.ybin)
+    
+    def to_binid(self):
+        return self.Norm.to_binid()
+    
+    def to_binxy(self):
+        return self.Norm.to_binxy()
+    
+
+class NormCoordinateArray(GridBasic):
+    def __init__(self, 
+                 x: float or np.ndarray,
+                 y: float or np.ndarray,
+                 xbin: int, 
+                 ybin: int
+                ) -> None:
+        super().__init__(xbin, ybin)
+        self._x, self._y = None, None
+        self.x = x
+        self.y = y
+
+    @property
+    def x(self):
+        return self._x
+    
+    @x.setter
+    def x(self, input_val: int or float or tuple or np.ndarray):
+        try:
+            l = len(input)
+            if type(input_val) is list or type(input_val) is tuple:
+                x = np.array(input_val, dtype = np.float64)
+            elif type(input_val) is np.ndarray:
+                x = input_val.astype(np.float64)
+            else:
+                warnings.warn(f"Only int, list, tuple and np.ndarray object instead of {type(input_val)} are supported.")
+                return
+
+            if len(np.where((x >= self.xbin)|(x < 0))[0]) != 0:
+                warnings.warn(f"{x} contains invalid value(s). Valid values belong to list [0, ..., {self.xbin})")
+                return
+            else:
+                self._x = x
+
+        except:
+            x = input_val
+            if x >= self.xbin or x < 0:
+                warnings.warn(f"{x} contains invalid value(s). Valid values belong to list [0, ..., {self.xbin})")
+                return
+            else:
+                self._x = x
+                return
+
+
+    @property
+    def y(self):
+        return self._y
+    
+    @y.setter
+    def y(self, input_val):
+        try:
+            l = len(input)
+            if type(input_val) is list or type(input_val) is tuple:
+                y = np.array(input_val, dtype = np.float64)
+            elif type(input_val) is np.ndarray:
+                y = input_val.astype(np.float64)
+            else:
+                warnings.warn(f"Only int, list, tuple and np.ndarray object instead of {type(input_val)} are supported.")
+                return
+
+            if len(np.where((y >= self.ybin)|(y < 0))[0]) != 0:
+                warnings.warn(f"{y} contains invalid value(s). Valid values belong to list [0, ..., {self.ybin})")
+                return
+            else:
+                self._y = y
+
+        except:
+            y = input_val
+            if y >= self.ybin or y < 0:
+                warnings.warn(f"{y} contains invalid value(s). Valid values belong to list [0, ..., {self.ybin})")
+                return
+            else:
+                self._y = y
+                return
+        
+    def to_binid(self) -> np.ndarray:
+        if type(self.x) is int or type(self.x) is float:
+            return int(self.x) + int(self.y)*self.xbin + 1
+        else:
+            return ((self.x // 1) + (self.y // 1)*self.xbin + 1).astype(np.int64)
+    
+    def to_binxy(self) -> np.ndarray:
+        if type(self.x) is int or type(self.x) is float:
+            return int(self.x), int(self.y)
+        else:
+            return (self.x // 1).astype(np.int64), (self.y // 1).astype(np.int64)
+        
+
+
+
+
+# =============================================================================================== 
+# =============================================================================================== 
+# =============================================================================================== 
+# =============================================================================================== 
+
+
+
+
+def pvl_to_idx(x: int or float or tuple or np.ndarray, 
+               y: int or float or tuple or np.ndarray, 
+               xbin: int, 
+               ybin: int,
+               xmax: float or int, 
+               ymax: float or int, 
+               xmin: float or int = 0,
+               ymin: float or int = 0
+              ) -> np.ndarray:
+    """
+    Parameter
+    ---------
+    x, y: int or float or tuple or numpy.ndarray object, required.
+    xbin: int, optional
+        The total bin number of dimension x
+        default: 10
+    ybin: int, optional
+        The total bin number of dimension y
+        default: 10
+    xmax: float, required
+        the max value of xmax
+    ymax: float, required
+        the max value of ymax
+    xmin: float, optional, default: 0
+    ymin: float, optional, default: 0
+
+    Return
+    ------
+    idx: int or numpy.ndarray 1d vector, containing index/indices of a collection of bin(s)
+
+    Note
+    ----
+    Transform precise value location into bin index.
+    """
+    Arr = RawCoordinateArray(x, y, xbin=xbin, ybin=ybin, xmax=xmax, ymax=ymax, xmin=xmin, ymin=ymin)
+    return Arr.to_binid()
+
+
+# transform 960cm position data into nx*nx form
+def pvl_to_loc(x: int or float or tuple or np.ndarray, 
+               y: int or float or tuple or np.ndarray, 
+               xbin: int,
+               ybin: int,
+               xmax: float or int, 
+               ymax: float or int, 
+               xmin: float or int = 0,
+               ymin: float or int = 0
+              ) -> np.ndarray:
+    """
+    Parameter
+    ---------
+    x, y: int or float or tuple or numpy.ndarray object, required.
+    xbin: int, optional
+        The total bin number of dimension x
+        default: 10
+    ybin: int, optional
+        The total bin number of dimension y
+        default: 10
+    xmax: float, required
+        the max value of xmax
+    ymax: float, required
+        the max value of ymax
+    xmin: float, optional, default: 0
+    ymin: float, optional, default: 0
+
+    Return
+    ------
+    coordinate: int or numpy.ndarray object with a shape of (2, T), containing bin location(s) of a collection of bin(s)
+
+    Note
+    ----
+    Transform precise value location into bin location.
+    """
+    Arr = RawCoordinateArray(x, y, xbin=xbin, ybin=ybin, xmax=xmax, ymax=ymax, xmin=xmin, ymin=ymin)
+    return Arr.to_binxy()
+
+def loc_to_idx(x: np.ndarray or int, y: np.ndarray or int, xbin: int, ybin: int) -> np.ndarray:
+    '''
+    Parameter
+    ---------
+    x, y: The bin coordinate.
+    xbin, ybin: int, required
+        The total bin number of dimension xcoordinate
+
+    Return
+    ------
+    idx: int or numpy.ndarray 1d vector, the bin index
+
+    Note
+    ----
+    Transform bin location into bin index.
+    '''
+    Arr = BinCoordinateArray(x, y, xbin=xbin, ybin=ybin)
+    return Arr.to_binid()
+
+
+def idx_to_loc(idx: int or np.ndarray, xbin: int, ybin: int) -> np.ndarray:
+    '''
+    Parameter
+    ---------
+    idx: int or np.ndarray 1d vector, required
+        the bin index
+    xbin, ybin: int, optional
+        The total bin number of dimension x
+        default: 10
+
+    Return
+    ------
+    x, y: int or np.ndarray 1d vector, respectively. 
+        that is the bin coordinate (x, y)
+
+    Note
+    ----
+    Transform bin index into bin location. 
+    '''
+    Arr = BinIDArray(idx, xbin=xbin, ybin=ybin)
+    return Arr.to_binxy()
+
+
+def loc_to_edge(x: float, y: float, xbin: int, ybin: int) -> tuple or None:
+    if (type(x) is float or type(x) is int) and (type(y) is float or type(y) is int):
+        if x == int(x) and y != int(y):
+            return ('v', int(x), int(y))
+        elif x != int(x) and y == int(y):
+            return ('h', int(x), int(y))
+        else:
+            return
+    else:
+        return
+
+
+def nearest_edge(x: int or float or tuple or np.ndarray, 
+               y: int or float or tuple or np.ndarray, 
+               xbin: int,
+               ybin: int,
+               xmax: float or int, 
+               ymax: float or int, 
+               xmin: float or int = 0,
+               ymin: float or int = 0
+              ) -> tuple:
+    '''
+    Parameter
+    ---------
+    x, y: int or float or tuple or numpy.ndarray object, required.
+    xbin: int, optional
+        The total bin number of dimension x
+        default: 10
+    ybin: int, optional
+        The total bin number of dimension y
+        default: 10
+    xmax: float, required
+        the max value of xmax
+    ymax: float, required
+        the max value of ymax
+    xmin: float, optional, default: 0
+    ymin: float, optional, default: 0
+
+    Return
+    ------
+    tuple: (direction, x, y) of the edge
+
+    Note
+    ----
+    Find the nearest edge to a precise value point.
+    '''
+    Arr = RawCoordinateArray(x, y, xbin=xbin, ybin=ybin, xmax=xmax, ymax=ymax, xmin=xmin, ymin=ymin)
+    xp, yp = Arr.Norm.x, Arr.Norm.y
+    x, y = int(xp), int(yp)
+
+    dy = yp - y - 0.5
+    dx = xp - x - 0.5
+    
+    if np.abs(dx) <= np.abs(dy):
+        if dy >= 0:
+            return ('h', x, y+1)  # North
+        else: # dy < 0
+            return ('h', x, y)  # South
+    else: # np.abs(dx) > np.abs(dy):
+        if dx >= 0:  
+            return ('v', x+1, y) # East
+        else: # dx < 0
+            return ('v', x, y) # West
+
 
 if __name__ == '__main__':
     # for test

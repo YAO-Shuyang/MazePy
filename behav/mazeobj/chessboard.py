@@ -10,8 +10,8 @@ import pyglet
 import numpy as np
 
 from . import HEIGHT, WIDTH
-from mazepy.behav.gridbin import GridBasic
-from mazepy.behav.transloc import idx_to_loc, loc_to_idx
+from mazepy.behav.grid import GridBasic
+from mazepy.behav.transloc import idx_to_loc
 from .windowobj import WindowsBin, WindowsWall, WindowsCalculator
 
 
@@ -101,6 +101,6 @@ class ChessBoard(GridBasic):
     def create_chessboard_bin(self) -> None:
         self.Bins = []
         for i in range(self.xbin*self.ybin):
-            x, y = idx_to_loc(i+1, self.xbin)
+            x, y = idx_to_loc(i+1, self.xbin, self.ybin)
             node = WindowsBin(self.xbin, self.ybin, x=x, y=y, calculator=self.wcalc)
             self.Bins.append(node)

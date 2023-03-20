@@ -18,7 +18,7 @@ import time
 import numpy as np
 import copy as cp
 
-from mazepy.behav.gridbin import GridBasic
+from mazepy.behav.grid import GridBasic
 from mazepy.behav.transloc import loc_to_idx
 from mazepy.behav.element import Bin, Point, Edge
 
@@ -146,8 +146,8 @@ class WindowsWall(Edge):
     def _two_bins_id_on_gui(self):
         """(x,y) coordinate to bin id.
         """
-        self._id1 = loc_to_idx(cell_x=self._bin1[0], cell_y=self._bin1[1], xbin=self.xbin) if self._bin1 is not None else None
-        self._id2 = loc_to_idx(cell_x=self._bin2[0], cell_y=self._bin2[1], xbin=self.xbin) if self._bin2 is not None else None
+        self._id1 = loc_to_idx(self._bin1[0], self._bin1[1], self.xbin, self.ybin) if self._bin1 is not None else None
+        self._id2 = loc_to_idx(self._bin2[0], self._bin2[1], self.xbin, self.ybin) if self._bin2 is not None else None
 
     @property
     def id1(self):
