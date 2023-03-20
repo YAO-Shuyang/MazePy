@@ -18,8 +18,8 @@ Their basic properties are listed here:
 
 import numpy as np
 
-from mazepy.behav.gridbin import GridBasic
-from mazepy.behav.transloc import loc_to_idx, isNorthBorder, isSouthBorder, isEastBorder, isWestBorder
+from mazepy.behav.grid import GridBasic
+from mazepy.behav.transloc import loc_to_idx
 
 
 class Elements(GridBasic):
@@ -45,8 +45,15 @@ class Elements(GridBasic):
         if y < 0 or y > ybin:
             raise ValueError(f"""{y} is overflow! The value to initiate Element
                              object should at least belong to [0 {ybin+1})""")
-        self._x = x
-        self._y = y
+        
+        if x != int(x):
+            raise ValueError(f"x should be an integer, but receive a float({x}) instead.")
+        
+        if y != int(y):
+            raise ValueError(f"y should be an integer, but receive a float({y}) instead.")
+
+        self._x = int(x)
+        self._y = int(y)
     
     @property
     def cordinate(self):
@@ -130,7 +137,7 @@ class Bin(Elements):
 
     @property
     def id(self):
-        return int(loc_to_idx(cell_x = self._x, cell_y = self._y, xbin = self.xbin))
+        return loc_to_idx(self._x, self._y, xbin=self.xbin, ybin=self.ybin)
 
     @property
     def ul(self):
@@ -251,8 +258,8 @@ class Edge(Elements):
             self._Wall = True
             return True
         
-        id1 = loc_to_idx(self.bin1[0], self.bin1[1], xbin=self.xbin)
-        id2 = loc_to_idx(self.bin2[0], self.bin2[1], xbin=self.xbin)
+        id1 = loc_to_idx(self.bin1[0], self.bin1[1], xbin=self.xbin, ybin=self.ybin)
+        id2 = loc_to_idx(self.bin2[0], self.bin2[1], xbin=self.xbin, ybin=self.ybin)
 
         if id2 in Graph[id1]:
             self._Wall = False

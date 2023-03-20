@@ -3,7 +3,7 @@ from matplotlib.axes._axes import Axes
 import numpy as np
 import warnings
 
-from mazepy.behav.gridbin import GridBasic
+from mazepy.behav.grid import GridBasic
 from mazepy.behav.transloc import loc_to_idx, idx_to_loc
 from mazepy.behav.graph import WallMatrix
 
