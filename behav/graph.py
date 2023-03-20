@@ -452,12 +452,20 @@ class Graph(GridBasic):
                     G.add_edge(i, nodes+1, weight = self._cartesian(p2, (self.Ps[i, 0], self.Ps[i, 1])))
         return nx.shortest_path(G=G, source=nodes, target=nodes+1, **kwargs)
 
-    def plot_shortest_path(self, p1: tuple, p2:tuple, ax: Axes = None, figsize: tuple = (6, 6), save_loc: str = None, **kwargs):
-        if ax == None:
+    def plot_shortest_path(self, p1: tuple, p2:tuple, ax: Axes = None, dx: float = 0.5, dy: float = 0.5,
+                           figsize: tuple = (6, 6), color = 'red', linewidth = 2, **kwargs) -> Axes:
+        if ax is None:
             fig = plt.figure(figsize = figsize)
             ax = plt.axes()
         
         path = self.shortest_path(p1, p2)
 
-        for i in range(len(path)):
+        ax.plot([p1[0] - dx, self.Ps[path[1], 0] - dx], [p1[1] - dy, self.Ps[path[1], 1] - dy], color = color, linewidth = 2, **kwargs)
+        for i in range(1, len(path)-2):
+            ax.plot([self.Ps[path[i], 0] - dx, self.Ps[path[i+1], 0] - dx], [self.Ps[path[i], 1] - dy, self.Ps[path[i+1], 1] - dy], 
+                    color = color, linewidth = linewidth, **kwargs)
+        ax.plot([self.Ps[path[-2], 0] - dx, p2[0] - dx], [self.Ps[path[-2], 1] - dy, p2[1] - dy], color = color, linewidth = linewidth, **kwargs)
+        
+        return ax
+
 

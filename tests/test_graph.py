@@ -13,11 +13,6 @@ if __name__ == "__main__":
     t1 = time.time()
     G = Graph(xbin=12, ybin=12, Graph=sample_graph)
 
-    distance, p1_list, p2_list = G.shortest_distance(p1, p2)
-    print(distance)
-    
-    print(time.time()-t1)
-
     Gg = G.ConnectMat
     Ps = G.Ps
 
@@ -33,15 +28,12 @@ if __name__ == "__main__":
                 #ax.text((Ps[i, 0] + Ps[j, 0])/2 - 0.5, (Ps[i, 1] + Ps[j, 1])/2 - 0.5, str(round(Gg[i, j], 1)))
 
 
-    for a in p1_list:
-        ax.plot([p1[0]-0.5, a[0]-0.5], [p1[1]-0.5, a[1]-0.5], color = 'black')
-
-    for a in p2_list:
-        ax.plot([p2[0]-0.5, a[0]-0.5], [p2[1]-0.5, a[1]-0.5], color = 'black')
-
     occu_map = np.zeros(144)*np.nan
     occu_map[0] = 0
-    Maze = MazeProfile(xbin=12, ybin=12, Graph=sample_graph, occu_map=occu_map, ax = ax, color = 'gray', linewidth = 2)
+    Maze = MazeProfile(xbin=12, ybin=12, Graph=sample_graph, occu_map=occu_map)
+    ax = Maze.DrawMazeProfile(ax=ax, linewidth=3, color = 'black')
+    G.plot_shortest_path(p1, p2, ax=ax)
+    plt.show()
     """
 
     import networkx as nx

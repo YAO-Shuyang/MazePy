@@ -18,9 +18,6 @@ class MazeProfile(GridBasic):
                  ybin: int,
                  Graph: dict = {},
                  occu_map: np.ndarray = None,
-                 save_loc: str = None,
-                 imshow_kwgs: dict = {},
-                 **kwargs
                 ) -> None:
         """
         Parameter
@@ -50,14 +47,6 @@ class MazeProfile(GridBasic):
                              ({self.xbin*self.ybin},).""")
         self.Graph = Graph
         self.occu_map = occu_map
-        self._loc = save_loc
-        ax = self.DrawMazeProfile(imshow_kwgs=imshow_kwgs, **kwargs)
-        if save_loc is None:
-            plt.show()
-        else:
-            plt.savefig(save_loc+'.png', dpi = 600)
-            plt.savefig(save_loc+'.svg', dpi = 600)
-            plt.close()
 
     def _WallMatrix(self):
         self._vertical_walls, self._horizont_walls = WallMatrix(self.Graph, self.xbin, self.ybin)
@@ -73,6 +62,7 @@ class MazeProfile(GridBasic):
 
     def DrawMazeProfile(self, 
                         ax: Axes = None,
+                        figsize: tuple = (6,6),
                         rate_map: np.ndarray = None,
                         imshow_kwgs: dict = {},
                         **kwargs,
@@ -98,7 +88,7 @@ class MazeProfile(GridBasic):
         v, h = self._vertical_walls, self._horizont_walls
 
         if ax is None:
-            fig = plt.figure(figsize = (6,6))
+            fig = plt.figure(figsize = figsize)
             ax = plt.axes()
             ax.set_aspect('equal')
 
