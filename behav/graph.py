@@ -182,9 +182,14 @@ class Graph(GridBasic):
                         self._l = True
                     if self.iscross_wall(p1=(x_set[i], y_set[i]), p2=(x_set[i+1], y_set[i+1]), left_or_right = 'r'):
                         self._r = True
-
+                    
                     if self._l and self._r:
                         return True
+
+                    E = Edge(xbin=self.xbin, ybin=self.ybin, x=x1, y=np.min([int(y_set[i+1]), int(y_set[i])]), dirc='v')
+                    E.place_wall(self.Graph)
+                    if E.Wall == False:
+                        self._r = self._l = False
 
                 elif y1 == y2 and y1 == int(y1):
                     if self.iscross_wall(p1=(x_set[i], y_set[i]), p2=(x_set[i+1], y_set[i+1]), up_and_down = 'u'):
@@ -194,6 +199,11 @@ class Graph(GridBasic):
 
                     if self._u and self._d:
                         return True
+
+                    E = Edge(xbin=self.xbin, ybin=self.ybin, x=np.min([int(x_set[i+1]), int(x_set[i])]), y=y1, dirc='h')
+                    E.place_wall(self.Graph)
+                    if E.Wall == False:
+                        self._u = self._d = False
                     
                 else:
                     if self.iscross_wall(p1=(x_set[i], y_set[i]), p2=(x_set[i+1], y_set[i+1]), step_length=step_length):
@@ -400,11 +410,12 @@ class Graph(GridBasic):
         for i in range(Ps.shape[0]-1):
             for j in range(i+1, Ps.shape[0]):
                 if self.iscross_wall(p1 = (self.Ps[i, 0], self.Ps[i, 1]), p2 = (self.Ps[j, 0], self.Ps[j, 1])) == False:
-                    if self.Points[i].is_passable(self.Graph, Ps[j, 0], Ps[j, 1]) and self.Points[j].is_passable(self.Graph, Ps[i, 0], Ps[i, 1]):
-                        G[i,j] = G[j,i] = self._cartesian((self.Ps[i, 0], self.Ps[i, 1]), (self.Ps[j, 0], self.Ps[j, 1]))
+                        if self.Points[i].is_passable(self.Graph, Ps[j, 0], Ps[j, 1]) and self.Points[j].is_passable(self.Graph, Ps[i, 0], Ps[i, 1]):
+                            G[i,j] = G[j,i] = self._cartesian((self.Ps[i, 0], self.Ps[i, 1]), (self.Ps[j, 0], self.Ps[j, 1]))
 
         self.ConnectMat = G
         self.CornerGraph = nx.Graph(G)
+        print(self.CornerGraph)
     
     def _find_all_corner_points(self):
         self.Ps = []
@@ -422,6 +433,9 @@ class Graph(GridBasic):
         """
         Using dijkstra algorithm to find the shortest path length between two point.
         """
+        if self.iscross_wall(p1, p2) == False:
+            return self._cartesian(p1, p2)
+
         G = cp.deepcopy(self.CornerGraph)
         nodes = len(G.nodes)
 
@@ -436,12 +450,17 @@ class Graph(GridBasic):
                 if self.Points[i].is_passable(self.Graph, p2[0], p2[1]):
                     G.add_edge(i, nodes+1, weight = self._cartesian(p2, (self.Ps[i, 0], self.Ps[i, 1])))
 
-        return nx.shortest_path_length(G=G, source=nodes, target=nodes+1, **kwargs)
+        return nx.dijkstra_path_length(G=G, source=nodes, target=nodes+1, **kwargs)
     
     def shortest_path(self, p1: tuple, p2: tuple, **kwargs):
         G = cp.deepcopy(self.CornerGraph)
         nodes = len(G.nodes)
-        G.add_nodes_from([nodes, nodes+1])
+
+        if self.iscross_wall(p1, p2) == False:
+            return [nodes, nodes+1]
+
+        G.add_node(nodes)
+        G.add_node(nodes+1)
         for i in range(nodes):
             if self.iscross_wall(p1, (self.Ps[i, 0], self.Ps[i, 1])) == False:
                 if self.Points[i].is_passable(self.Graph, p1[0], p1[1]):
@@ -450,7 +469,8 @@ class Graph(GridBasic):
             if self.iscross_wall(p2, (self.Ps[i, 0], self.Ps[i, 1])) == False:
                 if self.Points[i].is_passable(self.Graph, p2[0], p2[1]):
                     G.add_edge(i, nodes+1, weight = self._cartesian(p2, (self.Ps[i, 0], self.Ps[i, 1])))
-        return nx.shortest_path(G=G, source=nodes, target=nodes+1, **kwargs)
+
+        return nx.dijkstra_path(G=G, source=nodes, target=nodes+1, **kwargs)
 
     def plot_shortest_path(self, p1: tuple, p2:tuple, ax: Axes = None, dx: float = 0.5, dy: float = 0.5,
                            figsize: tuple = (6, 6), color = 'red', linewidth = 2, **kwargs) -> Axes:
@@ -460,11 +480,23 @@ class Graph(GridBasic):
         
         path = self.shortest_path(p1, p2)
 
-        ax.plot([p1[0] - dx, self.Ps[path[1], 0] - dx], [p1[1] - dy, self.Ps[path[1], 1] - dy], color = color, linewidth = 2, **kwargs)
-        for i in range(1, len(path)-2):
-            ax.plot([self.Ps[path[i], 0] - dx, self.Ps[path[i+1], 0] - dx], [self.Ps[path[i], 1] - dy, self.Ps[path[i+1], 1] - dy], 
-                    color = color, linewidth = linewidth, **kwargs)
-        ax.plot([self.Ps[path[-2], 0] - dx, p2[0] - dx], [self.Ps[path[-2], 1] - dy, p2[1] - dy], color = color, linewidth = linewidth, **kwargs)
+        if len(path) > 2:
+
+            ax.plot([p1[0] - dx, self.Ps[path[1], 0] - dx], [p1[1] - dy, self.Ps[path[1], 1] - dy], color = color, linewidth = 2, **kwargs)
+            for i in range(1, len(path)-2):
+                #ax.text(self.Ps[path[i], 0] - dx, self.Ps[path[i], 1] - dx, str(path[i]))
+                ax.plot([self.Ps[path[i], 0] - dx, self.Ps[path[i+1], 0] - dx], [self.Ps[path[i], 1] - dy, self.Ps[path[i+1], 1] - dy], 
+                         color = color, linewidth = linewidth, **kwargs)
+            ax.plot([self.Ps[path[-2], 0] - dx, p2[0] - dx], [self.Ps[path[-2], 1] - dy, p2[1] - dy], color = color, linewidth = linewidth, **kwargs)
+        else: # len(path) <= 2:
+            #ax.text(self.Ps[path[-2], 0] - dx, self.Ps[path[-2], 1] - dx, str(path[-2]))
+            ax.plot([p1[0] - dx, p2[0] - dx], [p1[1] - dy, p2[1] - dy], color = color, linewidth = linewidth, **kwargs)
+
+        for i in range(self.Ps.shape[0]):
+            if i in path:
+                ax.text(self.Ps[i, 0] - dx, self.Ps[i, 1] - dy, str(i), color = 'black')
+            else:
+                ax.text(self.Ps[i, 0] - dx, self.Ps[i, 1] - dy, str(i), color = 'gray')
         
         return ax
 

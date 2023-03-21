@@ -380,11 +380,8 @@ class Point(Elements):
         """
         if self.is_corner_point(Graph=Graph) == False:
             return False
-
-        if x > self.xbin or x < 0:
-            raise ValueError(f"{x} is invalid. It should in the range of [0, {self.xbin}).")
-        if y > self.ybin or y < 0:
-            raise ValueError(f"{y} is invalid. It should in the range of [0, {self.ybin}).")
+        
+        assert x >= 0 and x < self.xbin and y >= 0 and y < self.ybin
         
         # emit point is overlapped with corner point
         if x == self.x and y == self.y:
@@ -393,29 +390,83 @@ class Point(Elements):
         # Walls are placed at a 90° angle (|__ or    |), and every emit point at the second quadrant or the
         # forth quadrant can pass the corner point, whereas every emit point at the first and third quadrant
         # can not pass the corner point.
-        if (self.NWall and self.EWall) or (self.SWall and self.WWall):
+        if self.NWall and self.EWall:
             if (self.x - x)*(self.y - y) < 0:
                 return True
             elif (self.x - x)*(self.y - y) > 0:
                 return False
-            elif self.y == y or self.x == x:
+            elif self.y == y:
+                if self.x > x:
+                    return False
+                else: #self.x < x
+                    return True
+            else: # self.x == x:
+                if self.y > y:
+                    return False
+                else:
+                    return True
+                
+        if self.SWall and self.WWall:
+            if (self.x - x)*(self.y - y) < 0:
                 return True
-        
+            elif (self.x - x)*(self.y - y) > 0:
+                return False
+            elif self.y == y:
+                if self.x > x:
+                    return True
+                else: #self.x < x
+                    return False
+            else: # self.x == x:
+                if self.y > y:
+                    return True
+                else:
+                    return False            
+            
         #                                          __   
         # Walls are placed at a 90° angle (__| or |   ), and every emit point at the first and third quadrant
         # can pass the corner point, whereas every emit point at the second and forth quadrant cannot pass the 
         # corner point.
-        if (self.NWall and self.WWall) or (self.SWall and self.EWall):
+        if self.NWall and self.WWall:
             if (self.x - x)*(self.y - y) > 0:
                 return True
             elif (self.x - x)*(self.y - y) < 0:
                 return False
-            elif self.y == y or self.x == x:
+            elif self.y == y:
+                if self.x > x:
+                    return True
+                else: #self.x < x
+                    return False
+            else: # self.x == x:
+                if self.y > y:
+                    return False
+                else: return True # self.y < y
+
+        if self.SWall and self.EWall:
+            if (self.x - x)*(self.y - y) > 0:
                 return True
-        
+            elif (self.x - x)*(self.y - y) < 0:
+                return False
+            elif self.y == y:
+                if self.x > x:
+                    return False
+                else: #self.x < x
+                    return True
+            else: # self.x == x:
+                if self.y > y:
+                    return True
+                else: return False # self.y < y
+
         # The rest conditions are those points that have got only 1 connected wall or even haven't got a connected
         # wall. Beams from emit point can easily pass the corner point.
-        return True
+        B1 = self.x == x and self.y < y and self.SWall == True
+        B2 = self.x == x and self.y > y and self.NWall == True
+        B3 = self.y == y and self.x < x and self.WWall == True
+        B4 = self.y == y and self.x > x and self.EWall == True
+
+        if B1 or B2 or B3 or B4:
+            return False
+        else:
+            return True
     
     def is_corner_point(self, Graph: dict) -> bool:
         """
