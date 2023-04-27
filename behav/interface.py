@@ -12,18 +12,8 @@ The working flow should be like this:
          warped_image, warped_positions, M  = pd.run()
 '''
 
-try:
-    import numpy as np
-except:
-    print("There's no package named 'numpy'.")
-    assert False
-
-
-try:
-    import cv2
-except:
-    print("There's no package named 'cv2'.")
-    assert False
+import numpy as np
+import cv2
 
 def get_meanframe(video_name:str):
     '''
