@@ -1,33 +1,32 @@
 # Overview
 <font size=3>
-The thriving of system neuroscience have enhanced the status of behavioral experiments in daily research. As the direct readout of certain brain's activities, behavior of animals have been put in the center of the stage for 100+ years. While generations of scientists have established numerous behavioral paradigms to address the functions of diverse brain circuits, but scarce packages were developed to help people process these behavioral data, which make system neuroscience research hard for people who is not good at programming to join in.
-
+The thriving field of system neuroscience has enhanced the status of behavioral experiments in daily research. As the direct readout of certain brain's activities, the behavior of animals has been put at the center of the stage for 100+ years. While generations of scientists have established numerous behavioral paradigms to address the functions of diverse brain circuits, but scarce packages were developed to help people process these behavioral data, which make system neuroscience research hard for people who is not good at programming to join in.
+<br/>
 <br/>
 However, There're still several excellent Python sofewares developed to address this issue, e.g, DeepLabCut<https://github.com/DeepLabCut/DeepLabCut>
-
 <br/>
-After tens of years of rapid development, several tools have been developed to record neural activities, of which could be divided, in general, into 3 groups:
+<br/>
+After tens of years of rapid development, several tools have been developed to record neural activities, which could be divided, in general, into three groups:
 
 - Calcium indicator (e.g., GCaMP6s etc.)
 - Electrodes (e.g. tetrode array, Neuropixel, etc.)
 - Voltage indicator
 
-Here we provide a tool to help you process the behavioral data and neural data.
+Here we provide a tool to help you process the behavioral and neural data.
 
 <br/>
 
 # Plans
-The first step focuses on the development a subpackage MazePy for the analysis of data in the field of spatial navigation. It would include analysis of animal's trajectory in environment with different shapes. Mazepy would help people defines different kind of environment easily.
+The first step focuses on the development of a subpackage of MazePy for the analysis of data in the field of spatial navigation. It would include an analysis of the animal's trajectory in an environment with different shapes. Mazepy would help people define different kinds of environments easily.
 
 <br/>
 Besides, we would also provide classes and functions to analyze calcium imaging data. And of course, a package to analyze electrode-recorded data has also been taken into consideration.
 
 <br/>
-In future, we'd also consider such a possibility: using the AI tools to help
-us analyze data, plot high-qualified scientific figures and write scripts automatedly, which I believe would benefit researchers a lot.
+In future, we'd also consider such a possibility: using the AI tools to help us analyze data, plot high-qualified scientific figures, and write scripts automatedly, which I believe would benefit researchers a lot.
 
 <br/>
-We have to emphasize that the development of the package is still on a very preliminary status, and it may take years to finish.
+We have to emphasize that the development of the package is still in a very preliminary state and may take years to finish.
 
 <br/>
 
