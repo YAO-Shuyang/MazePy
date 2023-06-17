@@ -11,7 +11,7 @@ In the research field of the spatial navigation system of the brain, one common 
 However, packages trying and setting up to unify the analysis of different shapes of the environment are scanty. So, one of our aims is to develop a package that could well fit the analysis of most of the environments, so that researchers would no longer need to write new code to process data collected in an entirely different environment.
 <br/>
 <br/>
-MazePy provides a ``designer GUI`` to assist you in designing a new environment, and functions to help you analyze the data in the environment:
+MazePy provides a ``designer GUI`` to assist you in designing a new environment, and functions to help you analyze the data collected in the environment:
 <br/>
 <br/>
 ![GUI](https://github.com/YAO-Shuyang/MazePy/blob/master/behav/mazeobj/guiasset/GUI_backgound.png)
@@ -23,7 +23,7 @@ After tens of years of rapid development, several tools have been developed to r
 - Electrodes (e.g. tetrode array, Neuropixel, etc.)
 - Genetically encoded voltage indicator (GEVI)
 
-Several useful tools have been developed to process raw neural data, e.g., [``suite2p``](https://github.com/MouseLand/suite2p), [``CNMF-E``](https://github.com/inscopix/inscopix-cnmfe) and numerous spike sorting algorithms. However, the one that make people thrashed out is, generally,  different analysis packages save the processing results in divergent data form, which makes code imcompatible to be used in dealing with another data forms. Here, we are trying to establish very basic but standardized data structure, to make analysis of different forms of data more easily.
+Several useful tools have been developed to process raw neural data, e.g., [``suite2p``](https://github.com/MouseLand/suite2p), [``CNMF-E``](https://github.com/inscopix/inscopix-cnmfe) and numerous spike sorting algorithms. However, the one that makes people thrashed out is, generally,  different analysis packages save the processing results in divergent data form, which makes code imcompatible to be used in dealing with another data forms. Here, we are trying to establish very basic but standardized data structure, to make analysis of different forms of data more easily.
 <br/>
 <br/>
 
