@@ -2,17 +2,18 @@
 The thriving field of ``system neuroscience`` has enhanced the status of behavioral experiments in daily research. As the direct readout of certain brain's activities, the behavior of animals has been put at the center of the stage for 100+ years. While generations of scientists have established numerous ``behavioral paradigms`` to address the functions of diverse brain circuits, but scarce packages were developed to help people process these behavioral data, which make system neuroscience research hard for people who is not good at programming to join in.
 <br/>
 <br/>
-Of course there're several excellent Python sofewares developed to address this issue, e.g, [``DeepLabCut``](https://github.com/DeepLabCut/DeepLabCut). DeepLabCut provides strong function in processing animals' movement collected by cameras (e.g, moving trajectory of limbs of rats) and thus is hotly welcomed by researchers. However, moving trajectory is only one of the attributes of animals' behavior, which means there're another things we could do with the behavioral data. So, we'd emphasize here that we are certainly not pursuing to substitue these preexisted, well-developed and powerful tools with our ``MazePy``.
+Of course there're several excellent Python sofewares developed to address this issue, e.g, [``DeepLabCut``](https://github.com/DeepLabCut/DeepLabCut). DeepLabCut provides a strong function in processing animals' movements collected by cameras (e.g., the moving trajectory of the limbs of rats) and is thus hotly welcomed by researchers. However, moving trajectory is only one of the attributes of animals' behavior, which means there are other things we could do with the behavioral data. So, we'd like to emphasize here that we are certainly not pursuing substituting these preexisting, well-developed, and powerful tools with our ``MazePy``.
 <br/>
 <br/>
 ### 1. Design environments with diverse shapes and inner structures
-In the researching field of spatial navigation system of the brain, one common thing researchers like doing is to manipulate the shape of an environment and train mice/rats to navigate or randomly forage within this environment. tens of, if not hundreds of, environments or mazes (T maze/Y maze/8-arm maze/linear track/L maze/6-arm maze/pin maze/ complex maze/3D maze/) have been designed in the past 50+ years to investigate the neural representation of the space. 
+In the research field of the spatial navigation system of the brain, one common thing researchers like doing is manipulating the shape of an environment and training mice or rats to navigate or randomly forage within this environment. Tens of, if not hundreds of, environments or mazes (T maze, Y maze, 8-arm maze, linear track, L maze, 6-arm maze, pin maze, complex maze, 3D maze) have been designed in the past 50+ years to investigate the neural representation of the space. 
 
-However, packages trying and setting up to unify the analysis of different shapes of the environment are scanty. So, one of our aims is to develop a package that could well fit the analysis of most of the environments so that researchers would no longer need to write a new code to process data collected in an new environment with entirely differed shape.
+However, packages trying and setting up to unify the analysis of different shapes of the environment are scanty. So, one of our aims is to develop a package that could well fit the analysis of most of the environments so that researchers would no longer need to write new code to process data collected in an entirely different environment.
 <br/>
 <br/>
-MazePy proivdes a ``designer GUI`` to assist you designing a new environment, and funcitons to help your analyze the data in the environment:
-
+MazePy provides a ``designer GUI`` to assist you designing a new environment, and functions to help you analyze the data in the environment:
+<br/><br/>
+![GUI](https://github.com/YAO-Shuyang/MazePy/blob/master/behav/mazeobj/guiasset/GUI_backgound.png)
 
 ### Neural Activity
 After tens of years of rapid development, several tools have been developed to record neural activities, which could be divided, in general, into three groups:
