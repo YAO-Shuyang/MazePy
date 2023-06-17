@@ -8,22 +8,23 @@ Of course there're several excellent Python sofewares developed to address this 
 ### 1. Design environments with diverse shapes and inner structures
 In the research field of the spatial navigation system of the brain, one common thing researchers like doing is manipulating the shape of an environment and training mice or rats to navigate or randomly forage within this environment. Tens of, if not hundreds of, environments or mazes (T maze, Y maze, 8-arm maze, linear track, L maze, 6-arm maze, pin maze, complex maze, 3D maze) have been designed in the past 50+ years to investigate the neural representation of the space. 
 
-However, packages trying and setting up to unify the analysis of different shapes of the environment are scanty. So, one of our aims is to develop a package that could well fit the analysis of most of the environments so that researchers would no longer need to write new code to process data collected in an entirely different environment.
+However, packages trying and setting up to unify the analysis of different shapes of the environment are scanty. So, one of our aims is to develop a package that could well fit the analysis of most of the environments, so that researchers would no longer need to write new code to process data collected in an entirely different environment.
 <br/>
 <br/>
-MazePy provides a ``designer GUI`` to assist you designing a new environment, and functions to help you analyze the data in the environment:
-<br/><br/>
+MazePy provides a ``designer GUI`` to assist you in designing a new environment, and functions to help you analyze the data in the environment:
+<br/>
+<br/>
 ![GUI](https://github.com/YAO-Shuyang/MazePy/blob/master/behav/mazeobj/guiasset/GUI_backgound.png)
 
-### Neural Activity
+### 2. To integrate neural activity collected by calcium imaging and electrophysiological approaches.
 After tens of years of rapid development, several tools have been developed to record neural activities, which could be divided, in general, into three groups:
 
 - Genetically encoded calcium indicator (e.g., GCaMP family etc.)
 - Electrodes (e.g. tetrode array, Neuropixel, etc.)
 - Genetically encoded voltage indicator (GEVI)
 
-Here we provide a tool to help you process the behavioral and neural data.
-
+Several useful tools have been developed to process raw neural data, e.g., [``suite2p``](https://github.com/MouseLand/suite2p), [``CNMF-E``](https://github.com/inscopix/inscopix-cnmfe) and numerous spike sorting algorithms. However, the one that make people thrashed out is, generally,  different analysis packages save the processing results in divergent data form, which makes code imcompatible to be used in dealing with another data forms. Here, we are trying to establish very basic but standardized data structure, to make analysis of different forms of data more easily.
+<br/>
 <br/>
 
 # Plans
