@@ -1,6 +1,9 @@
 # Overview
 <font size=3>
-The thriving of system neuroscience have enhanced the status of behavioral experiments in daily research. As the direct readout of certain brain's activities, numerous behavioral paradigms have been established for years.
+The thriving of system neuroscience have enhanced the status of behavioral experiments in daily research. As the direct readout of certain brain's activities, behavior of animals have been put in the center of the stage for 100+ years. While generations of scientists have established numerous behavioral paradigms to address the functions of diverse brain circuits, but scarce packages were developed to help people process these behavioral data, which make system neuroscience research hard for people who is not good at programming to join in.
+
+<br/>
+However, There're still several excellent Python sofewares developed to address this issue, e.g, DeepLabCut<https://github.com/DeepLabCut/DeepLabCut>
 
 <br/>
 After tens of years of rapid development, several tools have been developed to record neural activities, of which could be divided, in general, into 3 groups:
@@ -29,9 +32,9 @@ We have to emphasize that the development of the package is still on a very prel
 <br/>
 
 # Contact
-We are very open to new members! Welcome every talented and skillful person to join us! Here're some basic requirement for joining the group:
+We are certainly very open to new members! Welcome every talented and skillful person to join us! Here're some basic requirements for joining our group:
 
 1. Have, at least, an 1-year experience of 'Python' programming.
-2. Have interests in neuroscience.
+2. Have interests in neuroscience and enthusiasm in working with others.
 
 If you are interested in our project, feel free to reach out to Shuyang: qzyaoshuyang3@pku.edu.cn
