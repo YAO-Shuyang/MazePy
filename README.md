@@ -1,4 +1,4 @@
-# Overview of MazePy
+# An overview of MazePy
 The thriving field of ``system neuroscience`` has enhanced the status of behavioral experiments in daily research. As the direct readout of certain brain's activities, the behavior of animals has been put at the center of the stage for 100+ years. While generations of scientists have established numerous ``behavioral paradigms`` to address the functions of diverse brain circuits, but scarce packages were developed to help people process these behavioral data, which make system neuroscience research hard for people who is not good at programming to join in.
 <br/>
 <br/>
@@ -23,23 +23,21 @@ After tens of years of rapid development, several tools have been developed to r
 - Electrodes (e.g. tetrode array, Neuropixel, etc.)
 - Genetically encoded voltage indicator (GEVI)
 
-Several useful tools have been developed to process raw neural data, e.g., [``suite2p``](https://github.com/MouseLand/suite2p), [``CNMF-E``](https://github.com/inscopix/inscopix-cnmfe) and numerous spike sorting algorithms. However, the one that makes people thrashed out is, generally,  different analysis packages save the processing results in divergent data form, which makes code imcompatible to be used in dealing with another data forms. Here, we are trying to establish very basic but standardized data structure, to make analysis of different forms of data more easily.
+Several useful tools have been developed to process raw neural data, e.g., [``suite2p``](https://github.com/MouseLand/suite2p), [``CNMF-E``](https://github.com/inscopix/inscopix-cnmfe) and numerous spike sorting algorithms. However, the one that makes people thrash out is that, generally, different analysis packages save the processing results in divergent data forms, which makes code incompatible with being used in dealing with other data forms. Here, we are trying to establish very basic but standardized data structures, to make the analysis of different forms of data more easily.
 <br/>
 <br/>
 
 # Plans
-The first step focuses on the development of a subpackage of MazePy for the analysis of data in the field of spatial navigation. It would include an analysis of the animal's trajectory in an environment with different shapes. Mazepy would help people define different kinds of environments easily.
-
+The 1.0 version of the ``MazePy`` consists of 2 basic (sub)modules: ``behavioral data processing module(BDPM)``, ``calcium data processing module(CDPM)``.
 <br/>
-Besides, we would also provide classes and functions to analyze calcium imaging data. And of course, a package to analyze electrode-recorded data has also been taken into consideration.
-
+### BDPM
+We plan to provide functions to help you design new environment, process animals' trajectory in that environment (e.g., affine rectification), divide spatial bins, etc.
 <br/>
-In the future, we'd also consider such a possibility: using the AI tools to help us analyze data, plot high-qualified scientific figures, and write scripts automatically, which I believe would benefit researchers a lot. (开始画饼)
+### CDPM
+We plan to establish several basic but standardized data structures (e.g., SpikeTrain, EventsTrain, etc.) and developed basic functions and algorithms based on these data structure for further analysis.
+### Future (A.D. 2100)
+In the future, we'd also consider such a possibility: using the AI tools to help us analyze data, plot high-qualified scientific figures, and write a script to report the analysis results, which I believe would benefit researchers a lot. (开始画饼)
 
-<br/>
-We have to emphasize that the development of the package is still in a very preliminary state and may take years to finish.
-
-<br/>
 
 # Contact
 We are certainly very open to new members! Welcome every talented and skillful person to join us! Here're some basic requirements for joining our group:
