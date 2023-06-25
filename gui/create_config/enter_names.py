@@ -23,9 +23,12 @@ class NameList(QVBoxLayout):
         self.first_names, self.last_names, self.name_items = [], [], []
         self.name_num = NAME_NUMBER_DEFAULT-1
         
+        self.scroll_lists = QScrollArea()
+        
         self.addWidget(members_tit)
         self.addLayout(buttons_layout)
         self.addLayout(name_title_layout)
+        self.addWidget(self.scroll_lists)
         
         self.is_init = True
         self.add_name()        
@@ -60,22 +63,19 @@ class NameList(QVBoxLayout):
     def update_scroll_area(self):
         content_widget = QWidget()
         layout = QVBoxLayout(content_widget)
+        layout.setSpacing(0)
 
         # Add some labels to the layout as an example content
         for item in self.name_items:
             layout.addWidget(item.item)
 
         # Create a QScrollArea
-        scroll_area = QScrollArea()
+        scroll_area = self.scroll_lists
         scroll_area.setStyleSheet("background-color: white;")
         scroll_area.setWidgetResizable(False)  # Allow the content to be resized
 
         # Set the content widget as the child of the QScrollArea
         scroll_area.setWidget(content_widget)
-        self.addWidget(scroll_area)
-        
-        if not self.is_init:
-            self.removeWidget(self.itemAt(self.count() - 2).widget())
         
 class NameItem(object):
     def __init__(self):
