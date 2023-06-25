@@ -8,6 +8,7 @@ from PyQt6.QtGui import QWheelEvent, QMouseEvent
 from mazepy.gui.ErrorWindow import ErrorWindow
 from mazepy.gui.label_video import VIDEO_FRAME_DEFAULT, MOUSE_WHEEL_STEP_DEFAULT
 
+
 class BehaviorEventsRecorder(QVBoxLayout):
     def __ini__(self):
         super().__init__()
