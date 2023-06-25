@@ -45,5 +45,5 @@ We are certainly very open to new members! Welcome every talented and skillful p
 1. Have, at least, an 1-year experience of 'Python' programming.
 2. Have interests in neuroscience and enthusiasm in working with others.
 
-If you are interested in our project, feel free to reach out to Shuyang: qzyaoshuyang3@pku.edu.cn
+If you are interested in our project, feel free to reach out to Shuyang: qzyaoshuyang3@pku.edu.cn (suggested) or yaosy@pku.org.cn
 
