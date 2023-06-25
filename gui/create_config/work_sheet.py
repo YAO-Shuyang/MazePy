@@ -65,6 +65,10 @@ class WorkSheet(QVBoxLayout):
         self.work_sheet_line = QLineEdit()
         self.work_sheet_line.returnPressed.connect(self.set_excel_directory)
         self.excel_dir, self.config_dir = None, None
+        self.selected_headers = None
+        self.headers_to_checkbox = {}
+        self.check_point_loading_sheet = False
+        self.check_point_select_header = False
         
         self.select_excel_button = QPushButton("Select")
         self.select_excel_button.clicked.connect(self.select_excel_directory)
@@ -76,6 +80,11 @@ class WorkSheet(QVBoxLayout):
         
         self.load_excel_button = QPushButton("load")
         self.load_excel_button.clicked.connect(self.load_sheet)
+        
+        self.notice_to_header_select = QLabel("Here're(s) the headers of the loaded"+
+                                              " excel sheet. Please select the ones "+
+                                              "you wanted to keep for further analysis.")
+        self.notice_to_header_select.setWordWrap(True)
         
         self.finish_select_header = QPushButton("Finish Selecting")
         self.finish_select_header.clicked.connect(self.finish_selecting_header)
@@ -94,6 +103,7 @@ class WorkSheet(QVBoxLayout):
         self.addWidget(self.work_sheet_tit)
         self.addLayout(select_layout)
         self.addLayout(load_layout)
+        self.addWidget(self.notice_to_header_select)
         self.addWidget(self.header_list)
         self.addWidget(self.finish_select_header)
         
@@ -152,15 +162,24 @@ class WorkSheet(QVBoxLayout):
 
             self.header_list.setWidget(widgets_content)
             self.select_headers()
+            
+            self.check_point_loading_sheet = True
+            NoticeWindow.throw_content("Load the sheet successfully!")
            
     def select_headers(self):
-        self.selected_headers = []
-        for i, header in enumerate(self.headers):
-            checker = self.headers_to_checkbox[header][0]
-            if checker.isChecked():
-                self.selected_headers.append(header)
+        if self.check_point_loading_sheet:
+            self.selected_headers = []
+            for i, header in enumerate(self.headers):
+                checker = self.headers_to_checkbox[header][0]
+                if checker.isChecked():
+                    self.selected_headers.append(header)
+            self.check_point_select_header = True
         
     def finish_selecting_header(self):
-        self.f = self.f[self.selected_headers]
-        self.f.to_excel(os.path.join(self.config_dir, os.path.basename(self.excel_dir)), index=False)
-        self.excel_dir = os.path.join(self.config_dir, os.path.basename(self.excel_dir))
+        if self.check_point_select_header:
+            self.select_headers()
+            self.f = self.f[self.selected_headers]
+            self.f.to_excel(os.path.join(self.config_dir, os.path.basename(self.excel_dir)), index=False)
+            self.excel_dir = os.path.join(self.config_dir, os.path.basename(self.excel_dir))
+            
+            NoticeWindow.throw_content("Finishing selected points!")
