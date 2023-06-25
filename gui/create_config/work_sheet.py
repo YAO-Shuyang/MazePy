@@ -1,16 +1,15 @@
 import pandas as pd
 from PyQt6 import QtCore
-from PyQt6.QtWidgets import QApplication, QComboBox, QCheckBox, QPushButton, QFileDialog, QHBoxLayout, QScrollArea
-from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QWidget
+from PyQt6.QtWidgets import QComboBox, QCheckBox, QPushButton, QFileDialog, QHBoxLayout, QScrollArea
+from PyQt6.QtWidgets import QVBoxLayout, QWidget, QLabel, QLineEdit, QWidget
 from mazepy.gui import WarningWindow, NoticeWindow
 from mazepy import mkdir
-from mazepy.gui.create_config import NAME_NUMBER_DEFAULT, NameList
+from mazepy.gui.create_config import NAME_NUMBER_DEFAULT
 import yaml
 import sys
 import os
 import numpy as np
 import shutil
-
 
 class ConfigFolder(QVBoxLayout):
     def __init__(self) -> None:
@@ -78,7 +77,7 @@ class WorkSheet(QVBoxLayout):
         self.sheet_name = str(self.select_names.currentText())
         self.select_names.currentTextChanged.connect(self.set_sheet_name)
         
-        self.load_excel_button = QPushButton("load")
+        self.load_excel_button = QPushButton("Load")
         self.load_excel_button.clicked.connect(self.load_sheet)
         
         self.notice_to_header_select = QLabel("Here're(s) the headers of the loaded"+

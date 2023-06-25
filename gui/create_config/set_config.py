@@ -1,14 +1,13 @@
 from PyQt6 import QtCore
 from PyQt6.QtWidgets import QApplication, QComboBox, QCheckBox, QPushButton, QFileDialog, QHBoxLayout, QScrollArea
 from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QWidget
-from mazepy.gui import WarningWindow, NoticeWindow
-from mazepy import mkdir
-from mazepy.gui.create_config import NAME_NUMBER_DEFAULT, NameList, ConfigFolder, WorkSheet
+from mazepy.gui import WarningWindow, NoticeWindow, EnvDesigner
+from mazepy.gui import NAME_NUMBER_DEFAULT, NameList, ConfigFolder, WorkSheet
 import yaml
 import sys
 import os
 
-class ConfigEditor(QMainWindow):
+class ConfigCreator(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
         
@@ -34,9 +33,12 @@ class ConfigEditor(QMainWindow):
         self.config_folder.config_dir_button.clicked.connect(self.pass_config_dir_to_sheet)
         
         # 5. Create button
-        self.create_config = QPushButton("Create Configuration File")
-        self.create_config.clicked.connect(self.create_file)
+        create_config = QPushButton("Create Configuration File")
+        create_config.clicked.connect(self.create_file)
         
+        # 6. Go to design environment
+        go_to_env_disigner = QPushButton("Go To Design Environment")
+        go_to_env_disigner.clicked.connect(self.open_env_designer)        
         
         column_layout = QVBoxLayout()
         column_layout.addWidget(self.behavior_paradigm_tit)
@@ -44,7 +46,8 @@ class ConfigEditor(QMainWindow):
         column_layout.addLayout(self.experimentor)
         column_layout.addLayout(self.config_folder)
         column_layout.addLayout(self.work_sheet)
-        column_layout.addWidget(self.create_config)
+        column_layout.addWidget(create_config)
+        column_layout.addWidget(go_to_env_disigner)
 
         central_widget = QWidget()
         central_widget.setLayout(column_layout)
@@ -77,13 +80,15 @@ class ConfigEditor(QMainWindow):
                                        os.path.join(self.config_folder.config_dir, 'config.yaml'))
         else:
             WarningWindow.throw_content("You have not yet loaded the excel working sheet! Cannot create config file!")
+    
+    def open_env_designer(self):
+        self.designer = EnvDesigner()
+        self.designer.show()
         
-
-            
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    editor = ConfigEditor()
+    editor = ConfigCreator()
     editor.show()
     sys.exit(app.exec())
     
