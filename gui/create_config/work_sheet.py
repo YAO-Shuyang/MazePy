@@ -55,7 +55,7 @@ class WorkSheet(QVBoxLayout):
     def __init__(self) -> None:
         super().__init__()
         
-        self.work_sheet_tit = QLabel("Load a excel sheet which contains basic information"+
+        self.work_sheet_tit = QLabel("Load an excel sheet which contains basic information"+
                                      " about your experiment sessions/trials. So-called "+
                                      "basic information might include the directory of "+
                                      "behavioral videos/Mouse Identity/Experiment date or "+

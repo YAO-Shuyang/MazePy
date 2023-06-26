@@ -40,8 +40,6 @@ class GridBasic(object):
         else:
             raise ValueError(f"ybin should get a int value larger than 1, but it gets {ybin_val} instead.")
 
-
-
 class GridSize(GridBasic):
     '''
     Note

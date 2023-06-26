@@ -35,7 +35,15 @@ class Circle(QWidget):
 
         x = self.radius * np.cos(theta)
         y = self.radius * np.sin(theta)
-        self.canvas.ax.plot(x, y, color = 'cornflowerblue')
-        self.canvas.ax.text(self.radius*0.5, 0, 'r = '+str(self.radius), ha='center', rotation = -5)
-        self.canvas.ax.arrow(0, 0, self.radius*np.cos(np.pi/36)*0.95, -self.radius*np.sin(np.pi/36), color = 'black', head_width = 5, head_length = 5)
+        self.ax.plot(x, y, color = 'cornflowerblue')
+        self.ax.text(self.radius*0.5, 0, 'r = '+str(self.radius), ha='center', rotation = -5)
+        self.ax.arrow(0, 0, self.radius*np.cos(np.pi/36)*0.95, -self.radius*np.sin(np.pi/36), color = 'black', head_width = 5, head_length = 5)
         self.canvas.canvas.draw()
+        
+        self.identity = {
+            'Shape': 'Circle',
+            'radius': self.radius,
+            'center': (self.radius, self.radius),
+            'width': 2*self.radius, 
+            'height': 2*self.radius
+        }

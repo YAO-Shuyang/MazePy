@@ -12,6 +12,7 @@ import scipy.stats
 
 from mazepy.behav.transloc import pvl_to_idx
 from mazepy.behav.grid import GridSize
+from mazepy.gui import ENV_OUTSIDE_SHAPE
 
 class GridBin(GridSize):
     '''
@@ -95,6 +96,10 @@ class GridBin(GridSize):
                                                       range=_coords_range)
         return self.occu_time
     
+    def detect_outside_bin(self, env_shape: str = 'Rectangle'):
+        assert env_shape in ENV_OUTSIDE_SHAPE
+        
+        if env
 
 if __name__ == '__main__':
     # test

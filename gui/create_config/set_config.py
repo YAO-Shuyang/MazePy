@@ -1,10 +1,12 @@
 from PyQt6 import QtCore
 from PyQt6.QtWidgets import QApplication, QComboBox, QCheckBox, QPushButton, QFileDialog, QHBoxLayout, QScrollArea
 from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QWidget
-from mazepy.gui import WarningWindow, NoticeWindow, EnvDesigner
-from mazepy.gui import NAME_NUMBER_DEFAULT, NameList, ConfigFolder, WorkSheet
+from mazepy.gui import WarningWindow, NoticeWindow
+from mazepy.gui import NameList, ConfigFolder, WorkSheet
+from mazepy.gui.env_design.designer import EnvDesigner
 import yaml
 import sys
+import pickle
 import os
 
 class ConfigCreator(QMainWindow):
@@ -73,6 +75,9 @@ class ConfigCreator(QMainWindow):
             self.config['work sheet directory'] = self.work_sheet.excel_dir
             self.config['work sheet header'] = self.work_sheet.selected_headers
             
+            with open(os.path.join(self.config_folder.config_dir, 'config.pkl'), 'wb') as f:
+                pickle.dump(self.config, f)        
+                   
             with open(os.path.join(self.config_folder.config_dir, 'config.yaml'), 'w') as f:
                 yaml.dump(self.config, f)
             

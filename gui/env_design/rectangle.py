@@ -52,4 +52,22 @@ class Rectangle(QWidget):
         self.canvas.ax.plot(np.repeat(-self.a*0.5, 10000), y, color = 'cornflowerblue')
         self.canvas.ax.text(-self.a*0.5, 0, 'b = '+str(self.b), va='center', ha = 'right', rotation = 'vertical')
         self.canvas.ax.text(0, self.b*0.5, 'a = '+str(self.a), ha='center')
+        
+        self.ax.text(-self.a*0.5, self.b*0.5, 'A', ha = 'right', va = 'bottom')
+        self.ax.text(-self.a*0.5,-self.b*0.5, 'B', ha = 'right', va = 'top')
+        self.ax.text(self.a*0.5, -self.b*0.5, 'C', ha = 'left',  va = 'top')
+        self.ax.text(self.a*0.5,  self.b*0.5, 'D', ha = 'left',  va = 'bottom')
         self.canvas.canvas.draw()
+        
+        self.identity = {
+            'Shape': 'Rectangle',
+            'a': self.a, 'b': self.b,            
+            'vertex': {
+                'A': (0, self.b, 'upper left'), 
+                'B': (0, 0, 'bottom left'), 
+                'C': (self.a, 0, 'bottom right'), 
+                'D': (self.a, self.b, 'upper right')},
+            'center': (self.a/2, self.b/2),
+            'width': self.a, 
+            'height': self.b
+        }

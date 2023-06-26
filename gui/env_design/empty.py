@@ -36,3 +36,5 @@ class Empty(QWidget):
         self.ax.axis([-1,1,-1,1]) 
 
         self.canvas.canvas.draw()
+        
+        self.identity = {}
