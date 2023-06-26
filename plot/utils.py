@@ -20,6 +20,12 @@ def clear_spines(ax: Axes, set_invisible_spines: list|str|None = None) -> Axes:
     
     if set_invisible_spines in ['all', 'All', 'a', 'A']:
         set_invisible_spines = ['top', 'bottom', 'right', 'left']
+        ax.set_xticks([])
+        ax.set_yticks([])
+        
+    elif set_invisible_spines in ['line', 'lineplot', 'hist', 'bar', 'barplot', 
+                                  'box', 'boxplot', 'violinplot', 'scatter', 'plot']:
+        set_invisible_spines = ['top', 'right']
         
     elif set_invisible_spines is None:
         return ax

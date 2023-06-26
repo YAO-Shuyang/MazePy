@@ -2,6 +2,7 @@ from PyQt6 import QtCore
 from PyQt6.QtWidgets import QApplication, QComboBox, QCheckBox, QPushButton, QFileDialog, QHBoxLayout, QScrollArea
 from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QWidget
 from mazepy.gui import WarningWindow, NoticeWindow
+from mazepy.gui.env_design.circle import Circle, ParameterItem, PlotStandardShape
 from mazepy import mkdir
 from mazepy.gui import ENV_OUTSIDE_SHAPE
 import yaml
@@ -34,18 +35,14 @@ class EnvDesigner(QMainWindow):
             self.env_shape_combo.addItem(item)           
         self.env_shape_combo.currentTextChanged.connect(self.display_parameter_selection)
         
-        # 3. Display dinamic widgets on the gui based on your selection
-        self.dynamic_widgets = QWidget()
-        
-        column_layout = QVBoxLayout()
-        column_layout.addWidget(load_config_label)
-        column_layout.addLayout(load_layout)
-        column_layout.addWidget(env_shape_label)
-        column_layout.addWidget(self.env_shape_combo)
-        column_layout.addWidget(self.dynamic_widgets)
+        self.column_layout = QVBoxLayout()
+        self.column_layout.addWidget(load_config_label)
+        self.column_layout.addLayout(load_layout)
+        self.column_layout.addWidget(env_shape_label)
+        self.column_layout.addWidget(self.env_shape_combo)
 
         central_widget = QWidget()
-        central_widget.setLayout(column_layout)
+        central_widget.setLayout(self.column_layout)
         self.setCentralWidget(central_widget)
         
     def keep_locked(self):
@@ -62,8 +59,14 @@ class EnvDesigner(QMainWindow):
             WarningWindow.throw_content(str(folder)+" is not loaded sucessfully, select again.")
     
     def display_parameter_selection(self):
-        print(self.env_shape_combo.currentText())
+        self.current_env_shape = self.env_shape_combo.currentText()
+        if self.current_env_shape == 'Circle':
+            self.dynamic_obj = Circle()
+            self.column_layout.addWidget(self.dynamic_obj)
         
+        
+            
+                
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     editor = EnvDesigner()

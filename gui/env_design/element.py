@@ -1,16 +1,13 @@
-import typing
-from PyQt6 import QtCore
-from PyQt6.QtWidgets import QApplication, QComboBox, QCheckBox, QPushButton, QFileDialog, QHBoxLayout, QScrollArea
-from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QWidget, QDoubleSpinBox
+from PyQt6.QtWidgets import QVBoxLayout, QWidget, QLabel, QWidget, QDoubleSpinBox
 from mazepy.gui import WarningWindow, NoticeWindow
-from mazepy import mkdir
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+from mazepy import mkdir, clear_spines
 from mazepy.gui import ENV_OUTSIDE_SHAPE, ENV_EDGE_LENGTH_DEFAULT, LARGEST_LEMGTJ_DEFAULT, SMALLEST_LEMGTJ_DEFAULT
-import yaml
-import sys
-import os
+
 
 class ParameterItem(QWidget):
-    def __init__(self, label: str, ) -> None:
+    def __init__(self, label: str) -> None:
         super().__init__()
         
         # input radius
@@ -30,9 +27,26 @@ class ParameterItem(QWidget):
         self.setLayout(layout)
         
     def set_value(self):
-        self.para_value = float(self.para_value.text())
+        self.para_value = float(self.para_value_spin.text())
         
 
 class PlotStandardShape(QWidget):
-    def __init__(self, label: str, ) -> None:
-        super().__init__()    
+    def __init__(self) -> None:
+        super().__init__()
+        
+        # Create a Figure object
+        fig = Figure(figsize=(8,8))
+        self.ax = clear_spines(fig.add_axes((0.1, 0.1, 0.8, 0.8)), set_invisible_spines='plot')
+        self.ax.spines['left'].set_position('zero')
+        self.ax.spines['bottom'].set_position('zero')
+        self.ax.set_xticks([])
+        self.ax.set_yticks([])
+        
+        # Create a Canvas widget that will display the Figure
+        self.canvas = FigureCanvas(fig)
+        
+        layout = QVBoxLayout()
+        layout.addWidget(self.canvas)
+        
+        self.setLayout(layout)
+        self.setFixedSize(300,300)
