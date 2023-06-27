@@ -73,10 +73,8 @@ class ConfigCreator(QMainWindow):
             self.config['last name'] = self.experimentor.last_names
             self.config['configuration directory'] = self.config_folder.config_dir
             self.config['work sheet directory'] = self.work_sheet.excel_dir
-            self.config['work sheet header'] = self.work_sheet.selected_headers
-            
-            with open(os.path.join(self.config_folder.config_dir, 'config.pkl'), 'wb') as f:
-                pickle.dump(self.config, f)        
+            self.config['work sheet name'] = self.work_sheet.sheet_name
+            self.config['work sheet header'] = self.work_sheet.selected_headers   
                    
             with open(os.path.join(self.config_folder.config_dir, 'config.yaml'), 'w') as f:
                 yaml.dump(self.config, f)

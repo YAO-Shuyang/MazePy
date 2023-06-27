@@ -1,6 +1,7 @@
 from PyQt6 import QtCore
 from PyQt6.QtWidgets import QApplication, QComboBox, QCheckBox, QPushButton, QFileDialog, QHBoxLayout, QScrollArea
 from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QWidget
+import mazepy.os
 from mazepy.gui import WarningWindow, NoticeWindow
 from mazepy.gui.env_design.circle import Circle, ParameterItem, PlotStandardShape
 from mazepy.gui.env_design.empty import Empty
@@ -67,17 +68,17 @@ class EnvDesigner(QMainWindow):
         self.load_config_line.setText(self.config_dir)
     
     def load_config(self):
-        folder, _ = QFileDialog.getOpenFileName(None, "Select configuration file", "", "PKL Files (*.pkl)")
+        folder, _ = QFileDialog.getOpenFileName(None, "Select configuration file", "", "YAML Files (*.yaml)")
         if os.path.exists(folder):
-            with open(folder, 'rb') as handle:
-                self.config = pickle.load(handle)
-                self.config_dir = folder
-                self.load_config_line.setText(folder)
-                if 'environment configuration' in self.config.keys():
-                    self.env_config = self.config['environment configuration']
-                else:
-                    self.config['environment configuration'] = {}
-                self.is_config_loaded = True
+            self.config = mazepy.os.load_yaml(folder)
+                
+            self.config_dir = folder
+            self.load_config_line.setText(folder)
+            if 'environment configuration' in self.config.keys():
+                self.env_config = self.config['environment configuration']
+            else:
+                self.config['environment configuration'] = {}
+            self.is_config_loaded = True
         else:
             WarningWindow.throw_content(str(folder)+" is not loaded sucessfully, select again.")
     
@@ -104,8 +105,6 @@ class EnvDesigner(QMainWindow):
             self.config['environment configuration'].update(self.env_config)
             with open(os.path.join(self.config['configuration directory'], 'config.yaml'), 'w') as f:
                 yaml.dump(self.config, f)
-            with open(os.path.join(self.config['configuration directory'], 'config.pkl'), 'wb') as f:
-                pickle.dump(self.config, f)
             NoticeWindow.throw_content("Save environment information successfully!")
         else:
             WarningWindow.throw_content("You have not yet loaded a config file!")

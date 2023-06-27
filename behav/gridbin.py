@@ -96,10 +96,6 @@ class GridBin(GridSize):
                                                       range=_coords_range)
         return self.occu_time
     
-    def detect_outside_bin(self, env_shape: str = 'Rectangle'):
-        assert env_shape in ENV_OUTSIDE_SHAPE
-        
-        if env
 
 if __name__ == '__main__':
     # test
