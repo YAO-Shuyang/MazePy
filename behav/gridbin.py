@@ -34,7 +34,7 @@ class GridBin(GridSize):
                  xmin: int or float = 0, ymin: int or float = 0) -> None:
         super().__init__(xbin, ybin, xmax, ymax, xmin, ymin)
 
-    def _pre_process(self, MAT):
+    def pre_process(self, MAT):
         '''
         Note
         ----
@@ -49,52 +49,104 @@ class GridBin(GridSize):
         MAT[1, np.where(MAT[1, :] >= self.ymax-0.0001)[0]] = self.ymax - 0.0001
         self.MAT = MAT
 
-    def divide_space(self, MAT):
-        '''
-        Parameter
-        ---------
-        MAT: numpy.ndarray object, required
-            It usually has a shape of (n, T), where n represent the dimension (default: 2) and T 
+    @staticmethod
+    def divide_space(
+        behav_pos: np.ndarray, 
+        xbin: int, ybin: int, 
+        xmax: float, 
+        ymax: float, 
+        xmin: int or float = 0, 
+        ymin: int or float = 0, 
+    ) -> np.ndarray:
+        """
+        divide_space: this function is used to divide the value space into grid-like bins and get the bin ID 
+                      of each value point (recorded by each frame).
+
+        Parameters
+        ----------
+        behav_pos : np.ndarray
+            The behavior position. It usually has a shape of (n, T), where n represent the dimension (default: 2) and T 
             represents the total number of frames that recorded.
+        xbin : int
+            The number of bins at axis x
+        ybin : int
+            The number of bins at axis y
+        xmax : float
+            The maximum x value
+        ymax : float
+            The maximum y value
+        xmin : int or float, optional
+            The minimum x value, by default 0
+        ymin : int or float, optional
+            The minimum y value, by default 0
 
-        Note
-        ----
-        This function is used to divide the value space into grid-like bins and get the bin ID 
-          of each value point (recorded by each frame).
+        Returns
+        -------
+        np.ndarray
+            1d numpy.ndarray object, with a length of T.
+        """
+        obj = GridBin(xbin=xbin, ybin=ybin, xmax=xmax, ymax=ymax, xmin=xmin, ymin=ymin)
+        obj.pre_process(behav_pos)
+        behav_nodes = pvl_to_idx(x = behav_pos[0, :], y = behav_pos[1, :], xbin = obj.xbin, ybin = obj.ybin, 
+                                 xmax = obj.xmax, ymax = obj.ymax)
+        return behav_nodes
+    
+    @staticmethod
+    def calc_rate_map(
+        behav_time: np.ndarray, 
+        behav_pos: np.ndarray, 
+        xbin: int, ybin: int, 
+        xmax: float, 
+        ymax: float, 
+        xmin: int or float = 0, 
+        ymin: int or float = 0, 
+        fps: float = 30.
+    ) -> np.ndarray:
+        """
+        calc_rate_map: calculate the behavior rate map
 
-        Return
-        ------
-        1d numpy.ndarray object, with a length of T.
-        '''
-        self._pre_process()
-        self.behav_nodes = pvl_to_idx(x = self.MAT[0, :], y = self.MAT[1, :], xbin = self.xbin, ybin = self.ybin, 
-                                      xmax = self.xmax, ymax = self.ymax)
-        return self.behav_nodes
+        Parameters
+        ----------
+        behav_time : np.ndarray
+            The behavior timestamp
+        behav_pos : np.ndarray
+            The behavior position
+        xbin : int
+            The number of bins at axis x
+        ybin : int
+            The number of bins at axis y
+        xmax : float
+            The maximum x value
+        ymax : float
+            The maximum y value
+        xmin : int or float, optional
+            The minimum x value, by default 0
+        ymin : int or float, optional
+            The minimum y value, by default 0
+        fps : float, optional
+            Frame per seconde, by default 30.
 
-    def cal_rate_map(self, behav_time:np.ndarray):
-        '''
-        Parameter
-        ---------
-        behav_time: numpy.ndarray object, required
-            It is usually a 1d vector with a shape of (T,).
+        Returns
+        -------
+        np.ndarray
+            The occupation time at each bin.
+        """
+        frame_interval = np.append(np.ediff1d(behav_time), fps)
 
-        Note
-        ----
-        This function is used to calculate the rate map of behavior. For this purpose, 
-          the time stamp of related behavior data is required.
+        behav_nodes = GridBin.divide_space(behav_pos, xbin=xbin, ybin=ybin, xmax=xmax, ymax=ymax, xmin=xmin, ymin=ymin)
         
-        '''
-        frame_interval = np.append(np.ediff1d(behav_time), 0)
-        
-        _nbins = self.xbin * self.ybin
+        _nbins = xbin * ybin
         _coords_range = [0, _nbins +0.0001 ]
 
-        self.occu_time = scipy.stats.binned_statistic(self.behav_nodes,
-                                                      frame_interval,
-                                                      bins=_nbins,
-                                                      statistic="sum",
-                                                      range=_coords_range)
-        return self.occu_time
+        occu_time = scipy.stats.binned_statistic(
+            behav_nodes,
+            frame_interval,
+            bins=_nbins,
+            statistic="sum",
+            range=_coords_range
+        )
+        occu_time[np.where(occu_time==0)[0]] = np.nan
+        return occu_time
     
 
 if __name__ == '__main__':

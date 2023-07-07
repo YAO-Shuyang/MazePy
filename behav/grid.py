@@ -40,6 +40,8 @@ class GridBasic(object):
         else:
             raise ValueError(f"ybin should get a int value larger than 1, but it gets {ybin_val} instead.")
 
+
+
 class GridSize(GridBasic):
     '''
     Note
@@ -76,19 +78,48 @@ class GridSize(GridBasic):
 
         if ymin >= ymax:
             raise ValueError(f"Detect value ymin({ymin}) >= ymax({ymax}). However, ymin should not be equal to or bigger than ymax.")
-        
+    
+
     @property
     def xmax(self):
         return self._xmax
+
+    @xmax.setter
+    def xmax(self, value):
+        if value > self.xmin:
+            self._xmax = value
+        else:
+            raise ValueError(f"input xmax ({value}) should be bigger than xmin {self.xmin}, but it is not.")
     
     @property
     def ymax(self):
         return self._ymax
+
+    @ymax.setter
+    def ymax(self, value):
+        if value > self.ymin:
+            self._ymax = value
+        else:
+            raise ValueError(f"input ymax ({value}) should be bigger than ymin {self.ymin}, but it is not.")
     
     @property
     def xmin(self):
         return self._xmin
+
+    @xmin.setter
+    def xmin(self, value):
+        if value < self.xmax:
+            self._xmin = value
+        else:
+            raise ValueError(f"input xmin ({value}) should be smaller than {self.xmax}, but it is not.")
     
     @property
     def ymin(self):
         return self._ymin
+
+    @ymin.setter
+    def ymin(self, value):
+        if value < self.ymax:
+            self._ymin = value
+        else:
+            raise ValueError(f"input ymin ({value}) should be smaller than {self.ymax}, but it is not.")
