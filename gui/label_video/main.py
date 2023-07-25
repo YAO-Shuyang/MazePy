@@ -5,17 +5,21 @@ from PyQt6.QtMultimedia import QMediaPlayer
 from PyQt6.QtMultimediaWidgets import QVideoWidget
 from PyQt6.QtGui import QWheelEvent, QMouseEvent
 from mazepy.gui.ErrorWindow import ErrorWindow, NoticeWindow
-from mazepy.gui.label_video import VideoSliderCoordinator, WheelStepSettor
-import cv2
-import os
+from mazepy.gui.label_video import VideoSliderCoordinator, WheelStepSettor, RecordTable
 import numpy as np
+import cv2
+import pickle
+import pandas as pd
+import os
 
 class VideoFrameLabel(QMainWindow):
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle("Video Player")
-        self.setGeometry(100, 100, 1000, 600)
+        self.setGeometry(100, 100, 1400, 600)
+        
+        self.file_path, self.folder_dir = None, None
 
         self.video_slider = VideoSliderCoordinator()
 
@@ -55,6 +59,24 @@ class VideoFrameLabel(QMainWindow):
         self.progress_bar = QProgressBar()
         self.progress_bar.setAlignment(Qt.AlignmentFlag.AlignCenter)
         
+        self.record_sheet = RecordTable()
+        self.record_sheet.save_records.clicked.connect(self.save_labeling_records)
+        
+        self.add_start = QPushButton("Add Start")
+        self.add_start.clicked.connect(self.pass_start_frame_to_sheet)
+        self.add_end = QPushButton("Add End")
+        self.add_end.clicked.connect(self.pass_end_frame_to_sheet)
+        self.delete = QPushButton("Delete")
+        self.delete.clicked.connect(self.record_sheet.delete_row)
+        self.adjust = QPushButton("Adjust")
+        self.adjust.clicked.connect(self.pass_frame_to_sheet)
+        addframe_layout = QHBoxLayout()
+        addframe_layout.addWidget(self.add_start)
+        addframe_layout.addWidget(self.add_end)
+        adjust_layout = QHBoxLayout()
+        adjust_layout.addWidget(self.delete)
+        adjust_layout.addWidget(self.adjust)
+             
         spacer2 = QWidget()
         spacer2.setFixedSize(10, 10)
         
@@ -67,11 +89,14 @@ class VideoFrameLabel(QMainWindow):
         control_layout.addLayout(add_layout)
         control_layout.addWidget(self.progress_bar_label)
         control_layout.addWidget(self.progress_bar)
+        control_layout.addLayout(addframe_layout)
+        control_layout.addLayout(adjust_layout)
                      
         # Create a horizontal layout to hold the control layout and video player layout
         main_layout = QHBoxLayout()
         main_layout.addLayout(control_layout, 1)
         main_layout.addLayout(self.video_slider, 4)
+        main_layout.addWidget(self.record_sheet)
 
         central_widget = QWidget()
         central_widget.setLayout(main_layout)
@@ -202,6 +227,30 @@ class VideoFrameLabel(QMainWindow):
         
     def pass_stamp_to_settor(self):
         self.step_settor.set_stamps(self.video_slider.media_player.position())
+        
+    def pass_start_frame_to_sheet(self):
+        self.record_sheet.add_row_at_col1(int(self.step_settor.current_frame))
+        
+    def pass_end_frame_to_sheet(self):
+        self.record_sheet.add_row_at_col2(int(self.step_settor.current_frame))
+        
+    def pass_frame_to_sheet(self):
+        # pass adjusted frame to sheet
+        if self.record_sheet.curr_col is not None and self.record_sheet.curr_row is not None:
+            self.record_sheet.adjust_content(int(self.step_settor.current_frame))
+        else:
+            NoticeWindow.throw_content("Please select the bin you want to adjust first!")
+            
+    def save_labeling_records(self):
+        root = os.path.dirname(self.file_path)
+        with open(os.path.join(root, 'frame_labels.pkl'), 'wb') as f:
+            pickle.dump(self.record_sheet.content, f)
+            
+        Data = {'start frame': self.record_sheet.content[:, 0], 'end frame': self.record_sheet.content[:, 1]}
+        D = pd.DataFrame(Data)
+        D.to_excel(os.path.join(root, 'frame_labels.xlsx'), sheet_name='labeled frames', index=False)
+            
+        NoticeWindow.throw_content(f"Save file successfully as {os.path.join(root, 'frame_labels.pkl')} and {os.path.join(root, 'frame_labels.xlsx')}")
         
 if __name__ == '__main__':
     app = QApplication([])

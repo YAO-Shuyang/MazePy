@@ -1,6 +1,7 @@
 import pandas as pd
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QApplication, QMainWindow, QTableWidget, QTableWidgetItem, QWidget
+from mazepy.os.utils import load_yaml
 
 class ExcelTableWidget(QWidget):
     def __init__(self, excel_dir: str, headers: list[str], sheet_name: str):
@@ -26,9 +27,6 @@ class ExcelTableWidget(QWidget):
                 item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)  # Make cells read-only
                 self.table_widget.setItem(row, col, item)
         
-        # Set the table widget as the central widget of the main window
-        self.setCentralWidget(self.table_widget)
-        
         # Resize the columns to fit the contents
         self.table_widget.resizeColumnsToContents()
 
@@ -37,10 +35,9 @@ app = QApplication([])
 excel_file = r"E:\Data\Cross_maze\cross_maze_paradigm.xlsx"
 
 import pickle, yaml
-with open (r"E:\Data\cross_maze_config\config.yaml", 'r') as handle:
-    config = yaml.safe_load(handle)
+config = load_yaml('E:\Data\cross_maze_config\config.yaml')
     
 headers = config['work sheet header']  # Specify the headers/columns to display
-widget = ExcelTableWidget(excel_file, headers)
+widget = ExcelTableWidget(excel_file, headers, sheet_name='behavior')
 widget.show()
 app.exec()
