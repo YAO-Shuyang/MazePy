@@ -473,7 +473,7 @@ class Graph(GridBasic):
         return nx.dijkstra_path(G=G, source=nodes, target=nodes+1, **kwargs)
 
     def plot_shortest_path(self, p1: tuple, p2:tuple, ax: Axes = None, dx: float = 0.5, dy: float = 0.5,
-                           figsize: tuple = (6, 6), color = 'red', linewidth = 2, **kwargs) -> Axes:
+                           figsize: tuple = (6, 6), color = 'red', linewidth = 2, is_show_nodes: bool = True, **kwargs) -> Axes:
         if ax is None:
             fig = plt.figure(figsize = figsize)
             ax = plt.axes()
@@ -482,7 +482,7 @@ class Graph(GridBasic):
 
         if len(path) > 2:
 
-            ax.plot([p1[0] - dx, self.Ps[path[1], 0] - dx], [p1[1] - dy, self.Ps[path[1], 1] - dy], color = color, linewidth = 2, **kwargs)
+            ax.plot([p1[0] - dx, self.Ps[path[1], 0] - dx], [p1[1] - dy, self.Ps[path[1], 1] - dy], color = color, linewidth = linewidth, **kwargs)
             for i in range(1, len(path)-2):
                 #ax.text(self.Ps[path[i], 0] - dx, self.Ps[path[i], 1] - dx, str(path[i]))
                 ax.plot([self.Ps[path[i], 0] - dx, self.Ps[path[i+1], 0] - dx], [self.Ps[path[i], 1] - dy, self.Ps[path[i+1], 1] - dy], 
@@ -492,6 +492,9 @@ class Graph(GridBasic):
             #ax.text(self.Ps[path[-2], 0] - dx, self.Ps[path[-2], 1] - dx, str(path[-2]))
             ax.plot([p1[0] - dx, p2[0] - dx], [p1[1] - dy, p2[1] - dy], color = color, linewidth = linewidth, **kwargs)
 
+        if not is_show_nodes:
+            return ax
+        
         for i in range(self.Ps.shape[0]):
             if i in path:
                 ax.text(self.Ps[i, 0] - dx, self.Ps[i, 1] - dy, str(i), color = 'black')
