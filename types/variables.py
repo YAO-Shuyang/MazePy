@@ -163,7 +163,7 @@ class _NeuralActivity:
     def __init__(
         self, 
         activity: ndarray, 
-        time_stamp: Variable1D | ndarray,
+        time_stamp: Union[Variable1D, ndarray],
         variable: Optional[VariableBin] = None
     ) -> None:
         """
@@ -179,8 +179,10 @@ class _NeuralActivity:
         if isinstance(variable, VariableBin) or variable is None:
             self.variable = variable
         else:
-            raise TypeError(f"The type of variable should be VariableBin,"+
-                            f" rather than {type(variable)}")
+            raise TypeError(
+                f"The type of variable should be VariableBin,"
+                f"rather than {type(variable)}"
+            )
         
         if isinstance(variable, VariableBin):
             assert activity.shape[1] == len(time_stamp) == len(variable.bins)
@@ -238,7 +240,7 @@ class CalciumTraces(_NeuralActivity):
     def __init__(
         self,
         activity: ndarray,
-        time_stamp: Variable1D,
+        time_stamp: Union[Variable1D, ndarray],
         variable: Optional[VariableBin] = None
     ) -> None:
         """
@@ -246,7 +248,7 @@ class CalciumTraces(_NeuralActivity):
         ----------
         activity: ndarray
             The calcium traces of each neuron, with shape (n_neurons, n_time).
-        time_stamp: Variable1D
+        time_stamp: Variable1D or ndarray
             The time stamp of each time point, with shape (n_time, ).
         variable: VariableBin
             The bin index of each time point, with shape (n_time, ).
@@ -260,7 +262,7 @@ class RawSpikeTrain(_NeuralActivity):
     def __init__(
         self,
         activity: ndarray,
-        time_stamp: Variable1D,
+        time_stamp: Union[Variable1D, ndarray],
         variable: Optional[VariableBin] = None
     ) -> None:
         """
@@ -299,6 +301,8 @@ class SpikeTrain(_NeuralActivity):
         try:
             assert np.all((activity == 0) | (activity == 1))
         except:
-            raise ValueError("All entries of the spike train should"+
-                             " be either 0 or 1")
+            raise ValueError(
+                "All entries of the spike train should be either 0 or 1. "
+                "Please check the input data and try again."
+            )
         super().__init__(activity, time_stamp, variable)
