@@ -142,7 +142,13 @@ class TuningCurve:
             The maximum number of bins in each dimension, e.g., (48, 48)
         """
         self._ndim = len(nbins)
-        self.firing_rate = firing_rate
+        if self._ndim == 1:
+            self.firing_rate = firing_rate
+        else:
+            self.firing_rate = np.reshape(
+                firing_rate, 
+                [firing_rate.shape[0]] + list(nbins)
+            )
         self.bins = None
 
     @property
@@ -151,6 +157,18 @@ class TuningCurve:
     
     def __len__(self) -> int:
         return len(self.firing_rate)
+    
+    def __str__(self) -> str:
+        return f"{self.firing_rate}"
+    
+    def __add__(self, other: 'TuningCurve') -> 'TuningCurve':
+        if self._ndim != other._ndim:
+            raise ValueError(
+                f"The number of dimensions for summation should be the same, "
+                f"rather than {self._ndim} and {other._ndim}."
+            )
+            
+        
     
     @property
     def n_neuron(self) -> int:
@@ -306,3 +324,16 @@ class SpikeTrain(_NeuralActivity):
                 "Please check the input data and try again."
             )
         super().__init__(activity, time_stamp, variable)
+        self.firing_rate = None
+        
+    def calc_temporal_tuning_curve(self, twindow: float) -> TuningCurve:
+        raise NotImplementedError
+    
+    def calc_firing_rate(
+        self
+    ) -> TuningCurve:
+        """
+        Calculate the firing rate of each neuron
+        """
+        self.firing_rate = self.activity.mean(axis=1)
+        return TuningCurve(self.firing_rate)

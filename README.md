@@ -28,16 +28,8 @@ Several useful tools have been developed to process raw neural data, e.g., [``su
 <br/>
 
 # Plans
-The 1.0 version of the ``MazePy`` consists of 2 basic (sub)modules: ``behavioral data processing module(BDPM)``, ``calcium data processing module(CDPM)``.
-<br/>
-### BDPM
-We plan to provide functions to help you design new environment, process animals' trajectory in that environment (e.g., affine rectification), divide spatial bins, etc.
-<br/>
-### CDPM
-We plan to establish several basic but standardized data structures (e.g., SpikeTrain, EventsTrain, etc.) and developed basic functions and algorithms based on these data structure for further analysis.
-### Future (A.D. 2100)
-In the future, we'd also consider such a possibility: using the AI tools to help us analyze data, plot high-qualified scientific figures, and write a script to report the analysis results, which I believe would benefit researchers a lot. (开始画饼)
-
+The 1.0 framework of the ``MazePy``:
+![](https://github.com/YAO-Shuyang/MazePy/blob/master/behav/mazeobj/guiasset/Plan.png)
 
 # Contact
 We are certainly very open to new members! Welcome every talented and skillful person to join us! Here're some basic requirements for joining our group:
