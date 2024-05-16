@@ -1,5 +1,6 @@
 from numpy import ndarray
-from typing import Optional, Union
+from typing import Optional, Union, Callable
+import numpy as np
 
 class VariableBin:
     def __init__(self, bins: ndarray) -> None: ...
@@ -71,6 +72,11 @@ class CalciumTraces(_NeuralActivity):
         time_stamp: Variable1D,
         variable: Optional[VariableBin]
     ) -> None: ...
+    def binarize(
+        self, 
+        thre: float = 3., 
+        func: Callable = np.nanstd
+    ) -> SpikeTrain: ...
 
 class RawSpikeTrain(_NeuralActivity):
     def __init__(

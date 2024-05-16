@@ -33,7 +33,7 @@ def value_to_bin(
     >>> xmax = 5
     >>> xmin = 0
     >>> value_to_bin(x, nbin, xmax, xmin)
-    array([0, 1, 2, 1, 2, 3, 4, 4, 3], dtype=int64)
+    array([1, 2, 3, 2, 3, 4, 5, 5, 4], dtype=int64)
     """
     # Implementation assumes linear spacing between xmin and xmax
     bins = np.linspace(xmin, xmax*1.0001, num=nbin + 1)  
