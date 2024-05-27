@@ -1,6 +1,7 @@
 from numpy import ndarray
 import numpy as np
 from typing import Optional, Union, Callable
+
 from mazepy.utils import value_to_bin
 import warnings
 from scipy.stats import binned_statistic
@@ -321,6 +322,9 @@ class SpikeTrain(_NeuralActivity):
         variable: Optional[VariableBin] = None
     ) -> None:
         """
+        Initialize the SpikeTrain with activity data, time stamps, and 
+        optional bin indices.
+
         Parameters
         ----------
         activity: ndarray
@@ -343,45 +347,84 @@ class SpikeTrain(_NeuralActivity):
         
     def calc_temporal_tuning_curve(
         self, 
-        twindow: float,
-        mode: str = 'sliding'
+        t_window: float,
+        step_size: Optional[float] = None
     ) -> TuningCurve:
         """
-        Calculate the temporal firing rate of neurons, namely the temporal
-        population vector.
+        Calculate the temporal firing rate of neurons using specified windowing
+        method.
         
         Parameters
         ----------
-        twindow: float
+        t_window: float
             The time window in miliseconds, e.g., 400
-        mode: str
-            The mode to compute the temporal tuning curve.
-            Valid values: 'sliding', 'non-overlap'
-            - 'sliding': a sliding window, for instance,\\
-                [0, 400] -> [50, 450] -> [100, 500] -> [150, 550] -> ...
-            - 'non-overlap': non-overlapping windows, for instance,\\
-                [0, 400] -> [400, 800] -> [800, 1200] -> [1200, 1600] -> ...
+        step_size: 
+            The step size in milliseconds for moving the window; defaults to 
+            twindow if None, which makes it non-overlapping.
             
         Returns
         -------
         TuningCurve
             The temporal population vector of each neuron.
-            
-        Notes
-        -----
-        The temporal population vector is calculated by:\\
-        :math:`r(t)` = :math:`\sum_{i=1}^n r_i(t)`
-            
-        where :math:`r_i(t)` is the firing rate of neuron :math:`i` at time
-        :math:`t`.
-        """
-        if mode == 'sliding':
-            raise NotImplementedError
-        elif mode == 'non-overlap':
-            raise NotImplementedError
-        else:
-            raise NotImplementedError
 
+        Examples
+        --------
+        >>> from mazepy.datastruc.variables import SpikeTrain
+        >>> import numpy as np
+        >>>
+        >>> spikes = SpikeTrain(
+        ...     # Spike Train
+        ...     activity = np.array([
+        ...         [1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0],
+        ...         [1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1],
+        ...         [0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1]
+        ...     ]),
+        ...     # Time stamps (unit: ms)
+        ...     time_stamp = np.array([
+        ...         0, 30, 32, 50, 90, 102, 110, 130, 154, 180, 200, 205, 240,
+        ...         260, 300
+        ...     ])
+        ... )
+        >>> tuning_curve = spikes.calc_temporal_tuning_curve(50)
+        >>> # time bins: [0, 50], [50, 100], [100, 150], ...
+        >>> tuning_curve.firing_rate
+        array([[40., 20.,  0., 20., 40., 20.,  0.],
+               [40.,  0., 40., 40., 20.,  0., 20.],
+               [40., 40., 20., 20., 40.,  0., 20.]])
+        >>> tuning_curve = spikes.calc_temporal_tuning_curve(50, 20)
+        >>> # time bins: [0, 50], [20, 70], [40, 90], [60, 110], ...
+        >>> tuning_curve.firing_rate
+        array([[40., 40., 20.,  0.,  0.,  0., 20., 20., 20., 20., 40., 40., 40.,
+                20.],
+               [40., 20.,  0., 20., 40., 40., 20., 40., 20., 20., 20., 20., 20.,
+                20.],
+               [40., 60., 20., 40., 40., 20.,  0., 20., 60., 60., 40.,  0.,  0.,
+                20.]])
+        """
+        if step_size is None:
+            step_size = t_window # Non-overlapping time bins by default
+
+        t = self.time_stamp
+        t_min, t_max = np.min(t), np.max(t)
+
+        # Ensure the time window is less than the total duration
+        assert t_window < t_max - t_min
+        
+        # Calculate the number of steps
+        n_step = int((t_max - t_min - t_window) // step_size) + 1
+        tuning_curve = np.zeros((self.activity.shape[0], n_step + 1))
+
+        # Define the edges of the time bins
+        left_bounds = np.linspace(t_min, t_min + step_size * n_step, n_step + 1)
+        right_bounds = left_bounds + t_window
+
+        for i in range(n_step + 1):
+            tuning_curve[:, i] = np.sum(
+                self.activity[:, (t >= left_bounds[i])&(t < right_bounds[i])],
+                axis= 1
+            ) / t_window * 1000 # Convert to firing rate (Hz)
+
+        return TuningCurve(tuning_curve, (n_step + 1, ))
     
     def calc_firing_rate(
         self, 
@@ -451,7 +494,7 @@ class SpikeTrain(_NeuralActivity):
             range = [0, _nbins + 0.00001]
         )
         
-        spike_count = np.zeros((self.activity.shape[0], _nbins), dtype = np.float64)
+        spike_count = np.zeros((self.activity.shape[0], _nbins), np.float64)
         for i in range(_nbins):
             idx = np.where(self.variable == i+1)[0]
             spike_count[:,i] = np.nansum(self.activity[:, idx], axis = 1)
@@ -522,14 +565,18 @@ class CalciumTraces(_NeuralActivity):
         >>> import numpy as np
         >>>
         >>> calcium = CalciumTraces(
-        ...     activity = np.array([[0.02, 0.03, 0.01, 2, 0.1, 0.05, 
-        ...                           0.01, 0., 0.003, 0.03, 0.02, 0.03], 
-        ...                          [0.06, 3., 0.05, 0.08, 0.03, 0.05, 
-        ...                           0.02, 0.01, 0.06, 0.03, 0.02, 0.03]]),
-        ...     time_stamp = np.array([0, 50, 100, 150, 200, 250,
-        ...                            300, 350, 400, 450, 500, 550]),
-        ...     variable = VariableBin(np.array([1, 1, 2, 2, 2, 2,
-        ...                                      1, 2, 2, 1, 1, 1])),
+        ...     activity = np.array([
+        ...         [0.02, 0.03, 0.01, 2, 0.1, 0.05, 
+        ...          0.01, 0., 0.003, 0.03, 0.02, 0.03],
+        ...         [0.06, 3., 0.05, 0.08, 0.03, 0.05, 
+        ...          0.02, 0.01, 0.06, 0.03, 0.02, 0.03]
+        ...     ]),
+        ...     time_stamp = np.array([
+        ...         0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550
+        ...     ]),
+        ...     variable = VariableBin(np.array([
+        ...         1, 1, 2, 2, 2, 2, 1, 2, 2, 1, 1, 1
+        ...     ]))
         ... )
         >>> spike = calcium.binarize(thre = 3)
         >>> spike.activity
@@ -571,7 +618,80 @@ class RawSpikeTrain(_NeuralActivity):
             The bin index of each time point, with shape (n_time, ).
         """
         super().__init__(activity, time_stamp, variable)
-    
+
+class KilosortSpikeTrain(SpikeTrain):
+    """
+    A class for the spike train generated by KiloSort, which is a neural data
+    spike sorting algorithm. This class processes raw spike identification
+    data into a structured spike train array.
+    """
+    def __init__(
+        self,
+        activity: ndarray,
+        time_stamp: ndarray,
+        variable: Optional[VariableBin] = None
+    ) -> None:
+        """
+        Initializes a processed spike train from raw Kilosort output.
+
+        Parameters
+        ----------
+        activity : ndarray
+            The neuron ID of each spike, with shape (n_time, ).
+        time_stamp : ndarray
+            The time stamp of each time point, with shape (n_time, ).
+        variable : Optional[VariableBin]
+            The bin index of each time point, with shape (n_time, ), optional.
+        """
+        # Ensure the time_stamp is sorted and sort activity and variable 
+        # accordingly
+        sort_idx = np.argsort(time_stamp)
+        sorted_activity = activity[sort_idx]
+        sorted_time_stamp = Variable1D(time_stamp[sort_idx], meaning='time')
+        
+        if variable is not None:
+            if isinstance(variable, VariableBin):
+                variable.bins = variable.bins[sort_idx]
+            else:
+                raise TypeError(
+                    f"Expected variable of type VariableBin, "
+                    f"got {type(variable)} instead."
+                )
+        
+        # Convert neuron IDs to a binary spike train matrix
+        spike_train = self._process(activity=sorted_activity)
+        
+        # Initialize the base SpikeTrain class with sorted and processed data
+        super().__init__(
+            activity=spike_train,
+            time_stamp=sorted_time_stamp,
+            variable=variable
+        )
+
+    def _process(self, activity: ndarray) -> ndarray:
+        """
+        Converts neuron IDs in 'activity' to a binary spike train matrix.
+
+        Parameters
+        ----------
+        activity : ndarray
+            Array of neuron IDs for each spike.
+
+        Returns
+        -------
+        ndarray
+            A binary matrix (n_neurons x n_time) indicating spike occurrences.
+        """
+        # Find the number of neurons based on the highest neuron ID
+        n_neuron = np.max(activity)
+        spike_train = np.zeros((n_neuron, activity.size), dtype=np.int64)
+        
+        # Populate the spike train matrix
+        for neuron_id in range(1, n_neuron + 1):
+            spike_train[neuron_id - 1, activity == neuron_id] = 1
+        
+        return spike_train
+
 
 if __name__ == "__main__":
     import doctest
