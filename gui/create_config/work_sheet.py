@@ -3,7 +3,7 @@ from PyQt6 import QtCore
 from PyQt6.QtWidgets import QComboBox, QCheckBox, QPushButton, QFileDialog, QHBoxLayout, QScrollArea
 from PyQt6.QtWidgets import QVBoxLayout, QWidget, QLabel, QLineEdit, QWidget
 from mazepy.gui import WarningWindow, NoticeWindow
-from mazepy import mkdir
+from mazepy.os import mkdir
 from mazepy.gui.create_config import NAME_NUMBER_DEFAULT
 import yaml
 import sys
