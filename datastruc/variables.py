@@ -344,6 +344,7 @@ class SpikeTrain(_NeuralActivity):
             )
         super().__init__(activity, time_stamp, variable)
         self.firing_rate = None
+        self.occu_time = None
         
     def calc_temporal_tuning_curve(
         self, 
@@ -493,6 +494,7 @@ class SpikeTrain(_NeuralActivity):
             statistic="sum",
             range = [0, _nbins + 0.00001]
         )
+        self.occu_time = occu_time
         
         spike_count = np.zeros((self.activity.shape[0], _nbins), np.float64)
         for i in range(_nbins):
@@ -638,7 +640,7 @@ class KilosortSpikeTrain(SpikeTrain):
         ----------
         activity : ndarray
             The neuron ID of each spike, with shape (n_time, ).
-        time_stamp : ndarray
+        time_stamp : ndarray. Unit: miliseconds
             The time stamp of each time point, with shape (n_time, ).
         variable : Optional[VariableBin]
             The bin index of each time point, with shape (n_time, ), optional.

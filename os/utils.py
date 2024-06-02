@@ -1,5 +1,6 @@
 import os
 from os.path import exists, join
+import yaml
 
 def mkdir(path: str) -> bool:
     """mkdir: make directory
@@ -25,7 +26,6 @@ def mkdir(path: str) -> bool:
         print("        "+path + ' is already existed!')
         return False
 
-import yaml
 def load_yaml(yaml_dir: str) -> dict:
     """load_yaml: safely load yaml which contains python tuple. If you directly use yaml.safe_load(), it may raise 
                   an error:
