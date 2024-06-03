@@ -2,81 +2,88 @@ from numpy import ndarray
 from typing import Optional, Union, Callable
 import numpy as np
 
-class VariableBin:
-    bins: ndarray
+class VariableBin(ndarray):
+    def __new__(cls, input_array: ndarray) -> 'VariableBin': ...
+    def __array_finalize__(self, obj: Optional[ndarray]) -> None: ...
 
-    def __init__(self, bins: ndarray) -> None: ...
-
-class Variable1D:
-    x: ndarray
+class Variable1D(ndarray):
     meaning: Optional[str]
-    bins: Optional[VariableBin]
 
-    def __init__(self, x: ndarray) -> None: ...
-    def __str__(self) -> str: ...
-    def __len__(self) -> int: ...
-    def transform_to_bin(
+    def __new__(
+        cls, 
+        input_array: ndarray, 
+        meaning: Optional[str] = ...
+    ) -> 'Variable1D': ...
+    def __array_finalize__(self, obj: Optional[ndarray]) -> None: ...
+    @property
+    def x(self) -> ndarray: ...
+    def to_bin(
         self, 
-        xbin: int, 
-        xmax: float, 
-        xmin: Optional[float] = ...
+        xmin: float,
+        xmax: float,
+        nbin: int
     ) -> VariableBin: ...
 
-class Variable2D:
-    x: ndarray
-    y: ndarray
+class Variable2D(ndarray):
     meaning: Optional[str]
-    bins: Optional[VariableBin]
 
-    def __init__(self, x: ndarray, y: ndarray) -> None: ...
-    def __str__(self) -> str: ...
-    def __len__(self) -> int: ...
-    def transform_to_bin(
+    def __new__(
+        cls, 
+        input_array: ndarray,
+        meaning: Optional[str] = ...
+    ) -> 'Variable2D': ...
+    def __array_finalize__(self, obj: Optional[ndarray]) -> None: ...
+    @property
+    def x(self) -> Variable1D: ...
+    @property
+    def y(self) -> Variable1D: ...
+    def to_bin(
         self, 
-        xbin: int, 
-        ybin: int, 
-        xmax: float, 
-        ymax: float, 
-        xmin: Optional[float] = ..., 
-        ymin: Optional[float] = ...
+        xmin: float,
+        xmax: float,
+        xnbin: int,
+        ymin: float,
+        ymax: float,
+        ynbin: int
     ) -> VariableBin: ...
 
-class Variable3D:
-    x: ndarray
-    y: ndarray
-    z: ndarray
-    meaning: Optional[str]
-    bins: Optional[VariableBin]
+class Variable3D(ndarray):
+    meaning: Union[str, tuple[str, str, str], None] = None
 
-    def __init__(
-        self, 
-        x: ndarray, 
-        y: ndarray, 
-        z: ndarray, 
-        meaning: Optional[str]
-    ) -> None: ...
-    def __str__(self) -> str: ...
-    def __len__(self) -> int: ...
-    def transform_to_bin(
-        self, xbin: int, 
-        ybin: int, 
-        zbin: int, 
-        xmax: float, 
-        ymax: float, 
+    def __new__(
+        cls, 
+        input_array: ndarray,
+        meaning: Union[str, tuple[str, str, str], None] = ...
+    ) -> 'Variable3D': ...
+    def __array_finalize__(self, obj: Optional[ndarray]) -> None: ...
+    @property
+    def x(self) -> Variable1D: ...
+    @property
+    def y(self) -> Variable1D: ...
+    @property
+    def z(self) -> Variable1D: ...
+    def to_bin(
+        self,
+        xmin: float,
+        xmax: float,
+        xnbin: int,
+        ymin: float,
+        ymax: float,
+        ynbin: int,
+        zmin: float,
         zmax: float,
-        xmin: Optional[float] = ..., 
-        ymin: Optional[float] = ..., 
-        zmin: Optional[float] = ...
+        znbin: int
     ) -> VariableBin: ...
 
-class TuningCurve:
-    _ndim: int
-    firing_rate: ndarray
-    nbins: int
-
+class TuningCurve(ndarray):
     def __init__(self, firing_rate: ndarray) -> None: ...
     @property
     def n_neuron(self) -> int: ...
+    def get_argpeaks(self) -> ndarray: ...
+    def get_peaks(self) -> ndarray: ...
+    def remove_nan(self) -> None: ...
+    def get_fields(self) -> list[dict]: ...
+    def 
 
 class _NeuralActivity:
     variable: Optional[VariableBin]

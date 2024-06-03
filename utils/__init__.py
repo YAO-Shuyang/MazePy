@@ -1,1 +1,0 @@
-from mazepy.utils.transloc import value_to_bin
