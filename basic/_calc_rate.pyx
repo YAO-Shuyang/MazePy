@@ -1,21 +1,18 @@
 import numpy as np
 cimport numpy as cnp
-from libc.math cimport log2
 
-cpdef cnp.ndarray[cnp.int64_t, ndim=2] _get_spike_counts(
-    cnp.ndarray[cnp.int64_t, ndim=2] spikes,
+cpdef cnp.ndarray[cnp.int64_t, ndim=2] _get_kilosort_spike_counts(
+    cnp.ndarray[cnp.int64_t, ndim=1] spikes,
     cnp.ndarray[cnp.int64_t, ndim=1] variable,
     int nbins
 ):
     cdef:
         cnp.ndarray[cnp.int64_t, ndim=2] spike_counts = np.zeros(
-            (spikes.shape[0], nbins), np.int64
+            (np.max(spikes), nbins), np.int64
         )
-    
-    for i in range(spikes.shape[1]):
-        for j in range(spikes.shape[0]):
-            if spikes[j, i] == 1:
-                spike_counts[j, variable[i]] += 1
+
+    for i in range(spikes.shape[0]):
+        spike_counts[spikes[i] - 1, variable[i]] += 1
     
     return spike_counts
 

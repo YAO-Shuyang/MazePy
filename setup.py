@@ -12,6 +12,11 @@ extensions = [
         "basic._calc_rate",
         ["basic/_calc_rate.pyx"],
         include_dirs=[numpy.get_include()],
+    ),
+    Extension(
+        "basic._utils",
+        ["basic/_utils.pyx"],
+        include_dirs=[numpy.get_include()],
     )
 ]
 

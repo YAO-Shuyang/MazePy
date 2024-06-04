@@ -2,10 +2,10 @@
 import numpy as np
 cimport numpy as cnp
 
-def _coordinate_recording_time(
+cpdef cnp.ndarray[cnp.int64_t, ndim=1] _coordinate_recording_time(
     cnp.ndarray[cnp.float64_t, ndim=1] source_time, 
     cnp.ndarray[cnp.float64_t, ndim=1] target_time
-) -> cnp.ndarray:
+):
     cdef int i, j, min_idx 
     cdef double min_val
     cdef cnp.ndarray[cnp.int64_t, ndim=1] res = np.zeros(

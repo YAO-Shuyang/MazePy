@@ -10,7 +10,8 @@ from mazepy.datastruc.exceptions import ViolatedConstraintError
 from mazepy.datastruc.exceptions import DimensionMismatchError
 from mazepy.datastruc.variables import VariableBin, Variable1D
 from mazepy.basic.conversion import coordinate_recording_time
-from mazepy.basic._calc_rate import _get_spike_counts, _get_occu_time
+from mazepy.basic._calc_rate import _get_kilosort_spike_counts, _get_occu_time
+from mazepy.basic._utils import _convert_kilosort_spike_train
 
 Kernels = Union[GaussianKernel1d, UniformKernel1d, ndarray]
 
@@ -404,11 +405,11 @@ class SpikeTrain(_NeuralActivity):
         time: Union[Variable1D, ndarray], 
         variable: Optional[VariableBin] = None
     ):
-        obj = np.asarray(activity).view(cls)
+        obj = activity.view(cls)
         return obj
     
     def __init__(
-        cls,
+        self,
         activity: ndarray,
         time: Union[Variable1D, ndarray],  
         variable: Optional[VariableBin] = None
@@ -421,9 +422,10 @@ class SpikeTrain(_NeuralActivity):
             raise ViolatedConstraintError(
                 "All entries of the spike train should be either 0 or 1."
             )
-
-        super().__init__(activity, time, variable)
-
+            
+        self.time = time
+        self.variable = variable
+        
     def _get_dt(self, t_interv_limits: Optional[float] = None) -> ndarray:
         """
         Get the time interval between each spike in the spike train, namely
@@ -570,11 +572,11 @@ class SpikeTrain(_NeuralActivity):
                         f"{np.max(self.variable)}, "
                         f"equals to or exceeds the input bin number {nbins}."
                     )
-            return _get_spike_counts(
-                self.astype(np.int64), 
-                self.variable.astype(np.int64), 
-                nbins
-            )
+            spike_count = np.zeros((self.shape[0], nbins), np.float64)
+            for i in range(nbins):
+                idx = np.where(self.variable == i)[0]
+                spike_count[:,i] = np.nansum(self[:, idx], axis = 1)
+            return spike_count
         else:
             raise ValueError("Param mode should be either 'sum' or 'bin'.")
 
@@ -733,7 +735,9 @@ class SpikeTrain(_NeuralActivity):
         self, 
         nbins: int,
         is_remove_nan: bool = True,
-        t_interv_limits: Optional[float] = None
+        t_interv_limits: Optional[float] = None,
+        kilosort_spikes: Optional[np.ndarray] = None,
+        kilosort_variables: Optional[Variable1D] = None
     ) -> TuningCurve:
         """
         Calculate the firing rate of each neuron
@@ -752,6 +756,13 @@ class SpikeTrain(_NeuralActivity):
             The frame per second of recording
         t_interv_limits: float
             The maximum time interval allowed between two frames.
+        kilosort_spikes: np.ndarray, (n_spikes, )
+            if kilosort-form spikes were available, used to greatly reduce
+            the computational time. So called `kilosort spikes` is an 1D
+            array with elements representing the neurons that were detected
+            spikes in sequence.
+        kisosort_variables: Variable1D, (n_spikes, )
+            Variables relates to kilosort-form spikes.
         
         Returns
         -------
@@ -788,37 +799,27 @@ class SpikeTrain(_NeuralActivity):
                 f"equals to or exceeds the input bin number {nbins}."
             )
         
-        t1 = time.time()
+        
         dt = self._get_dt(t_interv_limits=t_interv_limits)
+        occu_time = _get_occu_time(self.variable, dt, nbins)
         
-        occu_time, _, _ = binned_statistic(
-            self.variable,
-            dt,
-            bins=nbins,
-            statistic="sum",
-            range = [0, nbins - 1 + 0.00001]
-        )
-        #print(time.time() - t1)
-        t2 = time.time()
-        occu_time2 = self.calc_occu_time(
-            t_interv_limits=t_interv_limits,
-            nbins=nbins
-        )
-        #print(time.time() - t2)
-        
-        t3 = time.time()
-        spike_count = np.zeros((self.shape[0], nbins), np.float64)
-        for i in range(nbins):
-            idx = np.where(self.variable == i)[0]
-            spike_count[:,i] = np.nansum(self[:, idx], axis = 1)
 
-        #print(time.time() - t3)
-        
-        t4 = time.time()
-        spike_count2 = self.calc_spike_count(mode="bin", nbins=nbins)
-        #print(time.time() - t4)
-
-        firing_rate = spike_count/(occu_time/1000)
+        # Calculate the firing rate
+        if kilosort_spikes is None:
+            spike_counts = self.calc_spike_count(mode='bin', nbins=nbins)
+        else:
+            if kilosort_variables is None:
+                raise ValueError(
+                    "Both kilosort_spikes and kilosort_variables should be"
+                    "provided."
+                )
+            spike_counts = _get_kilosort_spike_counts(
+                kilosort_spikes.astype(np.int64),
+                kilosort_variables.astype(np.int64),
+                nbins
+            )
+            
+        firing_rate = spike_counts/(occu_time/1000)
         
         # Deal with nan value
         if is_remove_nan:
@@ -948,89 +949,111 @@ class RawSpikeTrain(_NeuralActivity):
     def __init__(self) -> None:
         super().__init__()
 
+
+def convert_kilosort_spike_train(activity: ndarray) -> ndarray:
+    """
+    Converts neuron IDs in 'activity' to a binary spike train matrix.
+
+    Parameters
+    ----------
+    activity : ndarray, (n_time, )
+        Array of neuron IDs for each spike.
+
+    Returns
+    -------
+    ndarray, (n_neurons, n_time)
+        A binary matrix (n_neurons x n_time) indicating spike occurrences.
+        
+    Examples
+    --------
+    >>> activity = np.array([1, 2, 3, 2, 3, 5, 4, 4, 1, 2])
+    >>> kilosort_spike_train = convert_kilosort_spike_train(activity)
+    >>> kilosort_spike_train
+    array([[1, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+           [0, 1, 0, 1, 0, 0, 0, 0, 0, 1],
+           [0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
+           [0, 0, 0, 0, 0, 1, 0, 0, 0, 0]], dtype=int64)
+    """
+    # Find the number of neurons based on the highest neuron ID
+    return _convert_kilosort_spike_train(
+        activity=activity.astype(np.int64)
+    )
+
 class KilosortSpikeTrain(SpikeTrain):
     """
     A class for the spike train generated by KiloSort, which is a neural data
     spike sorting algorithm. This class processes raw spike identification
     data into a structured spike train array.
     """
+    
     def __new__(
         cls,
         activity: ndarray,
-        time: ndarray,
+        time: Union[Variable1D, ndarray],
         variable: Optional[VariableBin] = None
     ) -> None:
         """
-        Initializes a processed spike train from raw Kilosort output.
-
         Parameters
         ----------
-        activity : ndarray
-            The neuron ID of each spike, with shape (n_time, ).
-        time : ndarray. Unit: miliseconds
+        activity: ndarray
+            The spike trains of each neuron, with shape (n_neurons, n_time).
+        time: Variable1D
             The time stamp of each time point, with shape (n_time, ).
-        variable : Optional[VariableBin]
-            The bin index of each time point, with shape (n_time, ), optional.
+        variable: VariableBin
+            The bin index of each time point, with shape (n_time, ).
         """
-        # Ensure the time is sorted and sort activity and variable 
-        # accordingly
-        sort_idx = np.argsort(time)
-        sorted_activity = activity[sort_idx]
-        sorted_time = Variable1D(time[sort_idx], meaning='time')
         
         if variable is not None:
-            if isinstance(variable, VariableBin):
-                variable = variable[sort_idx]
-            else:
+            if isinstance(variable, VariableBin) == False:
                 raise TypeError(
                     f"Expected variable of type VariableBin, "
                     f"got {type(variable)} instead."
                 )
         
         # Convert neuron IDs to a binary spike train matrix
-        obj = np.asarray(sorted_activity, dtype=np.int64).view(cls)
-        spike_train = obj.process(activity=sorted_activity)
-
-        # Initialize the base SpikeTrain class with sorted and processed data
-        return super().__new__(
-            cls,
-            activity=spike_train,
-            time=sorted_time,
-            variable=variable
-        )
-        
+        spike_train = convert_kilosort_spike_train(activity)
+        obj = spike_train.view(cls)
+        obj.time = time
+        obj.variable = variable
+        return obj
+    
     def __init__(
-        self,
-        activity: ndarray,
-        time: ndarray,
+        self, 
+        activity: ndarray, 
+        time: Union[Variable1D, ndarray], 
         variable: Optional[VariableBin] = None
     ) -> None:
-        super().__init__(activity, time, variable)
-
-    def process(self, activity: ndarray) -> ndarray:
+        super().__init__(self, self.time, self.variable)
+        
+    @staticmethod
+    def get_spike_train(
+        activity: ndarray,
+        input_time: ndarray,
+        variable: Optional[VariableBin] = None
+    ) -> SpikeTrain:
         """
-        Converts neuron IDs in 'activity' to a binary spike train matrix.
+        Creates a spike train from raw Kilosort output.
 
         Parameters
         ----------
-        activity : ndarray
-            Array of neuron IDs for each spike.
-
+        activity: ndarray
+            The spike trains of each neuron, with shape (n_neurons, n_time).
+        time: Variable1D
+            The time stamp of each time point, with shape (n_time, ).
+        variable: VariableBin
+            The bin index of each time point, with shape (n_time, ).
+            
         Returns
         -------
-        ndarray
-            A binary matrix (n_neurons x n_time) indicating spike occurrences.
+        SpikeTrain
+            A spike train object.
         """
-        # Find the number of neurons based on the highest neuron ID
-        n_neuron = np.max(activity)
-        spike_train = np.zeros((n_neuron, activity.size), dtype=np.int64)
+        spike_train = convert_kilosort_spike_train(activity)
+        return SpikeTrain(spike_train, input_time, variable)
         
-        # Populate the spike train matrix
-        for neuron_id in range(1, n_neuron + 1):
-            spike_train[neuron_id - 1, activity == neuron_id] = 1
         
-        return spike_train
-    
+        
 
 if __name__ == "__main__":
     import doctest
