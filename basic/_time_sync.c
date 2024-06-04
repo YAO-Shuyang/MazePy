@@ -3,13 +3,22 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "depends": [],
-        "name": "mazepy.basic.time_sync",
+        "depends": [
+            "C:\\ProgramData\\anaconda3\\envs\\replaypy\\lib\\site-packages\\numpy\\core\\include\\numpy\\arrayobject.h",
+            "C:\\ProgramData\\anaconda3\\envs\\replaypy\\lib\\site-packages\\numpy\\core\\include\\numpy\\arrayscalars.h",
+            "C:\\ProgramData\\anaconda3\\envs\\replaypy\\lib\\site-packages\\numpy\\core\\include\\numpy\\ndarrayobject.h",
+            "C:\\ProgramData\\anaconda3\\envs\\replaypy\\lib\\site-packages\\numpy\\core\\include\\numpy\\ndarraytypes.h",
+            "C:\\ProgramData\\anaconda3\\envs\\replaypy\\lib\\site-packages\\numpy\\core\\include\\numpy\\ufuncobject.h"
+        ],
+        "include_dirs": [
+            "C:\\ProgramData\\anaconda3\\envs\\replaypy\\lib\\site-packages\\numpy\\core\\include"
+        ],
+        "name": "basic._time_sync",
         "sources": [
-            "C:\\ProgramData\\anaconda3\\envs\\replaypy\\Lib\\site-packages\\mazepy\\basic\\time_sync.pyx"
+            "basic\\_time_sync.pyx"
         ]
     },
-    "module_name": "mazepy.basic.time_sync"
+    "module_name": "basic._time_sync"
 }
 END: Cython Metadata */
 
@@ -1229,8 +1238,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__mazepy__basic__time_sync
-#define __PYX_HAVE_API__mazepy__basic__time_sync
+#define __PYX_HAVE__basic___time_sync
+#define __PYX_HAVE_API__basic___time_sync
 /* Early includes */
 #include <string.h>
 #include <stdio.h>
@@ -1512,7 +1521,7 @@ static const char *__pyx_filename;
 /* #### Code section: filename_table ### */
 
 static const char *__pyx_f[] = {
-  "basic\\\\time_sync.pyx",
+  "basic\\\\_time_sync.pyx",
   "__init__.cython-30.pxd",
   "type.pxd",
 };
@@ -2637,6 +2646,9 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_Py_intptr_t(Py_intptr_t value);
 /* CIntFromPy.proto */
 static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
 
+/* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
+
 /* FormatTypeName.proto */
 #if CYTHON_COMPILING_IN_LIMITED_API
 typedef PyObject *__Pyx_TypeName;
@@ -2707,16 +2719,16 @@ static CYTHON_INLINE char *__pyx_f_5numpy_7ndarray_4data_data(PyArrayObject *__p
 
 /* Module declarations from "numpy" */
 
-/* Module declarations from "mazepy.basic.time_sync" */
+/* Module declarations from "basic._time_sync" */
 /* #### Code section: typeinfo ### */
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t = { "float64_t", NULL, sizeof(__pyx_t_5numpy_float64_t), { 0 }, 0, 'R', 0, 0 };
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_int64_t = { "int64_t", NULL, sizeof(__pyx_t_5numpy_int64_t), { 0 }, 0, __PYX_IS_UNSIGNED(__pyx_t_5numpy_int64_t) ? 'U' : 'I', __PYX_IS_UNSIGNED(__pyx_t_5numpy_int64_t), 0 };
 /* #### Code section: before_global_var ### */
-#define __Pyx_MODULE_NAME "mazepy.basic.time_sync"
-extern int __pyx_module_is_main_mazepy__basic__time_sync;
-int __pyx_module_is_main_mazepy__basic__time_sync = 0;
+#define __Pyx_MODULE_NAME "basic._time_sync"
+extern int __pyx_module_is_main_basic___time_sync;
+int __pyx_module_is_main_basic___time_sync = 0;
 
-/* Implementation of "mazepy.basic.time_sync" */
+/* Implementation of "basic._time_sync" */
 /* #### Code section: global_var ### */
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_ImportError;
@@ -2741,23 +2753,22 @@ static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_return[] = "return";
 static const char __pyx_k_min_idx[] = "min_idx";
 static const char __pyx_k_min_val[] = "min_val";
+static const char __pyx_k_prev_index[] = "prev_index";
 static const char __pyx_k_ImportError[] = "ImportError";
 static const char __pyx_k_cnp_ndarray[] = "cnp.ndarray";
 static const char __pyx_k_source_time[] = "source_time";
 static const char __pyx_k_target_time[] = "target_time";
 static const char __pyx_k_initializing[] = "_initializing";
 static const char __pyx_k_is_coroutine[] = "_is_coroutine";
+static const char __pyx_k_basic__time_sync[] = "basic._time_sync";
 static const char __pyx_k_asyncio_coroutines[] = "asyncio.coroutines";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
-static const char __pyx_k_basic_time_sync_pyx[] = "basic\\time_sync.pyx";
-static const char __pyx_k_mazepy_basic_time_sync[] = "mazepy.basic.time_sync";
-static const char __pyx_k_coordinate_recording_time[] = "coordinate_recording_time";
-static const char __pyx_k_Coordinate_recording_time_of_be[] = "\n    Coordinate recording time of behavioral data and neural data.\n\n    Parameters\n    ----------\n    source_time : ndarray\n        The time to be converted (typically the neural data).\n    target_time : ndarray\n        The targeted time (typically the behavioral data).\n\n    Returns\n    -------\n    ndarray\n        The index of each source_time in target_time. The same length as\n        source_time.\n\n    Examples\n    --------\n    >>> source_time = np.array([0, 33, 67, 100, 133, 167, 200, 233, 267, 300])\n    >>> target_time = np.array([0, 50, 100, 150, 200, 250, 300])\n    >>> coordinate_recording_time(source_time, target_time)\n    array([0, 1, 1, 2, 3, 3, 4, 5, 5, 6], dtype=int64)\n    ";
+static const char __pyx_k_basic__time_sync_pyx[] = "basic\\_time_sync.pyx";
+static const char __pyx_k_coordinate_recording_time[] = "_coordinate_recording_time";
 static const char __pyx_k_numpy_core_multiarray_failed_to[] = "numpy.core.multiarray failed to import";
-static const char __pyx_k_coordinate_recording_time_line_5[] = "coordinate_recording_time (line 5)";
 static const char __pyx_k_numpy_core_umath_failed_to_impor[] = "numpy.core.umath failed to import";
 /* #### Code section: decls ### */
-static PyArrayObject *__pyx_pf_6mazepy_5basic_9time_sync_coordinate_recording_time(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_source_time, PyArrayObject *__pyx_v_target_time); /* proto */
+static PyArrayObject *__pyx_pf_5basic_10_time_sync__coordinate_recording_time(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_source_time, PyArrayObject *__pyx_v_target_time); /* proto */
 /* #### Code section: late_includes ### */
 /* #### Code section: module_state ### */
 typedef struct {
@@ -2821,16 +2832,15 @@ typedef struct {
   PyTypeObject *__pyx_ptype_5numpy_ufunc;
   #if CYTHON_USE_MODULE_STATE
   #endif
-  PyObject *__pyx_kp_u_Coordinate_recording_time_of_be;
   PyObject *__pyx_n_s_ImportError;
   PyObject *__pyx_n_s__3;
   PyObject *__pyx_n_s__6;
   PyObject *__pyx_n_s_asyncio_coroutines;
-  PyObject *__pyx_kp_s_basic_time_sync_pyx;
+  PyObject *__pyx_n_s_basic__time_sync;
+  PyObject *__pyx_kp_s_basic__time_sync_pyx;
   PyObject *__pyx_n_s_cline_in_traceback;
   PyObject *__pyx_kp_s_cnp_ndarray;
   PyObject *__pyx_n_s_coordinate_recording_time;
-  PyObject *__pyx_kp_u_coordinate_recording_time_line_5;
   PyObject *__pyx_n_s_dtype;
   PyObject *__pyx_n_s_i;
   PyObject *__pyx_n_s_import;
@@ -2840,7 +2850,6 @@ typedef struct {
   PyObject *__pyx_n_s_is_coroutine;
   PyObject *__pyx_n_s_j;
   PyObject *__pyx_n_s_main;
-  PyObject *__pyx_n_s_mazepy_basic_time_sync;
   PyObject *__pyx_n_s_min_idx;
   PyObject *__pyx_n_s_min_val;
   PyObject *__pyx_n_s_name;
@@ -2848,6 +2857,7 @@ typedef struct {
   PyObject *__pyx_n_s_numpy;
   PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
   PyObject *__pyx_kp_s_numpy_core_umath_failed_to_impor;
+  PyObject *__pyx_n_s_prev_index;
   PyObject *__pyx_n_s_range;
   PyObject *__pyx_n_s_res;
   PyObject *__pyx_n_s_return;
@@ -2918,16 +2928,15 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_ptype_5numpy_flexible);
   Py_CLEAR(clear_module_state->__pyx_ptype_5numpy_character);
   Py_CLEAR(clear_module_state->__pyx_ptype_5numpy_ufunc);
-  Py_CLEAR(clear_module_state->__pyx_kp_u_Coordinate_recording_time_of_be);
   Py_CLEAR(clear_module_state->__pyx_n_s_ImportError);
   Py_CLEAR(clear_module_state->__pyx_n_s__3);
   Py_CLEAR(clear_module_state->__pyx_n_s__6);
   Py_CLEAR(clear_module_state->__pyx_n_s_asyncio_coroutines);
-  Py_CLEAR(clear_module_state->__pyx_kp_s_basic_time_sync_pyx);
+  Py_CLEAR(clear_module_state->__pyx_n_s_basic__time_sync);
+  Py_CLEAR(clear_module_state->__pyx_kp_s_basic__time_sync_pyx);
   Py_CLEAR(clear_module_state->__pyx_n_s_cline_in_traceback);
   Py_CLEAR(clear_module_state->__pyx_kp_s_cnp_ndarray);
   Py_CLEAR(clear_module_state->__pyx_n_s_coordinate_recording_time);
-  Py_CLEAR(clear_module_state->__pyx_kp_u_coordinate_recording_time_line_5);
   Py_CLEAR(clear_module_state->__pyx_n_s_dtype);
   Py_CLEAR(clear_module_state->__pyx_n_s_i);
   Py_CLEAR(clear_module_state->__pyx_n_s_import);
@@ -2937,7 +2946,6 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_is_coroutine);
   Py_CLEAR(clear_module_state->__pyx_n_s_j);
   Py_CLEAR(clear_module_state->__pyx_n_s_main);
-  Py_CLEAR(clear_module_state->__pyx_n_s_mazepy_basic_time_sync);
   Py_CLEAR(clear_module_state->__pyx_n_s_min_idx);
   Py_CLEAR(clear_module_state->__pyx_n_s_min_val);
   Py_CLEAR(clear_module_state->__pyx_n_s_name);
@@ -2945,6 +2953,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_numpy);
   Py_CLEAR(clear_module_state->__pyx_kp_s_numpy_core_multiarray_failed_to);
   Py_CLEAR(clear_module_state->__pyx_kp_s_numpy_core_umath_failed_to_impor);
+  Py_CLEAR(clear_module_state->__pyx_n_s_prev_index);
   Py_CLEAR(clear_module_state->__pyx_n_s_range);
   Py_CLEAR(clear_module_state->__pyx_n_s_res);
   Py_CLEAR(clear_module_state->__pyx_n_s_return);
@@ -2993,16 +3002,15 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_ptype_5numpy_flexible);
   Py_VISIT(traverse_module_state->__pyx_ptype_5numpy_character);
   Py_VISIT(traverse_module_state->__pyx_ptype_5numpy_ufunc);
-  Py_VISIT(traverse_module_state->__pyx_kp_u_Coordinate_recording_time_of_be);
   Py_VISIT(traverse_module_state->__pyx_n_s_ImportError);
   Py_VISIT(traverse_module_state->__pyx_n_s__3);
   Py_VISIT(traverse_module_state->__pyx_n_s__6);
   Py_VISIT(traverse_module_state->__pyx_n_s_asyncio_coroutines);
-  Py_VISIT(traverse_module_state->__pyx_kp_s_basic_time_sync_pyx);
+  Py_VISIT(traverse_module_state->__pyx_n_s_basic__time_sync);
+  Py_VISIT(traverse_module_state->__pyx_kp_s_basic__time_sync_pyx);
   Py_VISIT(traverse_module_state->__pyx_n_s_cline_in_traceback);
   Py_VISIT(traverse_module_state->__pyx_kp_s_cnp_ndarray);
   Py_VISIT(traverse_module_state->__pyx_n_s_coordinate_recording_time);
-  Py_VISIT(traverse_module_state->__pyx_kp_u_coordinate_recording_time_line_5);
   Py_VISIT(traverse_module_state->__pyx_n_s_dtype);
   Py_VISIT(traverse_module_state->__pyx_n_s_i);
   Py_VISIT(traverse_module_state->__pyx_n_s_import);
@@ -3012,7 +3020,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_is_coroutine);
   Py_VISIT(traverse_module_state->__pyx_n_s_j);
   Py_VISIT(traverse_module_state->__pyx_n_s_main);
-  Py_VISIT(traverse_module_state->__pyx_n_s_mazepy_basic_time_sync);
   Py_VISIT(traverse_module_state->__pyx_n_s_min_idx);
   Py_VISIT(traverse_module_state->__pyx_n_s_min_val);
   Py_VISIT(traverse_module_state->__pyx_n_s_name);
@@ -3020,6 +3027,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_numpy);
   Py_VISIT(traverse_module_state->__pyx_kp_s_numpy_core_multiarray_failed_to);
   Py_VISIT(traverse_module_state->__pyx_kp_s_numpy_core_umath_failed_to_impor);
+  Py_VISIT(traverse_module_state->__pyx_n_s_prev_index);
   Py_VISIT(traverse_module_state->__pyx_n_s_range);
   Py_VISIT(traverse_module_state->__pyx_n_s_res);
   Py_VISIT(traverse_module_state->__pyx_n_s_return);
@@ -3096,16 +3104,15 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_ptype_5numpy_ufunc __pyx_mstate_global->__pyx_ptype_5numpy_ufunc
 #if CYTHON_USE_MODULE_STATE
 #endif
-#define __pyx_kp_u_Coordinate_recording_time_of_be __pyx_mstate_global->__pyx_kp_u_Coordinate_recording_time_of_be
 #define __pyx_n_s_ImportError __pyx_mstate_global->__pyx_n_s_ImportError
 #define __pyx_n_s__3 __pyx_mstate_global->__pyx_n_s__3
 #define __pyx_n_s__6 __pyx_mstate_global->__pyx_n_s__6
 #define __pyx_n_s_asyncio_coroutines __pyx_mstate_global->__pyx_n_s_asyncio_coroutines
-#define __pyx_kp_s_basic_time_sync_pyx __pyx_mstate_global->__pyx_kp_s_basic_time_sync_pyx
+#define __pyx_n_s_basic__time_sync __pyx_mstate_global->__pyx_n_s_basic__time_sync
+#define __pyx_kp_s_basic__time_sync_pyx __pyx_mstate_global->__pyx_kp_s_basic__time_sync_pyx
 #define __pyx_n_s_cline_in_traceback __pyx_mstate_global->__pyx_n_s_cline_in_traceback
 #define __pyx_kp_s_cnp_ndarray __pyx_mstate_global->__pyx_kp_s_cnp_ndarray
 #define __pyx_n_s_coordinate_recording_time __pyx_mstate_global->__pyx_n_s_coordinate_recording_time
-#define __pyx_kp_u_coordinate_recording_time_line_5 __pyx_mstate_global->__pyx_kp_u_coordinate_recording_time_line_5
 #define __pyx_n_s_dtype __pyx_mstate_global->__pyx_n_s_dtype
 #define __pyx_n_s_i __pyx_mstate_global->__pyx_n_s_i
 #define __pyx_n_s_import __pyx_mstate_global->__pyx_n_s_import
@@ -3115,7 +3122,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_is_coroutine __pyx_mstate_global->__pyx_n_s_is_coroutine
 #define __pyx_n_s_j __pyx_mstate_global->__pyx_n_s_j
 #define __pyx_n_s_main __pyx_mstate_global->__pyx_n_s_main
-#define __pyx_n_s_mazepy_basic_time_sync __pyx_mstate_global->__pyx_n_s_mazepy_basic_time_sync
 #define __pyx_n_s_min_idx __pyx_mstate_global->__pyx_n_s_min_idx
 #define __pyx_n_s_min_val __pyx_mstate_global->__pyx_n_s_min_val
 #define __pyx_n_s_name __pyx_mstate_global->__pyx_n_s_name
@@ -3123,6 +3129,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_numpy __pyx_mstate_global->__pyx_n_s_numpy
 #define __pyx_kp_s_numpy_core_multiarray_failed_to __pyx_mstate_global->__pyx_kp_s_numpy_core_multiarray_failed_to
 #define __pyx_kp_s_numpy_core_umath_failed_to_impor __pyx_mstate_global->__pyx_kp_s_numpy_core_umath_failed_to_impor
+#define __pyx_n_s_prev_index __pyx_mstate_global->__pyx_n_s_prev_index
 #define __pyx_n_s_range __pyx_mstate_global->__pyx_n_s_range
 #define __pyx_n_s_res __pyx_mstate_global->__pyx_n_s_res
 #define __pyx_n_s_return __pyx_mstate_global->__pyx_n_s_return
@@ -4399,25 +4406,24 @@ static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObjec
   return __pyx_r;
 }
 
-/* "mazepy/basic/time_sync.pyx":5
+/* "basic/_time_sync.pyx":5
  * cimport numpy as cnp
  * 
- * def coordinate_recording_time(             # <<<<<<<<<<<<<<
+ * def _coordinate_recording_time(             # <<<<<<<<<<<<<<
  *     cnp.ndarray[cnp.float64_t, ndim=1] source_time,
  *     cnp.ndarray[cnp.float64_t, ndim=1] target_time
  */
 
 /* Python wrapper */
-static PyArrayObject *__pyx_pw_6mazepy_5basic_9time_sync_1coordinate_recording_time(PyObject *__pyx_self, 
+static PyArrayObject *__pyx_pw_5basic_10_time_sync_1_coordinate_recording_time(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_6mazepy_5basic_9time_sync_coordinate_recording_time, "\n    Coordinate recording time of behavioral data and neural data.\n\n    Parameters\n    ----------\n    source_time : ndarray\n        The time to be converted (typically the neural data).\n    target_time : ndarray\n        The targeted time (typically the behavioral data).\n\n    Returns\n    -------\n    ndarray\n        The index of each source_time in target_time. The same length as\n        source_time.\n\n    Examples\n    --------\n    >>> source_time = np.array([0, 33, 67, 100, 133, 167, 200, 233, 267, 300])\n    >>> target_time = np.array([0, 50, 100, 150, 200, 250, 300])\n    >>> coordinate_recording_time(source_time, target_time)\n    array([0, 1, 1, 2, 3, 3, 4, 5, 5, 6], dtype=int64)\n    ");
-static PyMethodDef __pyx_mdef_6mazepy_5basic_9time_sync_1coordinate_recording_time = {"coordinate_recording_time", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6mazepy_5basic_9time_sync_1coordinate_recording_time, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_6mazepy_5basic_9time_sync_coordinate_recording_time};
-static PyArrayObject *__pyx_pw_6mazepy_5basic_9time_sync_1coordinate_recording_time(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_5basic_10_time_sync_1_coordinate_recording_time = {"_coordinate_recording_time", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5basic_10_time_sync_1_coordinate_recording_time, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyArrayObject *__pyx_pw_5basic_10_time_sync_1_coordinate_recording_time(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -4436,7 +4442,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   int __pyx_clineno = 0;
   PyArrayObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("coordinate_recording_time (wrapper)", 0);
+  __Pyx_RefNannySetupContext("_coordinate_recording_time (wrapper)", 0);
   #if !CYTHON_METH_FASTCALL
   #if CYTHON_ASSUME_SAFE_MACROS
   __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
@@ -4474,12 +4480,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
         }
         else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 5, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("coordinate_recording_time", 1, 2, 2, 1); __PYX_ERR(0, 5, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("_coordinate_recording_time", 1, 2, 2, 1); __PYX_ERR(0, 5, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "coordinate_recording_time") < 0)) __PYX_ERR(0, 5, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "_coordinate_recording_time") < 0)) __PYX_ERR(0, 5, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -4492,7 +4498,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("coordinate_recording_time", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 5, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_coordinate_recording_time", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 5, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -4502,13 +4508,13 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("mazepy.basic.time_sync.coordinate_recording_time", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("basic._time_sync._coordinate_recording_time", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_source_time), __pyx_ptype_5numpy_ndarray, 1, "source_time", 0))) __PYX_ERR(0, 6, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_target_time), __pyx_ptype_5numpy_ndarray, 1, "target_time", 0))) __PYX_ERR(0, 7, __pyx_L1_error)
-  __pyx_r = __pyx_pf_6mazepy_5basic_9time_sync_coordinate_recording_time(__pyx_self, __pyx_v_source_time, __pyx_v_target_time);
+  __pyx_r = __pyx_pf_5basic_10_time_sync__coordinate_recording_time(__pyx_self, __pyx_v_source_time, __pyx_v_target_time);
 
   /* function exit code */
   goto __pyx_L0;
@@ -4525,12 +4531,13 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyArrayObject *__pyx_pf_6mazepy_5basic_9time_sync_coordinate_recording_time(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_source_time, PyArrayObject *__pyx_v_target_time) {
+static PyArrayObject *__pyx_pf_5basic_10_time_sync__coordinate_recording_time(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_source_time, PyArrayObject *__pyx_v_target_time) {
   int __pyx_v_i;
   int __pyx_v_j;
   int __pyx_v_min_idx;
   double __pyx_v_min_val;
   PyArrayObject *__pyx_v_res = 0;
+  int __pyx_v_prev_index;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_res;
   __Pyx_Buffer __pyx_pybuffer_res;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_source_time;
@@ -4560,7 +4567,7 @@ static PyArrayObject *__pyx_pf_6mazepy_5basic_9time_sync_coordinate_recording_ti
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("coordinate_recording_time", 1);
+  __Pyx_RefNannySetupContext("_coordinate_recording_time", 1);
   __pyx_pybuffer_res.pybuffer.buf = NULL;
   __pyx_pybuffer_res.refcount = 0;
   __pyx_pybuffernd_res.data = NULL;
@@ -4584,47 +4591,79 @@ static PyArrayObject *__pyx_pf_6mazepy_5basic_9time_sync_coordinate_recording_ti
   }
   __pyx_pybuffernd_target_time.diminfo[0].strides = __pyx_pybuffernd_target_time.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_target_time.diminfo[0].shape = __pyx_pybuffernd_target_time.rcbuffer->pybuffer.shape[0];
 
-  /* "mazepy/basic/time_sync.pyx":34
+  /* "basic/_time_sync.pyx":11
  *     cdef int i, j, min_idx
  *     cdef double min_val
- *     cdef cnp.ndarray[cnp.int64_t, ndim=1] res = np.zeros(source_time.shape[0], dtype=np.int64)             # <<<<<<<<<<<<<<
- * 
- *     for i in range(source_time.shape[0]):
+ *     cdef cnp.ndarray[cnp.int64_t, ndim=1] res = np.zeros(             # <<<<<<<<<<<<<<
+ *         source_time.shape[0],
+ *         dtype=np.int64
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __pyx_f_5numpy_7ndarray_5shape_shape(((PyArrayObject *)__pyx_v_source_time)); if (unlikely(__pyx_t_3 == ((npy_intp *)NULL) && PyErr_Occurred())) __PYX_ERR(0, 34, __pyx_L1_error)
-  __pyx_t_1 = __Pyx_PyInt_From_Py_intptr_t((__pyx_t_3[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+
+  /* "basic/_time_sync.pyx":12
+ *     cdef double min_val
+ *     cdef cnp.ndarray[cnp.int64_t, ndim=1] res = np.zeros(
+ *         source_time.shape[0],             # <<<<<<<<<<<<<<
+ *         dtype=np.int64
+ *     )
+ */
+  __pyx_t_3 = __pyx_f_5numpy_7ndarray_5shape_shape(((PyArrayObject *)__pyx_v_source_time)); if (unlikely(__pyx_t_3 == ((npy_intp *)NULL) && PyErr_Occurred())) __PYX_ERR(0, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_Py_intptr_t((__pyx_t_3[0])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 34, __pyx_L1_error)
+
+  /* "basic/_time_sync.pyx":11
+ *     cdef int i, j, min_idx
+ *     cdef double min_val
+ *     cdef cnp.ndarray[cnp.int64_t, ndim=1] res = np.zeros(             # <<<<<<<<<<<<<<
+ *         source_time.shape[0],
+ *         dtype=np.int64
+ */
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_1);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1)) __PYX_ERR(0, 11, __pyx_L1_error);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+
+  /* "basic/_time_sync.pyx":13
+ *     cdef cnp.ndarray[cnp.int64_t, ndim=1] res = np.zeros(
+ *         source_time.shape[0],
+ *         dtype=np.int64             # <<<<<<<<<<<<<<
+ *     )
+ * 
+ */
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_int64); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_int64); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 34, __pyx_L1_error)
+
+  /* "basic/_time_sync.pyx":11
+ *     cdef int i, j, min_idx
+ *     cdef double min_val
+ *     cdef cnp.ndarray[cnp.int64_t, ndim=1] res = np.zeros(             # <<<<<<<<<<<<<<
+ *         source_time.shape[0],
+ *         dtype=np.int64
+ */
+  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 11, __pyx_L1_error)
   __pyx_t_7 = ((PyArrayObject *)__pyx_t_6);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_res.rcbuffer->pybuffer, (PyObject*)__pyx_t_7, &__Pyx_TypeInfo_nn___pyx_t_5numpy_int64_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
       __pyx_v_res = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_res.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 34, __pyx_L1_error)
+      __PYX_ERR(0, 11, __pyx_L1_error)
     } else {__pyx_pybuffernd_res.diminfo[0].strides = __pyx_pybuffernd_res.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_res.diminfo[0].shape = __pyx_pybuffernd_res.rcbuffer->pybuffer.shape[0];
     }
   }
@@ -4632,54 +4671,63 @@ static PyArrayObject *__pyx_pf_6mazepy_5basic_9time_sync_coordinate_recording_ti
   __pyx_v_res = ((PyArrayObject *)__pyx_t_6);
   __pyx_t_6 = 0;
 
-  /* "mazepy/basic/time_sync.pyx":36
- *     cdef cnp.ndarray[cnp.int64_t, ndim=1] res = np.zeros(source_time.shape[0], dtype=np.int64)
+  /* "basic/_time_sync.pyx":16
+ *     )
  * 
+ *     cdef int prev_index = 0             # <<<<<<<<<<<<<<
+ *     for i in range(source_time.shape[0]):
+ *         min_val = float('inf')
+ */
+  __pyx_v_prev_index = 0;
+
+  /* "basic/_time_sync.pyx":17
+ * 
+ *     cdef int prev_index = 0
  *     for i in range(source_time.shape[0]):             # <<<<<<<<<<<<<<
  *         min_val = float('inf')
- *         min_idx = 0
+ *         min_idx = prev_index
  */
-  __pyx_t_3 = __pyx_f_5numpy_7ndarray_5shape_shape(((PyArrayObject *)__pyx_v_source_time)); if (unlikely(__pyx_t_3 == ((npy_intp *)NULL) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_3 = __pyx_f_5numpy_7ndarray_5shape_shape(((PyArrayObject *)__pyx_v_source_time)); if (unlikely(__pyx_t_3 == ((npy_intp *)NULL) && PyErr_Occurred())) __PYX_ERR(0, 17, __pyx_L1_error)
   __pyx_t_8 = (__pyx_t_3[0]);
   __pyx_t_9 = __pyx_t_8;
   for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
     __pyx_v_i = __pyx_t_10;
 
-    /* "mazepy/basic/time_sync.pyx":37
- * 
+    /* "basic/_time_sync.pyx":18
+ *     cdef int prev_index = 0
  *     for i in range(source_time.shape[0]):
  *         min_val = float('inf')             # <<<<<<<<<<<<<<
- *         min_idx = 0
- *         for j in range(target_time.shape[0]):
+ *         min_idx = prev_index
+ *         for j in range(prev_index, target_time.shape[0]):
  */
-    __pyx_t_11 = __Pyx_PyString_AsDouble(__pyx_n_s_inf); if (unlikely(__pyx_t_11 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyString_AsDouble(__pyx_n_s_inf); if (unlikely(__pyx_t_11 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 18, __pyx_L1_error)
     __pyx_v_min_val = __pyx_t_11;
 
-    /* "mazepy/basic/time_sync.pyx":38
+    /* "basic/_time_sync.pyx":19
  *     for i in range(source_time.shape[0]):
  *         min_val = float('inf')
- *         min_idx = 0             # <<<<<<<<<<<<<<
- *         for j in range(target_time.shape[0]):
+ *         min_idx = prev_index             # <<<<<<<<<<<<<<
+ *         for j in range(prev_index, target_time.shape[0]):
  *             if abs(target_time[j] - source_time[i]) < min_val:
  */
-    __pyx_v_min_idx = 0;
+    __pyx_v_min_idx = __pyx_v_prev_index;
 
-    /* "mazepy/basic/time_sync.pyx":39
+    /* "basic/_time_sync.pyx":20
  *         min_val = float('inf')
- *         min_idx = 0
- *         for j in range(target_time.shape[0]):             # <<<<<<<<<<<<<<
+ *         min_idx = prev_index
+ *         for j in range(prev_index, target_time.shape[0]):             # <<<<<<<<<<<<<<
  *             if abs(target_time[j] - source_time[i]) < min_val:
  *                 min_val = abs(target_time[j] - source_time[i])
  */
-    __pyx_t_3 = __pyx_f_5numpy_7ndarray_5shape_shape(((PyArrayObject *)__pyx_v_target_time)); if (unlikely(__pyx_t_3 == ((npy_intp *)NULL) && PyErr_Occurred())) __PYX_ERR(0, 39, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_5numpy_7ndarray_5shape_shape(((PyArrayObject *)__pyx_v_target_time)); if (unlikely(__pyx_t_3 == ((npy_intp *)NULL) && PyErr_Occurred())) __PYX_ERR(0, 20, __pyx_L1_error)
     __pyx_t_12 = (__pyx_t_3[0]);
     __pyx_t_13 = __pyx_t_12;
-    for (__pyx_t_14 = 0; __pyx_t_14 < __pyx_t_13; __pyx_t_14+=1) {
+    for (__pyx_t_14 = __pyx_v_prev_index; __pyx_t_14 < __pyx_t_13; __pyx_t_14+=1) {
       __pyx_v_j = __pyx_t_14;
 
-      /* "mazepy/basic/time_sync.pyx":40
- *         min_idx = 0
- *         for j in range(target_time.shape[0]):
+      /* "basic/_time_sync.pyx":21
+ *         min_idx = prev_index
+ *         for j in range(prev_index, target_time.shape[0]):
  *             if abs(target_time[j] - source_time[i]) < min_val:             # <<<<<<<<<<<<<<
  *                 min_val = abs(target_time[j] - source_time[i])
  *                 min_idx = j
@@ -4692,7 +4740,7 @@ static PyArrayObject *__pyx_pf_6mazepy_5basic_9time_sync_coordinate_recording_ti
       } else if (unlikely(__pyx_t_15 >= __pyx_pybuffernd_target_time.diminfo[0].shape)) __pyx_t_16 = 0;
       if (unlikely(__pyx_t_16 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_16);
-        __PYX_ERR(0, 40, __pyx_L1_error)
+        __PYX_ERR(0, 21, __pyx_L1_error)
       }
       __pyx_t_17 = __pyx_v_i;
       __pyx_t_16 = -1;
@@ -4702,17 +4750,17 @@ static PyArrayObject *__pyx_pf_6mazepy_5basic_9time_sync_coordinate_recording_ti
       } else if (unlikely(__pyx_t_17 >= __pyx_pybuffernd_source_time.diminfo[0].shape)) __pyx_t_16 = 0;
       if (unlikely(__pyx_t_16 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_16);
-        __PYX_ERR(0, 40, __pyx_L1_error)
+        __PYX_ERR(0, 21, __pyx_L1_error)
       }
       __pyx_t_18 = (fabs(((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_target_time.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_target_time.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_source_time.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_source_time.diminfo[0].strides)))) < __pyx_v_min_val);
       if (__pyx_t_18) {
 
-        /* "mazepy/basic/time_sync.pyx":41
- *         for j in range(target_time.shape[0]):
+        /* "basic/_time_sync.pyx":22
+ *         for j in range(prev_index, target_time.shape[0]):
  *             if abs(target_time[j] - source_time[i]) < min_val:
  *                 min_val = abs(target_time[j] - source_time[i])             # <<<<<<<<<<<<<<
  *                 min_idx = j
- *         res[i] = min_idx
+ *             else:
  */
         __pyx_t_17 = __pyx_v_j;
         __pyx_t_16 = -1;
@@ -4722,7 +4770,7 @@ static PyArrayObject *__pyx_pf_6mazepy_5basic_9time_sync_coordinate_recording_ti
         } else if (unlikely(__pyx_t_17 >= __pyx_pybuffernd_target_time.diminfo[0].shape)) __pyx_t_16 = 0;
         if (unlikely(__pyx_t_16 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_16);
-          __PYX_ERR(0, 41, __pyx_L1_error)
+          __PYX_ERR(0, 22, __pyx_L1_error)
         }
         __pyx_t_15 = __pyx_v_i;
         __pyx_t_16 = -1;
@@ -4732,33 +4780,48 @@ static PyArrayObject *__pyx_pf_6mazepy_5basic_9time_sync_coordinate_recording_ti
         } else if (unlikely(__pyx_t_15 >= __pyx_pybuffernd_source_time.diminfo[0].shape)) __pyx_t_16 = 0;
         if (unlikely(__pyx_t_16 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_16);
-          __PYX_ERR(0, 41, __pyx_L1_error)
+          __PYX_ERR(0, 22, __pyx_L1_error)
         }
         __pyx_v_min_val = fabs(((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_target_time.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_target_time.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_source_time.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_source_time.diminfo[0].strides))));
 
-        /* "mazepy/basic/time_sync.pyx":42
+        /* "basic/_time_sync.pyx":23
  *             if abs(target_time[j] - source_time[i]) < min_val:
  *                 min_val = abs(target_time[j] - source_time[i])
  *                 min_idx = j             # <<<<<<<<<<<<<<
- *         res[i] = min_idx
- *     return res
+ *             else:
+ *                 break
  */
         __pyx_v_min_idx = __pyx_v_j;
 
-        /* "mazepy/basic/time_sync.pyx":40
- *         min_idx = 0
- *         for j in range(target_time.shape[0]):
+        /* "basic/_time_sync.pyx":21
+ *         min_idx = prev_index
+ *         for j in range(prev_index, target_time.shape[0]):
  *             if abs(target_time[j] - source_time[i]) < min_val:             # <<<<<<<<<<<<<<
  *                 min_val = abs(target_time[j] - source_time[i])
  *                 min_idx = j
  */
+        goto __pyx_L7;
       }
-    }
 
-    /* "mazepy/basic/time_sync.pyx":43
- *                 min_val = abs(target_time[j] - source_time[i])
+      /* "basic/_time_sync.pyx":25
  *                 min_idx = j
+ *             else:
+ *                 break             # <<<<<<<<<<<<<<
+ *         res[i] = min_idx
+ *         prev_index = min_idx
+ */
+      /*else*/ {
+        goto __pyx_L6_break;
+      }
+      __pyx_L7:;
+    }
+    __pyx_L6_break:;
+
+    /* "basic/_time_sync.pyx":26
+ *             else:
+ *                 break
  *         res[i] = min_idx             # <<<<<<<<<<<<<<
+ *         prev_index = min_idx
  *     return res
  */
     __pyx_t_15 = __pyx_v_i;
@@ -4769,14 +4832,22 @@ static PyArrayObject *__pyx_pf_6mazepy_5basic_9time_sync_coordinate_recording_ti
     } else if (unlikely(__pyx_t_15 >= __pyx_pybuffernd_res.diminfo[0].shape)) __pyx_t_14 = 0;
     if (unlikely(__pyx_t_14 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_14);
-      __PYX_ERR(0, 43, __pyx_L1_error)
+      __PYX_ERR(0, 26, __pyx_L1_error)
     }
     *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_int64_t *, __pyx_pybuffernd_res.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_res.diminfo[0].strides) = __pyx_v_min_idx;
+
+    /* "basic/_time_sync.pyx":27
+ *                 break
+ *         res[i] = min_idx
+ *         prev_index = min_idx             # <<<<<<<<<<<<<<
+ *     return res
+ */
+    __pyx_v_prev_index = __pyx_v_min_idx;
   }
 
-  /* "mazepy/basic/time_sync.pyx":44
- *                 min_idx = j
+  /* "basic/_time_sync.pyx":28
  *         res[i] = min_idx
+ *         prev_index = min_idx
  *     return res             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF((PyObject *)__pyx_r);
@@ -4784,10 +4855,10 @@ static PyArrayObject *__pyx_pf_6mazepy_5basic_9time_sync_coordinate_recording_ti
   __pyx_r = ((PyArrayObject *)__pyx_v_res);
   goto __pyx_L0;
 
-  /* "mazepy/basic/time_sync.pyx":5
+  /* "basic/_time_sync.pyx":5
  * cimport numpy as cnp
  * 
- * def coordinate_recording_time(             # <<<<<<<<<<<<<<
+ * def _coordinate_recording_time(             # <<<<<<<<<<<<<<
  *     cnp.ndarray[cnp.float64_t, ndim=1] source_time,
  *     cnp.ndarray[cnp.float64_t, ndim=1] target_time
  */
@@ -4807,7 +4878,7 @@ static PyArrayObject *__pyx_pf_6mazepy_5basic_9time_sync_coordinate_recording_ti
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_source_time.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_target_time.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("mazepy.basic.time_sync.coordinate_recording_time", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("basic._time_sync._coordinate_recording_time", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -4837,16 +4908,15 @@ static PyMethodDef __pyx_methods[] = {
 
 static int __Pyx_CreateStringTabAndInitStrings(void) {
   __Pyx_StringTabEntry __pyx_string_tab[] = {
-    {&__pyx_kp_u_Coordinate_recording_time_of_be, __pyx_k_Coordinate_recording_time_of_be, sizeof(__pyx_k_Coordinate_recording_time_of_be), 0, 1, 0, 0},
     {&__pyx_n_s_ImportError, __pyx_k_ImportError, sizeof(__pyx_k_ImportError), 0, 0, 1, 1},
     {&__pyx_n_s__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 0, 1, 1},
     {&__pyx_n_s__6, __pyx_k__6, sizeof(__pyx_k__6), 0, 0, 1, 1},
     {&__pyx_n_s_asyncio_coroutines, __pyx_k_asyncio_coroutines, sizeof(__pyx_k_asyncio_coroutines), 0, 0, 1, 1},
-    {&__pyx_kp_s_basic_time_sync_pyx, __pyx_k_basic_time_sync_pyx, sizeof(__pyx_k_basic_time_sync_pyx), 0, 0, 1, 0},
+    {&__pyx_n_s_basic__time_sync, __pyx_k_basic__time_sync, sizeof(__pyx_k_basic__time_sync), 0, 0, 1, 1},
+    {&__pyx_kp_s_basic__time_sync_pyx, __pyx_k_basic__time_sync_pyx, sizeof(__pyx_k_basic__time_sync_pyx), 0, 0, 1, 0},
     {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
     {&__pyx_kp_s_cnp_ndarray, __pyx_k_cnp_ndarray, sizeof(__pyx_k_cnp_ndarray), 0, 0, 1, 0},
     {&__pyx_n_s_coordinate_recording_time, __pyx_k_coordinate_recording_time, sizeof(__pyx_k_coordinate_recording_time), 0, 0, 1, 1},
-    {&__pyx_kp_u_coordinate_recording_time_line_5, __pyx_k_coordinate_recording_time_line_5, sizeof(__pyx_k_coordinate_recording_time_line_5), 0, 1, 0, 0},
     {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
     {&__pyx_n_s_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
     {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
@@ -4856,7 +4926,6 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_is_coroutine, __pyx_k_is_coroutine, sizeof(__pyx_k_is_coroutine), 0, 0, 1, 1},
     {&__pyx_n_s_j, __pyx_k_j, sizeof(__pyx_k_j), 0, 0, 1, 1},
     {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
-    {&__pyx_n_s_mazepy_basic_time_sync, __pyx_k_mazepy_basic_time_sync, sizeof(__pyx_k_mazepy_basic_time_sync), 0, 0, 1, 1},
     {&__pyx_n_s_min_idx, __pyx_k_min_idx, sizeof(__pyx_k_min_idx), 0, 0, 1, 1},
     {&__pyx_n_s_min_val, __pyx_k_min_val, sizeof(__pyx_k_min_val), 0, 0, 1, 1},
     {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
@@ -4864,6 +4933,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
     {&__pyx_kp_s_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 0, 1, 0},
     {&__pyx_kp_s_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 0, 1, 0},
+    {&__pyx_n_s_prev_index, __pyx_k_prev_index, sizeof(__pyx_k_prev_index), 0, 0, 1, 1},
     {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
     {&__pyx_n_s_res, __pyx_k_res, sizeof(__pyx_k_res), 0, 0, 1, 1},
     {&__pyx_n_s_return, __pyx_k_return, sizeof(__pyx_k_return), 0, 0, 1, 1},
@@ -4878,7 +4948,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
 }
 /* #### Code section: cached_builtins ### */
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 17, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 984, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -4912,17 +4982,17 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "mazepy/basic/time_sync.pyx":5
+  /* "basic/_time_sync.pyx":5
  * cimport numpy as cnp
  * 
- * def coordinate_recording_time(             # <<<<<<<<<<<<<<
+ * def _coordinate_recording_time(             # <<<<<<<<<<<<<<
  *     cnp.ndarray[cnp.float64_t, ndim=1] source_time,
  *     cnp.ndarray[cnp.float64_t, ndim=1] target_time
  */
-  __pyx_tuple__4 = PyTuple_Pack(7, __pyx_n_s_source_time, __pyx_n_s_target_time, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_min_idx, __pyx_n_s_min_val, __pyx_n_s_res); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(8, __pyx_n_s_source_time, __pyx_n_s_target_time, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_min_idx, __pyx_n_s_min_val, __pyx_n_s_res, __pyx_n_s_prev_index); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
-  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_basic_time_sync_pyx, __pyx_n_s_coordinate_recording_time, 5, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_basic__time_sync_pyx, __pyx_n_s_coordinate_recording_time, 5, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -5071,10 +5141,10 @@ static int __Pyx_modinit_function_import_code(void) {
 #if PY_MAJOR_VERSION >= 3
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 static PyObject* __pyx_pymod_create(PyObject *spec, PyModuleDef *def); /*proto*/
-static int __pyx_pymod_exec_time_sync(PyObject* module); /*proto*/
+static int __pyx_pymod_exec__time_sync(PyObject* module); /*proto*/
 static PyModuleDef_Slot __pyx_moduledef_slots[] = {
   {Py_mod_create, (void*)__pyx_pymod_create},
-  {Py_mod_exec, (void*)__pyx_pymod_exec_time_sync},
+  {Py_mod_exec, (void*)__pyx_pymod_exec__time_sync},
   {0, NULL}
 };
 #endif
@@ -5087,7 +5157,7 @@ namespace {
   #endif
   {
       PyModuleDef_HEAD_INIT,
-      "time_sync",
+      "_time_sync",
       0, /* m_doc */
     #if CYTHON_PEP489_MULTI_PHASE_INIT
       0, /* m_size */
@@ -5135,11 +5205,11 @@ namespace {
 
 
 #if PY_MAJOR_VERSION < 3
-__Pyx_PyMODINIT_FUNC inittime_sync(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC inittime_sync(void)
+__Pyx_PyMODINIT_FUNC init_time_sync(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC init_time_sync(void)
 #else
-__Pyx_PyMODINIT_FUNC PyInit_time_sync(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC PyInit_time_sync(void)
+__Pyx_PyMODINIT_FUNC PyInit__time_sync(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC PyInit__time_sync(void)
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 {
   return PyModuleDef_Init(&__pyx_moduledef);
@@ -5220,7 +5290,7 @@ bad:
 }
 
 
-static CYTHON_SMALL_CODE int __pyx_pymod_exec_time_sync(PyObject *__pyx_pyinit_module)
+static CYTHON_SMALL_CODE int __pyx_pymod_exec__time_sync(PyObject *__pyx_pyinit_module)
 #endif
 #endif
 {
@@ -5238,7 +5308,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_time_sync(PyObject *__pyx_pyinit_m
   #if CYTHON_PEP489_MULTI_PHASE_INIT
   if (__pyx_m) {
     if (__pyx_m == __pyx_pyinit_module) return 0;
-    PyErr_SetString(PyExc_RuntimeError, "Module 'time_sync' has already been imported. Re-initialisation is not supported.");
+    PyErr_SetString(PyExc_RuntimeError, "Module '_time_sync' has already been imported. Re-initialisation is not supported.");
     return -1;
   }
   #elif PY_MAJOR_VERSION >= 3
@@ -5250,13 +5320,13 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_time_sync(PyObject *__pyx_pyinit_m
   Py_INCREF(__pyx_m);
   #else
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4("time_sync", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
+  __pyx_m = Py_InitModule4("_time_sync", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
   if (unlikely(!__pyx_m)) __PYX_ERR(0, 1, __pyx_L1_error)
   #elif CYTHON_USE_MODULE_STATE
   __pyx_t_1 = PyModule_Create(&__pyx_moduledef); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   {
     int add_module_result = PyState_AddModule(__pyx_t_1, &__pyx_moduledef);
-    __pyx_t_1 = 0; /* transfer ownership from __pyx_t_1 to "time_sync" pseudovariable */
+    __pyx_t_1 = 0; /* transfer ownership from __pyx_t_1 to "_time_sync" pseudovariable */
     if (unlikely((add_module_result < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
     pystate_addmodule_run = 1;
   }
@@ -5280,7 +5350,7 @@ if (!__Pyx_RefNanny) {
       Py_FatalError("failed to import 'refnanny' module");
 }
 #endif
-  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_time_sync(void)", 0);
+  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit__time_sync(void)", 0);
   if (__Pyx_check_binary_version(__PYX_LIMITED_VERSION_HEX, __Pyx_get_runtime_version(), CYTHON_COMPILING_IN_LIMITED_API) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #ifdef __Pxy_PyFrame_Initialize_Offsets
   __Pxy_PyFrame_Initialize_Offsets();
@@ -5318,14 +5388,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_mazepy__basic__time_sync) {
+  if (__pyx_module_is_main_basic___time_sync) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "mazepy.basic.time_sync")) {
-      if (unlikely((PyDict_SetItemString(modules, "mazepy.basic.time_sync", __pyx_m) < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "basic._time_sync")) {
+      if (unlikely((PyDict_SetItemString(modules, "basic._time_sync", __pyx_m) < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -5346,7 +5416,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "mazepy/basic/time_sync.pyx":2
+  /* "basic/_time_sync.pyx":2
  * # time_sync.pyx
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as cnp
@@ -5357,31 +5427,30 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_2) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "mazepy/basic/time_sync.pyx":5
+  /* "basic/_time_sync.pyx":5
  * cimport numpy as cnp
  * 
- * def coordinate_recording_time(             # <<<<<<<<<<<<<<
+ * def _coordinate_recording_time(             # <<<<<<<<<<<<<<
  *     cnp.ndarray[cnp.float64_t, ndim=1] source_time,
  *     cnp.ndarray[cnp.float64_t, ndim=1] target_time
  */
   __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_return, __pyx_kp_s_cnp_ndarray) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_6mazepy_5basic_9time_sync_1coordinate_recording_time, 0, __pyx_n_s_coordinate_recording_time, NULL, __pyx_n_s_mazepy_basic_time_sync, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_5basic_10_time_sync_1_coordinate_recording_time, 0, __pyx_n_s_coordinate_recording_time, NULL, __pyx_n_s_basic__time_sync, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_3, __pyx_t_2);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_coordinate_recording_time, __pyx_t_3) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "mazepy/basic/time_sync.pyx":1
+  /* "basic/_time_sync.pyx":1
  * # time_sync.pyx             # <<<<<<<<<<<<<<
  * import numpy as np
  * cimport numpy as cnp
  */
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_kp_u_coordinate_recording_time_line_5, __pyx_kp_u_Coordinate_recording_time_of_be) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_3) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
@@ -5393,7 +5462,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_3);
   if (__pyx_m) {
     if (__pyx_d && stringtab_initialized) {
-      __Pyx_AddTraceback("init mazepy.basic.time_sync", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init basic._time_sync", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     #if !CYTHON_USE_MODULE_STATE
     Py_CLEAR(__pyx_m);
@@ -5407,7 +5476,7 @@ if (!__Pyx_RefNanny) {
     }
     #endif
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init mazepy.basic.time_sync");
+    PyErr_SetString(PyExc_ImportError, "init basic._time_sync");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -9730,6 +9799,70 @@ raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
         "can't convert negative value to int");
     return (int) -1;
+}
+
+/* CIntToPy */
+  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const int neg_one = (int) -1, const_zero = (int) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(int) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(int) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+#if !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX < 0x030d0000
+        return _PyLong_FromByteArray(bytes, sizeof(int),
+                                     little, !is_unsigned);
+#else
+        PyObject *from_bytes, *result = NULL;
+        PyObject *py_bytes = NULL, *arg_tuple = NULL, *kwds = NULL, *order_str = NULL;
+        from_bytes = PyObject_GetAttrString((PyObject*)&PyLong_Type, "from_bytes");
+        if (!from_bytes) return NULL;
+        py_bytes = PyBytes_FromStringAndSize((char*)bytes, sizeof(int));
+        if (!py_bytes) goto limited_bad;
+        order_str = PyUnicode_FromString(little ? "little" : "big");
+        if (!order_str) goto limited_bad;
+        arg_tuple = PyTuple_Pack(2, py_bytes, order_str);
+        if (!arg_tuple) goto limited_bad;
+        if (!is_unsigned) {
+            kwds = PyDict_New();
+            if (!kwds) goto limited_bad;
+            if (PyDict_SetItemString(kwds, "signed", __Pyx_NewRef(Py_True))) goto limited_bad;
+        }
+        result = PyObject_Call(from_bytes, arg_tuple, kwds);
+        limited_bad:
+        Py_XDECREF(kwds);
+        Py_XDECREF(arg_tuple);
+        Py_XDECREF(order_str);
+        Py_XDECREF(py_bytes);
+        Py_XDECREF(from_bytes);
+        return result;
+#endif
+    }
 }
 
 /* FormatTypeName */

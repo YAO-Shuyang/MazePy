@@ -1,9 +1,25 @@
-from setuptools import setup, find_packages
+from setuptools import setup, Extension, find_packages
+from Cython.Build import cythonize
 import numpy
+
+extensions = [
+    Extension(
+        "basic._time_sync",
+        ["basic\_time_sync.pyx"],
+        include_dirs=[numpy.get_include()],
+    ),
+    Extension(
+        "basic._calc_rate",
+        ["basic/_calc_rate.pyx"],
+        include_dirs=[numpy.get_include()],
+    )
+]
+
+modules = cythonize(extensions)
+
 setup(
-    name="mazepy",
-    version="0.1",
-    package_dir={'': 'src'},
-    packages=find_packages(where='src'),
-    include_dirs=[numpy.get_include()]
+    ext_modules=modules,
+    include_dirs=[numpy.get_include()],
+    py_modules=['os', 'gui', 'plot', 'basic', 'behav', 'neural', 'datastruc']
 )
+

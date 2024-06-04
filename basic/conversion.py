@@ -1,5 +1,6 @@
 from typing import Optional
 import numpy as np
+from mazepy.basic._time_sync import _coordinate_recording_time
 
 def value_to_bin(
     x: np.ndarray, 
@@ -71,15 +72,10 @@ def coordinate_recording_time(
     >>> coordinate_recording_time(source_time, target_time)
     array([0, 1, 1, 2, 3, 3, 4, 5, 5, 6], dtype=int64)
     """
-    try:
-        # Test if memory supports
-        arr = np.repeat(target_time[np.newaxis, :], source_time.shape[0], axis=0)
-        return np.argmin(np.abs(arr - source_time[:, np.newaxis]), axis=1)
-    except:
-        res = np.zeros(source_time.shape, dtype=np.int64)
-        for i, t in enumerate(source_time):
-            res[i] = np.argmin(np.abs(target_time - t))
-        return res
+    return _coordinate_recording_time(
+        source_time.astype(np.float64), 
+        target_time.astype(np.float64)
+    )
     
 
 if __name__ == "__main__":
