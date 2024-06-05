@@ -1,8 +1,9 @@
 from signal import NSIG
 from numpy import ndarray
 import numpy as np
-from typing import Optional,Callable
+from typing import Optional, Callable
 
+from mazepy.basic._csmooth import _convolve2d
 """
 Define data structure for kernels, for the purpose of convolution and 
 smoothing.
@@ -135,6 +136,39 @@ class _Kernel2d(ndarray):
     def __array_finalize__(self, obj: Optional[ndarray]) -> None:  
         pass
 
+def convolve2d(
+    signal: ndarray,
+    kernel: ndarray,
+    axis: int = 0
+) -> ndarray:
+    """
+    Convolves a 2D signal along a specified axis with a 1D kernel.
+
+    Parameters
+    ----------
+    signal : ndarray, shape (N, M)
+        The signal to be convolved.
+    kernel : ndarray, shape (K,)
+        The kernel to use for convolution.
+    axis : int
+        The axis along which to convolve the signal.
+
+    Returns
+    -------
+    ndarray
+        The convolved signal.
+        
+    Notes
+    -----
+    `same` mode is transferred to `np.convolve()`.
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> from mazepy.datastruc.kernel import convolve2d
+    """
+    return _convolve2d(signal.astype(np.float64), kernel.astype(np.float64), axis)
+    
 
 if __name__ == "__main__":
     import doctest

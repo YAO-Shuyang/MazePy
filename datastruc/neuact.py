@@ -3,19 +3,107 @@ import numpy as np
 import time
 import warnings
 from typing import Optional, Union, Callable
-from scipy.stats import binned_statistic
 
 from mazepy.datastruc.kernel import GaussianKernel1d, UniformKernel1d
 from mazepy.datastruc.exceptions import ViolatedConstraintError
-from mazepy.datastruc.exceptions import DimensionMismatchError
+from mazepy.datastruc.exceptions import DimensionMismatchError, DimensionError
 from mazepy.datastruc.variables import VariableBin, Variable1D
 from mazepy.basic.conversion import coordinate_recording_time
 from mazepy.basic._calc_rate import _get_kilosort_spike_counts, _get_occu_time
+from mazepy.basic._calc_rate import calc_neural_trajectory
 from mazepy.basic._utils import _convert_kilosort_spike_train
+from mazepy.basic._csmooth import _convolve2d
 
 Kernels = Union[GaussianKernel1d, UniformKernel1d, ndarray]
 
-class TuningCurve(ndarray):
+class _ProcessedNeuralActivityBase(ndarray):
+    def __new__(cls, activity: ndarray) -> '_ProcessedNeuralActivityBase':
+        if isinstance(activity, ndarray) == False:
+            arr = np.asarray(activity)
+        else:
+            arr = activity
+            
+        obj = arr.view(cls)
+        return obj
+    
+    def __array_finalize__(self, obj: Optional[ndarray]) -> None:
+        pass
+        
+    def __init__(self, activity: ndarray) -> None:
+        pass
+        
+    @property
+    def n_neuron(self) -> int:
+        return self.shape[0]
+    
+    @property
+    def n_bin(self) -> int:
+        return self.shape[1]
+    
+    def reset_nan(self) -> None:
+        """
+        Reset NaN values in the array to 0.
+        """
+        self[np.isnan(self)] = 0
+        
+    def _smooth1d(self, kernel: Kernels) -> ndarray:
+        """
+        Smooth the tuning curve with one dimensions using a given kernel.
+        """
+        #smoothed_curve = np.zeros_like(self)
+        #for i in range(self.shape[0]):
+        #    smoothed_curve[i] = np.convolve(self[i, :], kernel)
+        #return smoothed_curve
+        return _convolve2d(
+            signal=self.astype(np.float64), 
+            kernel=kernel.astype(np.float64), 
+            axis=1
+        )
+    
+    def _smooth2d(self, kernel: Kernels) -> ndarray:
+        """
+        Smooth the tuning curve with two dimensions using a given kernel.
+        """
+        if self.shape[1] != kernel.shape[0]:
+            raise DimensionError(
+                f"Kernel matrix must be {self.shape[0]} by {kernel.shape[1]}"
+                f", but got {kernel.shape}."
+            )
+        
+        if kernel.shape[0] != kernel.shape[1]:
+            raise DimensionError(
+                f"Kernel matrix must be square, but got {kernel.shape}."
+            )
+        return self @ kernel
+    
+    def smooth(self, kernel: Kernels) -> ndarray:
+        """
+        Smooth the tuning curve using a given smoothing matrix.
+
+        Parameters
+        ----------
+        kernel : Kernels
+            The kernel to be used for smoothing.
+
+        Returns
+        -------
+        TuningCurve
+            The smoothed tuning curve.
+        """
+        self.reset_nan()
+        if kernel.ndim == 1:
+            return self._smooth1d(kernel)
+        elif kernel.ndim == 2:
+            return self._smooth2d(kernel)
+        else:
+            raise ValueError(
+                f"Kernel must be 1D or 2D, but got {kernel.ndim}D."
+            )
+            
+    def to_array(self) -> ndarray:
+        return np.asarray(self)
+
+class TuningCurve(_ProcessedNeuralActivityBase):
     """
     A class for representing tuning curves, typically used to describe the 
     firing behavior of neurons across different conditions or stimuli.
@@ -26,7 +114,7 @@ class TuningCurve(ndarray):
 
     Parameters
     ----------
-    firing_rate : ndarray, shape (n_neuron, n_condition)
+    activity : ndarray, shape (n_neuron, n_condition)
         An array-like object containing the firing rates of neurons. This can 
         be a 2D array where each row corresponds to a neuron and each column 
         corresponds to a different condition or stimulus, for instance, a 
@@ -34,7 +122,7 @@ class TuningCurve(ndarray):
     occu_time : ndarray, shape (n_condition, )
         An array-like object containing the time spent in each condition or 
         stimulus. This should be an 1D array with the same number of elements as 
-        the number of columns in the `firing_rate` array.
+        the number of columns in the `activity` array.
 
     Methods
     -------
@@ -64,65 +152,62 @@ class TuningCurve(ndarray):
 
     def __new__(
         cls, 
-        firing_rate: ndarray, 
+        activity: ndarray, 
         occu_time: np.ndarray
     ) -> 'TuningCurve':
-        obj = np.asarray(firing_rate).view(cls)
-        return obj
-    
-    def __init__(
-        self, 
-        firing_rate: ndarray, 
-        occu_time: np.ndarray
-    ) -> None:
-        self.occu_time = occu_time
-    
+        return super().__new__(cls, activity)
+
     def __array_finalize__(self, obj: Optional[ndarray]) -> None:
         if obj is None:
             return
-        self.occu_time = getattr(obj, 'occu_time', None)
-    
-    @property
-    def n_neuron(self) -> int:
-        return self.shape[0]
-    
+        self.occu_time = getattr(obj, 'occu_time', None)    
+
+    def __init__(
+        self, 
+        activity: ndarray, 
+        occu_time: np.ndarray
+    ) -> None:
+        super().__init__(activity)
+        self.occu_time = occu_time
+        
     def get_argpeaks(self) -> ndarray:
         """
         Get the index of the peak firing rate of each neuron.
+        
+        Ignoring NaN values.
+        
+        Examples
+        --------
+        >>> tuning_curve = TuningCurve(
+        ...     activity=np.array([[0., 2., 3.], [1., 5., 2.], [3., 0., 0.]]), 
+        ...     occu_time=np.array([50, 100, 150])
+        ... )
+        >>> tuning_curve.get_argpeaks()
+        array([2, 1, 0], dtype=int64)
         """
-        return np.nanargmax(self, axis=1)
+        return np.nanargmax(self.to_array(), axis=1)
     
     def get_peaks(self) -> ndarray:
         """
         Get the peak firing rate of each neuron.
+        
+        Ignoring NaN values.
+        
+        Examples
+        --------
+        >>> tuning_curve = TuningCurve(
+        ...     activity=np.array([[0., 2., 3.], [1., 5., 2.], [3., 0., 0.]]), 
+        ...     occu_time=np.array([50, 100, 150])
+        ... )
+        >>> tuning_curve.get_peaks()
+        array([3., 5., 3.])
         """
-        return np.nanmax(self, axis=1)
-    
-    def remove_nan(self) -> None:
-        """
-        Remove NaN values from the array by setting them to 0.
-        """
-        self[np.isnan(self)] = 0
+        return np.nanmax(self.to_array(), axis=1)
 
     def get_fields(self) -> list[dict]:
         # Provides Breadth First Search (BFS) implementation for candidate
         # response fields
         raise NotImplementedError
-    
-    def _smooth1d(self, kernel: Kernels) -> 'TuningCurve':
-        """
-        Smooth the tuning curve with one dimensions using a given kernel.
-        """
-        smoothed_curve = np.zeros_like(self)
-        for i in range(self.shape[0]):
-            smoothed_curve[i] = np.convolve(self[i, :], kernel)
-        return TuningCurve(smoothed_curve)
-    
-    def _smooth2d(self, kernel: Kernels) -> 'TuningCurve':
-        """
-        Smooth the tuning curve with two dimensions using a given kernel.
-        """
-        return TuningCurve(self @ kernel)
     
     def smooth(self, kernel: Kernels) -> 'TuningCurve':
         """
@@ -137,18 +222,30 @@ class TuningCurve(ndarray):
         -------
         TuningCurve
             The smoothed tuning curve.
-        """
-        self.remove_nan()
-        if kernel.ndim == 1:
-            return self._smooth1d(kernel)
-        elif kernel.ndim == 2:
-            return self._smooth2d(kernel)
-        else:
-            raise ValueError(
-                f"Kernel must be 1D or 2D, but got {kernel.ndim}D."
-            )
+            
+        Notes
+        -----
+        kernel can be generated by the `Kernels` class.
 
-class NeuralTrajectory(ndarray):
+        Examples
+        --------
+        >>> from mazepy.datastruc.kernel import GaussianKernel1d
+        >>> from mazepy.datastruc.neuact import TuningCurve, Variable1D
+        >>> kernel = GaussianKernel1d(n=3, sigma=1)
+        >>> tuning_curve = TuningCurve(
+        ...     activity=np.array([[0, 2, 3], [1, 5, 2], [3, 0, 0]]), 
+        ...     occu_time=Variable1D([50, 100, 150])
+        ... )
+        >>> tuning_curve = tuning_curve.smooth(kernel)
+        >>> tuning_curve
+        TuningCurve([[0.54813724, 1.72593138, 1.90372552],
+                     [1.82220586, 3.08151967, 2.27406862],
+                     [1.35558829, 0.82220586, 0.        ]])
+        """
+        smoothed_activity = super().smooth(kernel)
+        return TuningCurve(smoothed_activity, self.occu_time)
+
+class NeuralTrajectory(_ProcessedNeuralActivityBase):
     """
     A class for representing temporal population vectors, typically used to 
     describe the temporal dynamics of a population of neurons, namely the 
@@ -203,9 +300,17 @@ class NeuralTrajectory(ndarray):
         time: Union[Variable1D, ndarray],
         variable: Optional[VariableBin] = None
     ) -> 'NeuralTrajectory':
-        obj = np.asarray(neural_trajectory).view(cls)
-        return obj
-    
+        if isinstance(neural_trajectory, ndarray) == False:
+            return neural_trajectory.view(cls)
+        else:
+            return np.asarray(neural_trajectory).view(cls)
+
+    def __array_finalize__(self, obj: Optional[ndarray]) -> None:
+        if obj is None:
+            return
+        self.time = getattr(obj, 'time', None)
+        self.variable = getattr(obj, 'variable', None)    
+
     def __init__(
         self, 
         neural_trajectory: ndarray, 
@@ -227,19 +332,184 @@ class NeuralTrajectory(ndarray):
         
         self.time = time
         self.variable = variable
-        pass
+        super().__init__(neural_trajectory)
+    
+    def smooth(self, kernel: Kernels) -> 'NeuralTrajectory':
+        """
+        Smooths the neural trajectory using the specified kernel.
 
-    def __array_finalize__(self, obj: Optional[ndarray]) -> None:
-        if obj is None:
-            return
-        self.time = getattr(obj, 'time', None)
-        self.variable = getattr(obj, 'variable', None)
+        Parameters
+        ----------
+        kernel : Union[GaussianKernel1d, UniformKernel1d]
+            The kernel to use for smoothing the neural trajectory. This can be
+            either a Gaussian kernel or a uniform kernel.
+
+        Returns
+        -------
+        NeuralTrajectory
+            The smoothed neural trajectory.
+            
+        Raises
+        ------
+        DimensionError
+            Only 1D kernels are supported for smoothing the neural trajectory; 
+            Otherwise, a 'DimensionError' is raised.
+            
+        Notes
+        -----
+        See also `np.convolve()`.
+            
+        Examples
+        --------
+        >>> import numpy as np
+        >>> from mazepy.datastruc.neuact import GaussianKernel1d
+        >>> from mazepy.datastruc.neuact import NeuralTrajectory
+        >>> kernel = GaussianKernel1d(n=3, sigma=1)
+        >>> neural_traj = NeuralTrajectory(
+        ...     np.array([[0, 2, 3], [1, 5, 2], [3, 0, 0]]), 
+        ...     np.array([0, 50, 100]),
+        ...     variable=np.array([1, 1, 2])
+        ... )
+        >>> smoothed_traj = neural_traj.smooth(kernel)
+        >>> smoothed_traj
+        NeuralTrajectory([[0.54813724, 1.72593138, 1.90372552],
+                          [1.82220586, 3.08151967, 2.27406862],
+                          [1.35558829, 0.82220586, 0.        ]])
+        """
+        if kernel.ndim != 1:
+            raise DimensionError(
+                "Only 1D kernels are supported for smoothing the neural "
+                f"trajectory. But got {kernel.ndim}-D kernel."
+            )
+        return NeuralTrajectory(
+            neural_trajectory=super().smooth(kernel),
+            time=self.time,
+            variable=self.variable
+        )
+    
+    def clip(self, indices: np.ndarray) -> 'NeuralTrajectory':
+        """
+        Clips the neural trajectory using the specified indices.
+
+        Parameters
+        ----------
+        indices : np.ndarray
+            The indices to clip the neural trajectory.
+
+        Returns
+        -------
+        NeuralTrajectory
+            The clipped neural trajectory.
+            
+        Raises
+        ------
+        OverflowError
+            The maximum indices should be less than the maximum number of 
+            time bins; otherwise, an 'OverflowError' is raised.
+        """
+        if np.max(indices) >= self.shape[1]:
+            raise OverflowError(
+                "The maximum indices should be less than the maximum number "
+                f"of time bins {self.shape[1]}. But got {np.max(indices)}."
+            )
         
-    @property
-    def n_neuron(self) -> int:
-        return self.shape[0]
+        if self.variable is not None:
+            return NeuralTrajectory(
+                neural_trajectory=super().clip(self, indices),
+                time=self.time[indices],
+                variable=self.variable[indices]
+            )
+        else:
+            return NeuralTrajectory(
+                neural_trajectory=super().clip(self, indices),
+                time=self.time[indices]
+            )
+    
+    def clip_within_trials(
+        self,
+        time_begs: np.ndarray,
+        time_ends: np.ndarray
+    ) -> 'NeuralTrajectory':
+        """
+        Clips the neural trajectory within the specified trials.
+        
+        Parameters
+        ----------
+        time_begs : np.ndarray
+            The beginning time of each trial.
+        time_ends : np.ndarray
+            The end time of each trial.
+            
+        Returns
+        -------
+        NeuralTrajectory
+            The clipped neural trajectory.
+            
+        Raises
+        ------
+        DimensionMismatchError
+            The `time_begs` and `time_ends` should have the same length as the 
+            number of trials you wanted to clip; otherwise, a 
+            'DimensionMismatchError' is raised.
+        """
+        if time_begs.shape[0] != time_ends.shape[0]:
+            raise DimensionMismatchError(
+                time_begs.shape[0], time_ends.shape[0],
+                "The `time_begs` and `time_ends` should have the same length "
+                "as the number of trials you wanted to clip."
+            )
+        
+        clipped_indices = np.concatenate((
+            np.where(
+                (self.time >= time_begs[i]) & (self.time <= time_ends[i])
+            )[0] for i in range(time_begs.shape[0])
+        ))
+        return self.clip(clipped_indices)
+    
+    def clip_inter_trials(
+        self,
+        time_begs: np.ndarray,
+        time_ends: np.ndarray
+    ) -> 'NeuralTrajectory':
+        """
+        Clips the neural trajectory between the specified trials. It would
+        return the n-1 intervals between the n given trials.
+        
+        Parameters
+        ----------
+        time_begs : np.ndarray
+            The beginning time of each trial.
+        time_ends : np.ndarray
+            The end time of each trial.
+            
+        Returns
+        -------
+        NeuralTrajectory
+            The clipped neural trajectory between the specified trials.
+            
+        Raises
+        ------
+        DimensionMismatchError
+            The `time_begs` and `time_ends` should have the same length as the 
+            number of trials you wanted to clip; otherwise, a 
+            'DimensionMismatchError' is raised.
+        """
+        if time_begs.shape[0] != time_ends.shape[0]:
+            raise DimensionMismatchError(
+                time_begs.shape[0], time_ends.shape[0],
+                "The `time_begs` and `time_ends` should have the same length "
+                "as the number of trials you wanted to clip."
+            )
+            
+        clipped_indices = np.concatenate((
+            np.where(
+                (self.time > time_ends[i]) & (self.time < time_begs[i+1])
+            )[0] for i in range(time_begs.shape[0] - 1)
+        ))
+        return self.clip(clipped_indices)
+    
 
-class _NeuralActivity(ndarray):
+class _NeuralActivityBase(ndarray):
     """
     A base class for representing neural activity in terms of neurons and 
     time points.
@@ -280,7 +550,7 @@ class _NeuralActivity(ndarray):
         activity: ndarray, 
         time: ndarray, 
         variable: Optional[VariableBin] = None
-    ) -> '_NeuralActivity':
+    ) -> '_NeuralActivityBase':
         """
         Parameters
         ----------
@@ -292,8 +562,10 @@ class _NeuralActivity(ndarray):
             Optional variable data associated with the neural activity, such as
             stimulus conditions or experimental variables.
         """
-        obj = np.asarray(activity).view(cls)
-        return obj
+        if isinstance(activity, ndarray) == False:
+            return np.asarray(activity).view(cls)
+        else:
+            return activity.view(cls)
     
     def __init__(
         self, 
@@ -334,7 +606,6 @@ class _NeuralActivity(ndarray):
     def __array_finalize__(self, obj: Optional[ndarray]) -> None:
         if obj is None:
             return
-        
         self.time = getattr(obj, 'time', None)
         self.variable = getattr(obj, 'variable', None)
     
@@ -365,8 +636,11 @@ class _NeuralActivity(ndarray):
             
         self[:] = np.delete(self, nan_indices, axis=1)
         self.time = np.delete(self.time, nan_indices)
+        
+    def to_array(self) -> ndarray:
+        return np.asarray(self)
 
-class SpikeTrain(_NeuralActivity):
+class SpikeTrain(_NeuralActivityBase):
     """
     A class specifically for representing spike train data. Spike trains record
     the firing of neurons over time, typically binary data indicating the 
@@ -374,9 +648,6 @@ class SpikeTrain(_NeuralActivity):
 
     Attributes
     ----------
-    activity : ndarray, shape (n_neurons, n_time)
-        The spike trains of each neuron, with shape (n_neurons, n_time).
-        All entries should be either 1 or 0.
     time : Variable1D or ndarray, shape (n_time, )
         The time stamps for each point in the activity array, with units in 
         milliseconds.
@@ -386,18 +657,12 @@ class SpikeTrain(_NeuralActivity):
 
     Methods
     -------
-    calc_total_time(self, t_interv_limits: Optional[float] = None)
+    `calc_total_time(self, t_interv_limits: Optional[float] = None)`
         Get the total time of the spike train.
-    calc_spike_count(self)
+    `calc_spike_count(self)`
         Calculate the spike count of each neuron.
-    calc_mean_rate(self, t_interv_limits: Optional[float] = None)
+    `calc_mean_rate(self, t_interv_limits: Optional[float] = None)`
         Calculate the mean firing rate of each neuron.
-
-
-    Raises
-    ------
-    ViolatedConstraintError
-        If the activity data are not binary.
     """
     def __new__(
         cls, 
@@ -443,7 +708,7 @@ class SpikeTrain(_NeuralActivity):
         if t_interv_limits is None:
             t_interv_limits = np.nanmedian(dt) * 2
         dt = np.append(dt, t_interv_limits)
-        dt[dt > t_interv_limits] = t_interv_limits    
+        dt[dt > t_interv_limits] = t_interv_limits
         return dt
     
     def calc_total_time(self, t_interv_limits: Optional[float] = None) -> float:
@@ -572,7 +837,7 @@ class SpikeTrain(_NeuralActivity):
                         f"{np.max(self.variable)}, "
                         f"equals to or exceeds the input bin number {nbins}."
                     )
-            spike_count = np.zeros((self.shape[0], nbins), np.float64)
+            spike_count = np.zeros((self.shape[0], nbins), np.int64)
             for i in range(nbins):
                 idx = np.where(self.variable == i)[0]
                 spike_count[:,i] = np.nansum(self[:, idx], axis = 1)
@@ -691,44 +956,52 @@ class SpikeTrain(_NeuralActivity):
         >>> # time bins: [0, 50], [50, 100], [100, 150], ...
         >>> tuning_curve
         NeuralTrajectory([[40., 20.,  0., 20., 40., 20.,  0.],
-                          [40.,  0., 40., 40., 20.,  0., 20.],
-                          [40., 40., 20., 20., 40.,  0., 20.]])
+                          [40.,  0., 40., 40., 20.,  0.,  0.],
+                          [40., 40., 20., 20., 40.,  0.,  0.]])
         >>> tuning_curve = spikes.calc_neural_trajectory(50, 20)
         >>> # time bins: [0, 50], [20, 70], [40, 90], [60, 110], ...
         >>> tuning_curve
         NeuralTrajectory([[40., 40., 20.,  0.,  0.,  0., 20., 20., 20., 20., 40.,
                            40., 40., 20.],
                           [40., 20.,  0., 20., 40., 40., 20., 40., 20., 20., 20.,
-                           20., 20., 20.],
+                           20., 20.,  0.],
                           [40., 60., 20., 40., 40., 20.,  0., 20., 60., 60., 40.,
-                            0.,  0., 20.]])
+                            0.,  0.,  0.]])
         """
         if step_size is None:
             step_size = t_window # Non-overlapping time bins by default
-
+            
         t = self.time
         t_min, t_max = np.min(t), np.max(t)
 
         # Ensure the time window is less than the total duration
-        assert t_window < t_max - t_min
+        if t_window >= t_max - t_min:
+            raise OverflowError(
+                "Time window must be less than the total duration, but "
+                f"{t_window} >= {t_max - t_min}."
+            )
         
         # Calculate the number of steps
         n_step = int((t_max - t_min - t_window) // step_size) + 1
-        neural_traj = np.zeros((self.shape[0], n_step + 1))
-
-        # Define the edges of the time bins
+        
+        # Determine the edges of the time bins
         left_bounds = np.linspace(t_min, t_min + step_size * n_step, n_step + 1)
-        right_bounds = left_bounds + t_window
-
-        for i in range(n_step + 1):
-            neural_traj[:, i] = np.sum(
-                self[:, (t >= left_bounds[i])&(t < right_bounds[i])],
-                axis= 1
-            ) / t_window * 1000 # Convert to firing rate (Hz)
-
+    
+        neural_traj = calc_neural_trajectory(
+            spikes = self.astype(np.int64),
+            time = t.astype(np.float64),
+            t_window = t_window,
+            step_size = step_size
+        )
+        
+        variable_traj = self.calc_variable_trajectory(
+            traj_time=left_bounds + t_window / 2
+        )
+        
         return NeuralTrajectory(
             neural_trajectory=neural_traj, 
-            time=left_bounds + t_window / 2
+            time=left_bounds + t_window / 2,
+            variable=variable_traj
         )
     
     def calc_tuning_curve(
@@ -801,9 +1074,12 @@ class SpikeTrain(_NeuralActivity):
         
         
         dt = self._get_dt(t_interv_limits=t_interv_limits)
-        occu_time = _get_occu_time(self.variable, dt, nbins)
+        occu_time = _get_occu_time(
+            variable=self.variable.astype(np.int64), 
+            dtime=dt.astype(np.float64), 
+            nbins=nbins
+        )
         
-
         # Calculate the firing rate
         if kilosort_spikes is None:
             spike_counts = self.calc_spike_count(mode='bin', nbins=nbins)
@@ -828,8 +1104,34 @@ class SpikeTrain(_NeuralActivity):
         firing_rate = firing_rate.astype(np.float64)
 
         return TuningCurve(firing_rate, occu_time)
+    
+    def to_array(self) -> ndarray:
+        """
+        Convert SpikeTrain to numpy.array
 
-class CalciumTraces(_NeuralActivity):
+        Returns
+        -------
+        ndarray
+            The spike array of each neuron, with shape (n_neurons, n_time).
+            The same shape as the original activity.
+        
+        Examples
+        --------
+        >>> spike = SpikeTrain(
+        ...     activity = np.array([[1, 1, 1, 0, 0, 0], [0, 0, 1, 1, 1, 0]]),
+        ...     time = Variable1D([0, 50, 100, 150, 200, 250]),
+        ...     variable = VariableBin([0, 0, 1, 1, 1, 1]),
+        ... )
+        >>> spike
+        SpikeTrain([[1, 1, 1, 0, 0, 0],
+                    [0, 0, 1, 1, 1, 0]])
+        >>> spike.to_array()
+        array([[1, 1, 1, 0, 0, 0],
+               [0, 0, 1, 1, 1, 0]])
+        """
+        return super().to_array()
+
+class CalciumTraces(_NeuralActivityBase):
     """
     A class for representing calcium traces.
     """
@@ -850,6 +1152,9 @@ class CalciumTraces(_NeuralActivity):
             The bin index of each time point, with shape (n_time, ).
         """
         return super().__new__(cls, activity, time, variable)
+    
+    def __array_finalize__(self, obj: Optional[np.ndarray]) -> None:
+        super().__array_finalize__(obj)
     
     def __init__(
         self,
@@ -921,7 +1226,10 @@ class CalciumTraces(_NeuralActivity):
             variable = VariableBin(self.variable)
         )
         
-class RawSpikeTrain(_NeuralActivity):
+    def to_array(self) -> ndarray:
+        return super().to_array()
+        
+class RawSpikeTrain(_NeuralActivityBase):
     """
     A class for representing raw spike trains.
     """
@@ -946,8 +1254,19 @@ class RawSpikeTrain(_NeuralActivity):
             variable = variable
         )
         
-    def __init__(self) -> None:
-        super().__init__()
+    def __array_finalize__(self, obj: Optional[ndarray]) -> None:
+        super().__array_finalize__(obj)
+        
+    def __init__(
+        self, 
+        activity: ndarray, 
+        time: Variable1D, 
+        variable: Optional[VariableBin]
+    ) -> None:
+        super().__init__(activity=activity, time=time, variable=variable)
+        
+    def to_array(self) -> ndarray:
+        return super().to_array()
 
 
 def convert_kilosort_spike_train(activity: ndarray) -> ndarray:
@@ -996,8 +1315,6 @@ class KilosortSpikeTrain(SpikeTrain):
         """
         Parameters
         ----------
-        activity: ndarray
-            The spike trains of each neuron, with shape (n_neurons, n_time).
         time: Variable1D
             The time stamp of each time point, with shape (n_time, ).
         variable: VariableBin
@@ -1011,12 +1328,18 @@ class KilosortSpikeTrain(SpikeTrain):
                     f"got {type(variable)} instead."
                 )
         
+        if isinstance(activity, ndarray) == False:
+            activity = np.asarray(activity)
+            
         # Convert neuron IDs to a binary spike train matrix
         spike_train = convert_kilosort_spike_train(activity)
         obj = spike_train.view(cls)
         obj.time = time
         obj.variable = variable
         return obj
+    
+    def __array_finalize__(self, obj: Optional[ndarray]) -> None:
+        super().__array_finalize__(obj)
     
     def __init__(
         self, 
@@ -1029,7 +1352,7 @@ class KilosortSpikeTrain(SpikeTrain):
     @staticmethod
     def get_spike_train(
         activity: ndarray,
-        input_time: ndarray,
+        time: Union[Variable1D, ndarray],
         variable: Optional[VariableBin] = None
     ) -> SpikeTrain:
         """
@@ -1050,8 +1373,13 @@ class KilosortSpikeTrain(SpikeTrain):
             A spike train object.
         """
         spike_train = convert_kilosort_spike_train(activity)
-        return SpikeTrain(spike_train, input_time, variable)
-        
+        return SpikeTrain(spike_train, time, variable)
+    
+    def to_array(self) -> ndarray:
+        return super().to_array()
+    
+    def to_kilosort_form(self) -> ndarray:
+        return np.argmax(self, axis=0) + 1
         
         
 

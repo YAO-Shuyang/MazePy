@@ -2,6 +2,8 @@
 Provide Gaussian Smooth for complex environment. It can avoid the internal walls.
 """
 
+"""should be deprecated"""
+
 import numpy as np
 from mazepy.behav.grid import GridBasic
 from mazepy.behav.graph import OpenFieldGraph, Graph

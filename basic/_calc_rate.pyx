@@ -16,9 +16,9 @@ cpdef cnp.ndarray[cnp.int64_t, ndim=2] _get_kilosort_spike_counts(
     
     return spike_counts
 
-cpdef cnp.ndarray[cnp.int64_t, ndim=2] _get_occu_time(
+cpdef cnp.ndarray[cnp.float64_t, ndim=2] _get_occu_time(
     cnp.ndarray[cnp.int64_t, ndim=1] variable,
-    cnp.ndarray[cnp.float64_t, ndim=1] time,
+    cnp.ndarray[cnp.float64_t, ndim=1] dtime,
     int nbins
 ):
     cdef cnp.ndarray[cnp.float64_t, ndim=1] occu_time = np.zeros(
@@ -27,7 +27,55 @@ cpdef cnp.ndarray[cnp.int64_t, ndim=2] _get_occu_time(
     )
 
     for i in range(variable.shape[0]):
-        occu_time[variable[i]] += time[i]
+        occu_time[variable[i]] += dtime[i]
 
     return occu_time
 
+cpdef cnp.ndarray[cnp.float64_t, ndim=2] calc_neural_trajectory(
+    cnp.ndarray[cnp.int64_t, ndim = 2] spikes,
+    cnp.ndarray[cnp.float64_t, ndim = 1] time,
+    double t_window,
+    double step_size
+):
+    cdef:
+        double t_min = np.min(time)
+        double t_max = np.max(time)
+        # Determine the number of time bins (nstep+1)
+        int nstep = int((t_max - t_min - t_window) // step_size) + 1
+        cnp.ndarray[cnp.float64_t, ndim=2] neural_traj = np.zeros(
+            (spikes.shape[0], nstep+1), np.float64
+        )
+
+        int left, right
+
+        cnp.ndarray[cnp.float64_t, ndim=1] left_bounds = np.linspace(
+            t_min, t_min + step_size * nstep, nstep+1
+        )
+
+        cnp.ndarray[cnp.float64_t, ndim=1] right_bounds = left_bounds + t_window
+
+        int init_frame = 0
+        int is_first = 0
+
+    # Determine range first
+    
+    for i in range(nstep+1):
+        # Determine the range
+        for j in range(init_frame, time.shape[0]):
+            if time[j] < left_bounds[i]:
+                continue
+            
+            if is_first == 0:
+                left = j
+                init_frame = j
+                is_first = 1
+
+            if time[j] >= right_bounds[i]:
+                right = j
+                is_first = 0
+                break
+
+        # Convert to firing rate
+        neural_traj[:, i] = np.sum(spikes[:, left:right], axis = 1) / t_window * 1000
+
+    return neural_traj

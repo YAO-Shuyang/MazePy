@@ -1,12 +1,28 @@
-from numpy import ndarray
+from re import X
+from networkx import center
+from numpy import isin, ndarray
 import numpy as np
 from typing import Optional, Union, Any
 
 from mazepy.basic.conversion import value_to_bin
-from .exceptions import DtypeError
-from .exceptions import DimensionError
 
-class VariableBin(np.ndarray):
+from mazepy.datastruc.exceptions import DtypeError, DimensionError
+
+class _VariableBase(ndarray):
+    def __new__(cls, input_array: ndarray) -> '_VariableBase':
+        obj = np.asarray(input_array).view(cls)
+        return obj
+    
+    def __array_finalize__(self, obj: Optional[ndarray]) -> None:
+        pass
+    
+    def __init__(self, input_array: ndarray) -> None:
+        pass
+    
+    def to_array(self) -> ndarray:
+        return np.asarray(self)
+
+class VariableBin(_VariableBase):
     """
     Represents a binned variable, such as time, position, or sensory gradients.
 
@@ -18,7 +34,8 @@ class VariableBin(np.ndarray):
     
     Methods
     -------
-    get_bin_center(xmin, xmax, nbin)
+    @staticmethod
+    get_bin_center1d(xmin, xmax, nbins)
         Returns the center of the bins.
 
     Raises
@@ -28,7 +45,11 @@ class VariableBin(np.ndarray):
     """
 
     def __new__(cls, input_array: ndarray) -> 'VariableBin':
-        arr = np.asarray(input_array)
+        if isinstance(input_array, ndarray) == False:
+            arr = np.asarray(input_array)
+        else:
+            arr = input_array
+            
         # Ensure the input is an array of integers
         if not np.issubdtype(arr.dtype, np.integer):
             raise DtypeError(
@@ -42,13 +63,197 @@ class VariableBin(np.ndarray):
     def __array_finalize__(self, obj: Optional[np.ndarray]) -> None:
         pass
     
+    def __init__(self, input_array: ndarray) -> None:
+        super().__init__(input_array)
+    
     @staticmethod
-    def get_bin_center(xmin: float, xmax: float, nbin: int) -> np.ndarray:
-        bin_widths = (xmax - xmin) / nbin
+    def get_bin_center1d(xmin: float, xmax: float, xnbins: int) -> np.ndarray:
+        """
+        Get the center of the bins based on the min and max values and the
+        number of bins. The bin width is assumed to be uniform and uniquely
+        determined by the number of bins and the range by:
+
+            bin_width = (xmax - xmin) / nbins
+
+        Parameters
+        ----------
+        xmin : float
+            The minimum value of the range.
+        xmax : float
+            The maximum value of the range.
+        xnbins : int
+            The number of bins.
+
+        Returns
+        -------
+        np.ndarray
+            The center of the bins.
+            
+        Examples
+        --------
+        >>> from mazepy.datastruc.variables import VariableBin
+        >>> VariableBin.get_bin_center1d(0, 10, 5)
+        array([1., 3., 5., 7., 9.])
+        >>> # Another way to input, which is recommended when get the bin
+        >>> # centers for 2D or 3D variables.
+        >>> VariableBin.get_bin_center1d(*(0, 10, 5))
+        array([1., 3., 5., 7., 9.])
+        """
+        if xmax <= xmin:
+            raise ValueError(
+                f"xmax must be greater than xmin, but {xmax} <= {xmin}."
+            )
+            
+        bin_widths = (xmax - xmin) / xnbins
         left_edges = np.arange(xmin, xmax, bin_widths)
         return left_edges + bin_widths / 2
+    
+    @staticmethod
+    def get_bin_center2d(
+        xmin: float, 
+        xmax: float, 
+        xnbins: int, 
+        ymin: float, 
+        ymax: float, 
+        ynbins: int
+    ) -> np.ndarray:
+        """
+        Get the center of the bins based on the min and max values and the
+        number of bins. The bin width is assumed to be uniform and uniquely
+        determined by the number of bins and the range by:
 
-class Variable1D(ndarray):
+            bin_width_x = (xmax - xmin) / xnbins
+            bin_width_y = (ymax - ymin) / ynbins
+
+        Parameters
+        ----------
+        xmin : float
+            The minimum value of the range.
+        xmax : float
+            The maximum value of the range.
+        xnbins : int
+            The number of bins in the x direction.
+        ymin : float
+            The minimum value of the range.
+        ymax : float
+            The maximum value of the range.
+        ynbins : int
+            The number of bins in the y direction.
+
+        Returns
+        -------
+        np.ndarray, with shape (xnbins * ynbins, 2)
+            The center of the bins.
+            
+        Examples
+        --------
+        >>> from mazepy.datastruc.variables import VariableBin
+        >>> VariableBin.get_bin_center2d(0, 10, 2, 0, 2, 2)
+        array([[2.5, 0.5],
+               [7.5, 0.5],
+               [2.5, 1.5],
+               [7.5, 1.5]])
+        >>> # Recommmended way to input, grouping the parameters for each
+        >>> # dimension for clarity.
+        >>> VariableBin.get_bin_center2d(*(0, 10, 2), *(0, 2, 2))
+        array([[2.5, 0.5],
+               [7.5, 0.5],
+               [2.5, 1.5],
+               [7.5, 1.5]])
+        """
+        centers_x = VariableBin.get_bin_center1d(xmin, xmax, xnbins)
+        centers_y = VariableBin.get_bin_center1d(ymin, ymax, ynbins)
+        centers_x, centers_y = np.meshgrid(centers_x, centers_y)
+        return np.vstack((np.ravel(centers_x), np.ravel(centers_y))).T
+    
+    @staticmethod
+    def get_bin_center3d(
+        xmin: float, 
+        xmax: float, 
+        xnbins: int, 
+        ymin: float, 
+        ymax: float, 
+        ynbins: int, 
+        zmin: float, 
+        zmax: float, 
+        znbins: int
+    ) -> np.ndarray:
+        """
+        Get the center of the bins based on the min and max values and the
+        number of bins. The bin width is assumed to be uniform and uniquely
+        determined by the number of bins and the range by:
+
+            bin_width_x = (xmax - xmin) / xnbins
+            bin_width_y = (ymax - ymin) / ynbins
+            bin_width_z = (zmax - zmin) / znbins
+
+        Parameters
+        ----------
+        xmin : float
+            The minimum value of the range.
+        xmax : float
+            The maximum value of the range.
+        xnbins : int
+            The number of bins in the x direction.
+        ymin : float
+            The minimum value of the range.
+        ymax : float
+            The maximum value of the range.
+        ynbins : int
+            The number of bins in the y direction.
+        zmin : float
+            The minimum value of the range.
+        zmax : float
+            The maximum value of the range.
+        znbins : int
+            The number of bins in the z direction.
+
+        Returns
+        -------
+        np.ndarray, with shape (xnbins * ynbins * znbins, 3)
+            The center of the bins.
+            
+        Examples
+        --------
+        >>> from mazepy.datastruc.variables import VariableBin
+        >>> VariableBin.get_bin_center3d(0, 10, 2, 0, 10, 2, 0, 4, 2)
+        array([[2.5, 2.5, 1. ],
+               [7.5, 2.5, 1. ],
+               [2.5, 7.5, 1. ],
+               [7.5, 7.5, 1. ],
+               [2.5, 2.5, 3. ],
+               [7.5, 2.5, 3. ],
+               [2.5, 7.5, 3. ],
+               [7.5, 7.5, 3. ]])
+        >>> # Recommmended way to input, grouping the parameters for each
+        >>> # dimension for clarity.
+        >>> VariableBin.get_bin_center3d(*(0, 10, 2), *(0, 2, 2), *(0, 4, 2))
+        array([[2.5, 0.5, 1. ],
+               [7.5, 0.5, 1. ],
+               [2.5, 1.5, 1. ],
+               [7.5, 1.5, 1. ],
+               [2.5, 0.5, 3. ],
+               [7.5, 0.5, 3. ],
+               [2.5, 1.5, 3. ],
+               [7.5, 1.5, 3. ]])
+        """
+        left_centers_x = VariableBin.get_bin_center1d(xmin, xmax, xnbins)
+        left_centers_y = VariableBin.get_bin_center1d(ymin, ymax, ynbins)
+        left_centers_z = VariableBin.get_bin_center1d(zmin, zmax, znbins)
+        # This order is necessary, I just have no idea why.
+        centers_y, centers_z, centers_x = np.meshgrid(
+            left_centers_y,
+            left_centers_z,
+            left_centers_x
+        )
+        return np.vstack((
+            np.ravel(centers_x), 
+            np.ravel(centers_y), 
+            np.ravel(centers_z)
+        )).T
+        
+
+class Variable1D(_VariableBase):
     """
     Represents a one-dimensional variable, such as time or a single spatial 
     dimension.
@@ -69,7 +274,7 @@ class Variable1D(ndarray):
 
     Methods
     -------
-    to_bin(xmin, xmax, nbin)
+    to_bin(xmin, xmax, nbins)
         Transform the value of the variable into bin indices.
 
     Examples
@@ -87,20 +292,25 @@ class Variable1D(ndarray):
         input_array: Any, 
         meaning: Optional[str] = None
     ) -> 'Variable1D':
-        arr = np.asarray(input_array)
+        if isinstance(input_array, ndarray) == False:
+            arr = np.asarray(input_array)
+        else:
+            arr = input_array
 
         if arr.ndim != 1:
             raise DimensionError(arr.ndim, "The array must be 1D.")
 
-        obj = arr.view(cls)
-        obj.meaning = meaning
-        return obj
+        return arr.view(cls)
 
     def __array_finalize__(self, obj: Optional[np.ndarray]) -> None:
         if obj is None: 
             return
         self.meaning = getattr(obj, 'meaning', None)
-
+        
+    def __init__(self, input_array: ndarray, meaning: Optional[str] = None) -> None:
+        super().__init__(input_array)
+        self.meaning = meaning
+        
     @property
     def x(self) -> ndarray:
         return self
@@ -109,9 +319,11 @@ class Variable1D(ndarray):
         self, 
         xmin: float,
         xmax: float,
-        nbin: int
+        nbins: int
     ) -> VariableBin:
         """
+        Binned Index starts from `0` to `(nbins - 1)`.
+
         Transform the value of the variable into bin indices.
 
         Parameters
@@ -120,7 +332,7 @@ class Variable1D(ndarray):
             Minimum value for binning, defaults to 0.
         xmax : float
             Maximum value for binning.
-        nbin : int
+        nbins : int
             Number of bins.
 
         Returns
@@ -134,16 +346,16 @@ class Variable1D(ndarray):
 
         Examples
         --------
-        >>> x = Variable1D(np.array([0.1, 1.2, 2.3, 1.1, 2.4])
-        >>> nbin = 5
+        >>> x = Variable1D([0.1, 1.2, 2.3, 1.1, 2.4])
+        >>> nbins = 5
         >>> xmax = 5
         >>> xmin = 0
-        >>> value_to_bin(x, xmin, xmax, nbin)
+        >>> value_to_bin(x, xmin, xmax, nbins)
         array([0, 1, 2, 1, 2], dtype=int64)
         """
-        return VariableBin(value_to_bin(self, nbin, xmax, xmin))
+        return VariableBin(value_to_bin(self, nbins, xmax, xmin))
     
-class Variable2D(ndarray):
+class Variable2D(_VariableBase):
     """
     Represents a 2D variable, such as time, 2-D position, or sensory gradients.
 
@@ -172,21 +384,18 @@ class Variable2D(ndarray):
         The values of the first variable or dimension.
     y : ndarray
         The values of the second variable or dimension.
-    to_bin(xmin, xmax, xnbin, ymin, ymax, ynbin)
+    to_bin(xmin, xmax, xnbins, ymin, ymax, ynbins)
         Transform the value of the variable into bin indices.
 
     Examples
     --------
-    >>> x = Variable2D(
-        np.array([[0, 1, 2, 3], [1, 2, 3, 4]]),
-        meaning=('x', 'y')
-    )
-    >>> print(x.meaning)
+    >>> x = Variable2D([[0, 1, 2, 3], [1, 2, 3, 4]], meaning=('x', 'y'))
+    >>> x.meaning
     ('x', 'y')
-    >>> print(x.x)
-    [0 1 2 3]
-    >>> print(x.y)
-    [0 1 2 3]
+    >>> x.x
+    Variable1D([0, 1, 2, 3])
+    >>> x.y
+    Variable1D([1, 2, 3, 4])
     """
     meaning: Union[str, tuple[str, str], None]
 
@@ -195,12 +404,16 @@ class Variable2D(ndarray):
         input_array: ndarray, 
         meaning: Union[str, tuple[str, str], None] = None
     ) -> 'Variable2D':
-        arr = np.asarray(input_array)
-        if arr.shape[1] != 2 or arr.shape[0] != 2:
+        if isinstance(input_array, ndarray) == False:
+            arr = np.asarray(input_array)
+        else:
+            arr = input_array
+            
+        if arr.shape[1] != 2 and arr.shape[0] != 2:
             raise DimensionError(
                 f"Input array must be two-column, but {arr.shape} is given."
             )
-        elif arr.shape[1] != 2 or arr.shape[0] == 2:
+        elif arr.shape[1] != 2 and arr.shape[0] == 2:
             arr = arr.T
 
         if isinstance(meaning, tuple):
@@ -218,6 +431,13 @@ class Variable2D(ndarray):
         if obj is None:
             return
         self.meaning = getattr(obj, 'meaning', None)
+        
+    def __init__(
+        self,
+        input_array: ndarray, 
+        meaning: Union[str, tuple[str, str], None] = None
+    ) -> None:
+        super().__init__(input_array)
 
     @property
     def x(self) -> Variable1D:
@@ -237,12 +457,14 @@ class Variable2D(ndarray):
         self, 
         xmin: float,
         xmax: float,
-        xnbin: int,
+        xnbins: int,
         ymin: float,
         ymax: float,
-        ynbin: int
+        ynbins: int
     ) -> VariableBin:
         """
+        Binned Index starts from `0` to `(xnbins * ynbins - 1)`.
+            
         Transform the 2D variable's x and y components into discrete bin 
         indices based on specified ranges and bin counts.
 
@@ -257,13 +479,13 @@ class Variable2D(ndarray):
             Minimum value of the first dimension to be binned.
         xmax : float
             Maximum value of the first dimension to be binned.
-        xnbin : int
+        xnbins : int
             Number of bins for the first dimension.
         ymin : float
             Minimum value of the second dimension to be binned.
         ymax : float
             Maximum value of the second dimension to be binned.
-        ynbin : int
+        ynbins : int
             Number of bins for the second dimension.
 
         Returns
@@ -271,7 +493,7 @@ class Variable2D(ndarray):
         VariableBin
             A new instance of `VariableBin` containing the combined bin indices
             for each point. The bin index is computed as:
-                `xbins + xnbin * (ybins - 1)`, 
+                `xbins + xnbins * (ybins - 1)`, 
             ensuring a unique index for each (x, y) pair.
 
         See Also
@@ -283,18 +505,18 @@ class Variable2D(ndarray):
         --------
         Assuming `value_to_bin` is implemented and handles the inputs correctly:
 
-        >>> variable = Variable3D(
-        ...     np.array([[1.5, 2.5, 3.5], [4.5, 5.5, 7.5]])
-        ... )
-        >>> bin_indices = variable.to_bin(*(1, 4, 3), *(4, 8, 4))
-        >>> print(bin_indices)
-        VariableBin([])
+        >>> variable = Variable3D([
+        ...     [1.5, 2.5, 3.5], [4.5, 5.5, 7.5], [6.5, 7.5, 8.5]
+        ... ])
+        >>> bin_indices = variable.to_bin(*(1, 4, 3), *(4, 8, 4), *(6, 9, 3))
+        >>> bin_indices
+        VariableBin([ 0, 17, 35], dtype=int64)
         """
-        xbins = value_to_bin(self[:, 0], xmin, xmax, xnbin)
-        ybins = value_to_bin(self[:, 1], ymin, ymax, ynbin)
-        return VariableBin(xbins + xnbin * (ybins - 1))
+        xbins = value_to_bin(self[:, 0], xmin, xmax, xnbins)
+        ybins = value_to_bin(self[:, 1], ymin, ymax, ynbins)
+        return VariableBin(xbins + xnbins * (ybins - 1))
     
-class Variable3D:
+class Variable3D(_VariableBase):
     """
     Represents a 3D variable, such as 3D position, velocity in 3D space, etc.
 
@@ -327,12 +549,16 @@ class Variable3D:
         input_array: ndarray, 
         meaning: Union[str, tuple[str, str, str], None] = None
     ) -> 'Variable3D':
-        arr = np.asarray(input_array)
-        if arr.shape[1] != 3 or arr.shape[0] != 3:
+        if isinstance(input_array, np.ndarray) == False:
+            arr = np.asarray(input_array)
+        else:
+            arr = input_array
+            
+        if arr.shape[1] != 3 and arr.shape[0] != 3:
             raise DimensionError(
                 f"Input array must be three-column, but {arr.shape} is given."
             )
-        elif arr.shape[1] != 3 or arr.shape[0] == 3:
+        elif arr.shape[1] != 3 and arr.shape[0] == 3:
             arr = arr.T
 
         obj = arr.view(cls)
@@ -351,6 +577,13 @@ class Variable3D:
         if obj is None:
             return
         self.meaning = getattr(obj, 'meaning', None)
+        
+    def __init__(
+        self,
+        input_array: ndarray, 
+        meaning: Union[str, tuple[str, str, str], None] = None
+    ) -> None:
+        super().__init__(input_array)
 
     @property
     def x(self) -> Variable1D:
@@ -377,15 +610,17 @@ class Variable3D:
         self,
         xmin: float,
         xmax: float,
-        xnbin: int,
+        xnbins: int,
         ymin: float,
         ymax: float,
-        ynbin: int,
+        ynbins: int,
         zmin: float,
         zmax: float,
-        znbin: int
+        znbins: int
     ) -> VariableBin:
         """
+        Binned Index starts from `0` to `(xnbins * ynbins * znbins - 1)`.
+        
         Transform the 3D variable's x, y, and z components into discrete bin 
         indices based on specified ranges and bin counts.
 
@@ -400,19 +635,19 @@ class Variable3D:
             Minimum value of the first dimension to be binned.
         xmax : float
             Maximum value of the first dimension to be binned.
-        xnbin : int
+        xnbins : int
             Number of bins for the first dimension.
         ymin : float
             Minimum value of the second dimension to be binned.
         ymax : float
             Maximum value of the second dimension to be binned.
-        ynbin : int
+        ynbins : int
             Number of bins for the second dimension.
         zmin : float
             Minimum value of the third dimension to be binned.
         zmax : float
             Maximum value of the third dimension to be binned.
-        znbin : int
+        znbins : int
             Number of bins for the third dimension.
 
         Returns
@@ -420,7 +655,7 @@ class Variable3D:
         VariableBin
             A new instance of `VariableBin` containing the combined bin indices
             for each point. The bin index is computed as:
-                `xbins + xnbin * (ybins - 1) + xnbin * ynbin * (zbins - 1)`, 
+                `xbins + xnbins * (ybins - 1) + xnbins * ynbins * (zbins - 1)`, 
             ensuring a unique index for each (x, y, z) pair.
 
         See Also
@@ -431,18 +666,20 @@ class Variable3D:
         Examples
         --------
         >>> from mazepy.datastruc.variables import Variable3D
-        >>> variable = Variable3D(
-        ...     np.array([[1.5, 2.5, 3.5], [4.5, 5.5, 7.5], [8.5, 9.5, 10.5]])
-        ... )
+        >>> variable = Variable3D([
+        ...     [1.5, 2.5, 3.5], 
+        ...     [4.5, 5.5, 7.5], 
+        ...     [8.5, 9.5, 10.5]
+        ... ])
         >>> bin_indices = variable.to_bin(*(1, 4, 3), *(4, 8, 4), *(8, 11, 3))
-        >>> print(bin_indices)
-        VariableBin([])
+        >>> bin_indices
+        VariableBin([ 0,  5, 35], dtype=int64)
         """
-        xbins = value_to_bin(self.x, xmin, xmax, xnbin)
-        ybins = value_to_bin(self.y, ymin, ymax, ynbin)
-        zbins = value_to_bin(self.z, zmin, zmax, znbin)
+        xbins = value_to_bin(self.x, xmin, xmax, xnbins)
+        ybins = value_to_bin(self.y, ymin, ymax, ynbins)
+        zbins = value_to_bin(self.z, zmin, zmax, znbins)
         return VariableBin(
-            xbins + xnbin * (ybins - 1) + xnbin * ynbin * (zbins - 1)
+            xbins + xnbins * ybins + xnbins * ynbins * zbins
         )
 
 Variables = Union[Variable1D, Variable2D, Variable3D, VariableBin, ndarray]

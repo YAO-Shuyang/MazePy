@@ -17,6 +17,11 @@ extensions = [
         "basic._utils",
         ["basic/_utils.pyx"],
         include_dirs=[numpy.get_include()],
+    ),
+    Extension(
+        "basic._csmooth",
+        ["basic/_csmooth.pyx"],
+        include_dirs=[numpy.get_include()],
     )
 ]
 
