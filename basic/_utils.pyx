@@ -15,4 +15,4 @@ cpdef cnp.ndarray[cnp.int64_t, ndim=2] _convert_kilosort_spike_train(
         spike_train[activity[i] - 1, i] = 1
 
     return spike_train
-        
+

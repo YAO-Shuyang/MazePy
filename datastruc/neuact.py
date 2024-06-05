@@ -280,6 +280,13 @@ class NeuralTrajectory(_ProcessedNeuralActivityBase):
     -------
     n_neuron
         Returns the number of neurons constituting the neural trajectory.
+    smooth(self, kernel)
+        Smooth the neural trajectory using a given smoothing matrix.
+    clip(self, indices)
+        Clips the neural trajectory using the specified indices.
+    clip_within_trials(self, time_begs, time_ends)
+        Clips the neural trajectory within the specified trials.
+    clip_inter_trials(self, time_begs, time_ends)
 
     Examples
     --------
@@ -415,13 +422,13 @@ class NeuralTrajectory(_ProcessedNeuralActivityBase):
         
         if self.variable is not None:
             return NeuralTrajectory(
-                neural_trajectory=super().clip(self, indices),
+                neural_trajectory=self[:, indices],
                 time=self.time[indices],
                 variable=self.variable[indices]
             )
         else:
             return NeuralTrajectory(
-                neural_trajectory=super().clip(self, indices),
+                neural_trajectory=self[:, indices],
                 time=self.time[indices]
             )
     
@@ -459,11 +466,16 @@ class NeuralTrajectory(_ProcessedNeuralActivityBase):
                 "as the number of trials you wanted to clip."
             )
         
-        clipped_indices = np.concatenate((
-            np.where(
-                (self.time >= time_begs[i]) & (self.time <= time_ends[i])
-            )[0] for i in range(time_begs.shape[0])
-        ))
+        if time_begs.shape[0] == 1:
+            clipped_indices = np.where(
+                (self.time >= time_begs[0]) & (self.time <= time_ends[0])
+            )[0]
+        else:
+            clipped_indices = np.concatenate([
+                np.where(
+                    (self.time >= time_begs[i]) & (self.time <= time_ends[i])
+                )[0] for i in range(time_begs.shape[0])
+            ])
         return self.clip(clipped_indices)
     
     def clip_inter_trials(
@@ -501,11 +513,11 @@ class NeuralTrajectory(_ProcessedNeuralActivityBase):
                 "as the number of trials you wanted to clip."
             )
             
-        clipped_indices = np.concatenate((
+        clipped_indices = np.concatenate([
             np.where(
                 (self.time > time_ends[i]) & (self.time < time_begs[i+1])
             )[0] for i in range(time_begs.shape[0] - 1)
-        ))
+        ])
         return self.clip(clipped_indices)
     
 
@@ -528,9 +540,11 @@ class _NeuralActivityBase(ndarray):
 
     Methods
     -------
-    remove_nan():
+    remove_nan(self)
         Removes NaN values from neural activity and corresponding time and 
         variable arrays.
+    to_array(self)
+        Converts the object into a numpy array.
 
     Raises
     ------
@@ -657,12 +671,20 @@ class SpikeTrain(_NeuralActivityBase):
 
     Methods
     -------
-    `calc_total_time(self, t_interv_limits: Optional[float] = None)`
+    calc_total_time(self, t_interv_limits)
         Get the total time of the spike train.
-    `calc_spike_count(self)`
+    calc_occu_time(self, t_interv_limits, nbins)
+        Calculate the occurrence time of each neuron.
+    calc_spike_count(self, mode, nbins)
         Calculate the spike count of each neuron.
-    `calc_mean_rate(self, t_interv_limits: Optional[float] = None)`
+    calc_mean_rate(self, t_interv_limits)
         Calculate the mean firing rate of each neuron.
+    calc_variable_trajectory(self, traj_time)
+        Calculate the variable trajectory relating to the neural trajectory.
+    calc_neural_trajectory(self, t_window, step_size)
+        Calculate the neural trajectory of each neuron.
+    calc_tuning_curve(self, nbins, is_remove_nan, t_interv_limits)
+        Calculate the tuning curve of each neuron.
     """
     def __new__(
         cls, 
@@ -900,6 +922,12 @@ class SpikeTrain(_NeuralActivityBase):
         a 1D variable with the same length as the neural trajectory.
 
         Only computed if the variable is accessible.
+        
+        Parameters
+        ----------
+        traj_time: Union[Variable1D, np.ndarray]
+            The time stamp of the neural trajectory. This time stamp would be
+            the target of the variable trajectory.
 
         Returns
         -------
@@ -1380,8 +1408,6 @@ class KilosortSpikeTrain(SpikeTrain):
     
     def to_kilosort_form(self) -> ndarray:
         return np.argmax(self, axis=0) + 1
-        
-        
 
 if __name__ == "__main__":
     import doctest

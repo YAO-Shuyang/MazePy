@@ -1,0 +1,3 @@
+import numpy as np
+
+def _convert_kilosort_spike_train(activity: np.ndarray) -> np.ndarray: ...
