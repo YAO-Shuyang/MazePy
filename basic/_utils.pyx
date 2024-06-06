@@ -1,7 +1,7 @@
 import numpy as np
 cimport numpy as cnp
 
-cpdef cnp.ndarray[cnp.int64_t, ndim=2] _convert_kilosort_spike_train(
+cpdef cnp.ndarray[cnp.int64_t, ndim=2] _convert_from_kilosort_form(
     cnp.ndarray[cnp.int64_t, ndim=1] activity
 ):
     cdef:
@@ -16,3 +16,11 @@ cpdef cnp.ndarray[cnp.int64_t, ndim=2] _convert_kilosort_spike_train(
 
     return spike_train
 
+
+
+cpdef cnp.ndarray[cnp.int64_t, ndim=2] _convert_to_kilosort_form(
+    cnp.ndarray[cnp.int64_t, ndim=2] activity
+):
+    idx_time, idx_neuron = np.where(activity.T == 1)
+
+    return np.vstack((idx_neuron+1, idx_time))

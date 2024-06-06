@@ -22,6 +22,16 @@ extensions = [
         "basic._csmooth",
         ["basic/_csmooth.pyx"],
         include_dirs=[numpy.get_include()],
+    ),
+    Extension(
+        "basic._calculate",
+        ["basic/_calculate.pyx"],
+        include_dirs=[numpy.get_include()],
+    ),
+    Extension(
+        "basic._cshuffle",
+        ["basic/_cshuffle.pyx"],
+        include_dirs=[numpy.get_include()],
     )
 ]
 

@@ -4,7 +4,7 @@ from numpy import isin, ndarray
 import numpy as np
 from typing import Optional, Union, Any
 
-from mazepy.basic.conversion import value_to_bin
+from mazepy.basic.convert import value_to_bin
 
 from mazepy.datastruc.exceptions import DtypeError, DimensionError
 

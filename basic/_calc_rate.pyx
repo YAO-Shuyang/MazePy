@@ -16,6 +16,39 @@ cpdef cnp.ndarray[cnp.int64_t, ndim=2] _get_kilosort_spike_counts(
     
     return spike_counts
 
+cpdef cnp.ndarray[cnp.int64_t, ndim=1] _get_kilosort_spike_counts_total(
+    cnp.ndarray[cnp.int64_t, ndim=1] spikes
+):
+    cdef cnp.ndarray[cnp.int64_t, ndim=1] spike_counts = np.zeros(
+        np.max(spikes), dtype=np.int64
+    )
+
+    for i in range(spikes.shape[0]):
+        spike_counts[spikes[i] - 1] += 1
+
+    return spike_counts
+
+cpdef cnp.ndarray[cnp.int64_t, ndim=2] _get_spike_counts(
+    cnp.ndarray[cnp.int64_t, ndim=2] spikes,
+    cnp.ndarray[cnp.int64_t, ndim=1] variable,
+    int nbins
+):
+    cdef:
+        cnp.ndarray[cnp.int64_t, ndim=2] spike_counts = np.zeros(
+            (spikes.shape[0], nbins), np.int64
+        )
+
+    for i in range(nbins): 
+        idx = np.where(variable == i)[0]
+        spike_counts[:, i] += np.sum(spikes[:, idx], axis = 1)
+    
+    return spike_counts
+
+cpdef cnp.ndarray[cnp.int64_t, ndim=1] _get_spike_counts_total(
+    cnp.ndarray[cnp.int64_t, ndim=2] spikes
+):
+    return np.sum(spikes, axis = 1)
+
 cpdef cnp.ndarray[cnp.float64_t, ndim=2] _get_occu_time(
     cnp.ndarray[cnp.int64_t, ndim=1] variable,
     cnp.ndarray[cnp.float64_t, ndim=1] dtime,
@@ -79,3 +112,11 @@ cpdef cnp.ndarray[cnp.float64_t, ndim=2] calc_neural_trajectory(
         neural_traj[:, i] = np.sum(spikes[:, left:right], axis = 1) / t_window * 1000
 
     return neural_traj
+
+
+cpdef cnp.ndarray[cnp.int64_t, ndim=2] _convert_to_kilosort_form(
+    cnp.ndarray[cnp.int64_t, ndim=2] spikes
+):
+    idx_time, idx_neuron = np.where(spikes.T == 1)
+
+    return np.vstack((idx_neuron+1, idx_time))
