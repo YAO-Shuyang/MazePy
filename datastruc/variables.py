@@ -353,7 +353,7 @@ class Variable1D(_VariableBase):
         >>> value_to_bin(x, xmin, xmax, nbins)
         array([0, 1, 2, 1, 2], dtype=int64)
         """
-        return VariableBin(value_to_bin(self, nbins, xmax, xmin))
+        return VariableBin(value_to_bin(self, xmin, xmax, nbins))
     
 class Variable2D(_VariableBase):
     """
