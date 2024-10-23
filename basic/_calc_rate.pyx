@@ -4,11 +4,12 @@ cimport numpy as cnp
 cpdef cnp.ndarray[cnp.int64_t, ndim=2] _get_kilosort_spike_counts(
     cnp.ndarray[cnp.int64_t, ndim=1] spikes,
     cnp.ndarray[cnp.int64_t, ndim=1] variable,
-    int nbins
+    int nbins,
+    int n_neurons
 ):
     cdef:
         cnp.ndarray[cnp.int64_t, ndim=2] spike_counts = np.zeros(
-            (np.max(spikes), nbins), np.int64
+            (n_neurons, nbins), np.int64
         )
 
     for i in range(spikes.shape[0]):

@@ -1015,7 +1015,7 @@ class SpikeTrain(_NeuralActivityBase):
         
         # Determine the edges of the time bins
         left_bounds = np.linspace(t_min, t_min + step_size * n_step, n_step + 1)
-    
+        
         neural_traj = calc_neural_trajectory(
             spikes = self.astype(np.int64),
             time = t.astype(np.float64),
@@ -1117,7 +1117,8 @@ class SpikeTrain(_NeuralActivityBase):
         spike_counts = _get_kilosort_spike_counts(
             kilosort_spikes.astype(np.int64),
             kilosort_variables.astype(np.int64),
-            nbins
+            nbins,
+            self.shape[0]
         )
             
         firing_rate = spike_counts/(occu_time/1000)
