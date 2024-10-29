@@ -14,16 +14,16 @@ cpdef cnp.ndarray[cnp.float64_t, ndim=2] _shift_shuffle_kilosort(
     cnp.ndarray[cnp.float64_t, ndim=1] dtime,
     cnp.ndarray[cnp.int64_t, ndim = 1] variable,
     int nbins,
+    int n_neurons,
     int n_shuffle = 1000,
     int info_thre = 95
 ):
     cdef:
-        int n_neuron = np.max(spikes)
-        # Results: n_neuron x 3, the three columns represent
+        # Results: n_neurons x 3, the three columns represent
         # 1. is_passed_shuffle (0. or 1.) 2. information 3. shuffle threshold (info.)
         # Units of information: bits per spikes.
         cnp.ndarray[cnp.float64_t, ndim=2] res = np.zeros(
-            (n_neuron, 3), np.float64
+            (n_neurons, 3), np.float64
         )
         
         cnp.ndarray[cnp.float64_t, ndim=1] occu_time = _get_occu_time(
@@ -32,10 +32,10 @@ cpdef cnp.ndarray[cnp.float64_t, ndim=2] _shift_shuffle_kilosort(
         double t_total = np.nansum(occu_time)
         cnp.ndarray[cnp.float64_t, ndim=1] occu_time_norm = occu_time / t_total
         cnp.ndarray[cnp.float64_t, ndim=2] tuning_curve_shuf = np.zeros(
-            (n_neuron, nbins)
+            (n_neurons, nbins)
         )
         cnp.ndarray[cnp.float64_t, ndim=2] tuning_curve = np.zeros(
-            (n_neuron, nbins)
+            (n_neurons, nbins)
         )
 
         cnp.ndarray[cnp.int64_t, ndim=2] shuf_spikes = np.zeros(
@@ -43,20 +43,21 @@ cpdef cnp.ndarray[cnp.float64_t, ndim=2] _shift_shuffle_kilosort(
         )
 
         cnp.ndarray[cnp.float64_t, ndim=2] shuf_info = np.zeros(
-            (n_neuron, n_shuffle), np.float64
+            (n_neurons, n_shuffle), np.float64
         )
     
-        cnp.ndarray[cnp.float64_t, ndim=1] mean_rate = np.zeros(n_neuron)
+        cnp.ndarray[cnp.float64_t, ndim=1] mean_rate = np.zeros(n_neurons)
 
         cnp.ndarray[cnp.int64_t, ndim=1] shuf_shift = np.random.randint(
             low=1, high=spikes.shape[1], size=n_shuffle
         ).astype(np.int64)
     
-    mean_rate = _get_kilosort_spike_counts_total(spikes) / t_total    
+    mean_rate = _get_kilosort_spike_counts_total(spikes, n_neurons) / t_total    
     tuning_curve = _get_kilosort_spike_counts(
         spikes = spikes,
         variable = variable,
-        nbins = nbins
+        nbins = nbins,
+        n_neurons = n_neurons
     ) / occu_time
 
     res[:, 1] = _calc_information(
@@ -70,7 +71,8 @@ cpdef cnp.ndarray[cnp.float64_t, ndim=2] _shift_shuffle_kilosort(
         tuning_curve_shuf = _get_kilosort_spike_counts(
             spikes = np.roll(spikes, shift = shuf_shift[i]),
             variable = variable,
-            nbins = nbins
+            nbins = nbins,
+            n_neurons = n_neurons
         ) / occu_time
 
         shuf_info[:, i] = _calc_information(
@@ -88,6 +90,7 @@ cpdef cnp.ndarray[cnp.float64_t, ndim=2] _shift_shuffle(
     cnp.ndarray[cnp.float64_t, ndim=1] dtime,
     cnp.ndarray[cnp.int64_t, ndim = 1] variable,
     int nbins,
+    int n_neurons,
     int n_shuffle = 1000,
     int info_thre = 95
 ):
@@ -101,6 +104,7 @@ cpdef cnp.ndarray[cnp.float64_t, ndim=2] _shift_shuffle(
         dtime = dtime[res[1, :]],
         variable = variable[res[1, :]],
         nbins = nbins,
+        n_neurons = n_neurons,
         n_shuffle = n_shuffle,
         info_thre = info_thre
     )

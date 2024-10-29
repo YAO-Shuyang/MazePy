@@ -20,7 +20,6 @@ cpdef tuple pearsonr(cnp.ndarray[DTYPE_t, ndim=1] x, cnp.ndarray[DTYPE_t, ndim=1
         var_x += (x[i] - mean_x) ** 2
         var_y += (y[i] - mean_y) ** 2
 
-    # Avoid division by zero
     if n > 1:
         cov_xy /= n
         var_x /= n
@@ -28,9 +27,9 @@ cpdef tuple pearsonr(cnp.ndarray[DTYPE_t, ndim=1] x, cnp.ndarray[DTYPE_t, ndim=1
     else:
         return 0.0, cov_xy  # Not enough data points
 
-    # Handle the case where variance is zero
-    if var_x == 0 or var_y == 0:
-        return 0.0, cov_xy  # Return correlation of zero if any variance is zero
+    # Handle the case where covariance or variance is zero
+    if cov_xy == 0 or var_x == 0 or var_y == 0:
+        return np.nan, cov_xy  # Return NaN if correlation is undefined
 
     correlation = cov_xy / (sqrt(var_x) * sqrt(var_y))
     return correlation, cov_xy

@@ -18,10 +18,11 @@ cpdef cnp.ndarray[cnp.int64_t, ndim=2] _get_kilosort_spike_counts(
     return spike_counts
 
 cpdef cnp.ndarray[cnp.int64_t, ndim=1] _get_kilosort_spike_counts_total(
-    cnp.ndarray[cnp.int64_t, ndim=1] spikes
+    cnp.ndarray[cnp.int64_t, ndim=1] spikes,
+    int n_neurons
 ):
     cdef cnp.ndarray[cnp.int64_t, ndim=1] spike_counts = np.zeros(
-        np.max(spikes), dtype=np.int64
+        n_neurons, dtype=np.int64
     )
 
     for i in range(spikes.shape[0]):

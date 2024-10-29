@@ -54,6 +54,7 @@ def _shift_shuffle(
     dtime: np.ndarray, 
     variable: np.ndarray, 
     nbins: int, 
+    n_neurons: int,
     n_shuffle: int = 1000, 
     info_thre: int = 95
 ) -> np.ndarray:
