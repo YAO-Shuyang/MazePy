@@ -5,8 +5,7 @@ import numpy as np
 from typing import Optional, Union, Any
 
 from mazepy.basic.convert import value_to_bin
-
-from mazepy.datastruc.exceptions import DtypeError, DimensionError
+from mazepy.exceptions import DtypeError, DimensionError
 
 class _VariableBase(ndarray):
     def __new__(cls, input_array: ndarray) -> '_VariableBase':

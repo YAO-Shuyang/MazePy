@@ -34,6 +34,23 @@ class DimensionError(Exception):
         if message is None:
             message = f"Invalid dimension: {ndim}"
         super().__init__(message)
+        
+class ShapeError(Exception):
+    """
+    Exception raised when the shape of the array does not satisfy the
+    requirement.
+
+    Attributes
+    ----------
+    shape : int
+        Shape of the array.
+    message : str
+    """
+
+    def __init__(self, shape: tuple, message: Optional[str] = None):
+        if message is None:
+            message = f"Invalid dimension: {shape}"
+        super().__init__(message)
 
 class DimensionMismatchError(Exception):
     """
