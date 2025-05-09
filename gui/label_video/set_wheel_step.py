@@ -8,8 +8,11 @@ class WheelStepSettor(QVBoxLayout):
         super().__init__()
         
         self.current_stamp_spinbox = QSpinBox()
+        self.current_stamp_spinbox.setWrapping(False)
         self.current_frame_spinbox = QSpinBox()
+        self.current_frame_spinbox.setWrapping(False)
         self.wheel_steps_spinbox = QSpinBox()
+        self.wheel_steps_spinbox.setWrapping(False)
         self.stamp_to_frame, self.frame_to_stamp, self.total_frame_num = None, None, 0
         
         # Create spin boxes to set/show time values

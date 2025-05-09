@@ -1,13 +1,25 @@
+from typing import Optional
 from PyQt6.QtWidgets import QApplication, QMainWindow, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget, QPushButton, QAbstractItemView
 import numpy as np
+import time
 
 class RecordTable(QWidget):
-    def __init__(self):
-        super().__init__()    
+    def __init__(
+        self, 
+        column_labels: list[str] = ["Start Frame", "End Frame"]
+    ):
+        """A table widget for recording video information.
+        
+        Parameters
+        ----------
+        column_labels : list[str]
+            The labels for the columns in the table.
+        """
+        super().__init__()
 
         self.table_widget = QTableWidget()
         self.table_widget.setColumnCount(2)
-        self.table_widget.setHorizontalHeaderLabels(["Start Frame", "End Frame"])
+        self.table_widget.setHorizontalHeaderLabels(column_labels)
         self.table_widget.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.table_widget.itemChanged.connect(self.update_content)
         self.table_widget.clicked.connect(self.current_item)
@@ -15,7 +27,7 @@ class RecordTable(QWidget):
         self.save_records = QPushButton("Save Records")
                 
         self.curr_row, self.curr_col = None, None
-        self.content = np.array([], np.int64)
+        self.content = np.array((0, 2), np.int64)
         
         layout = QVBoxLayout()
         layout.addWidget(self.table_widget)
@@ -52,7 +64,6 @@ class RecordTable(QWidget):
         else:
             selected_row = self.table_widget.currentRow()
             self.table_widget.setItem(selected_row, 1, QTableWidgetItem(str(item)))
-            
 
     def delete_row(self):
         selected_row = self.table_widget.currentRow()
@@ -77,8 +88,6 @@ class RecordTable(QWidget):
                         self.content[r, l] = np.nan
                 else:
                     self.content[r, l] = np.nan
-                
-        print(1, self.content)
         
     def current_item(self):
         self.curr_row, self.curr_col = self.table_widget.currentRow(), self.table_widget.currentColumn()
@@ -87,7 +96,21 @@ class RecordTable(QWidget):
         if self.curr_row is not None and self.curr_col is not None:
             self.table_widget.item(self.curr_row, self.curr_col).setText(str(num))
         
-                
+    def clear_content(self):
+        self.table_widget.clearContents()
+        self.table_widget.setRowCount(0)
+        self.curr_row, self.curr_col = None, None
+        self.content = np.array((0, 2), np.int64)
+        
+    def set_content(self, content: np.ndarray):
+        self.table_widget.clearContents()
+        self.table_widget.setRowCount(0)
+        self.content = content
+        for i in range(content.shape[0]):
+            self.table_widget.insertRow(i)
+            for j in range(content.shape[1]):
+                item = QTableWidgetItem(str(int(content[i, j])))
+                self.table_widget.setItem(i, j, item)
 
 class MainWindow(QMainWindow):
     def __init__(self):
