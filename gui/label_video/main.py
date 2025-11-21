@@ -132,14 +132,13 @@ class VideoFrameLabel(QMainWindow):
     def get_video_files(self):
         video_extensions = (".avi")
         video_files = []
-        for root, _, files in os.walk(self.folder_dir):
-            for file in files:
-                if file.lower().endswith(video_extensions):
-                    file_path = os.path.join(os.path.abspath(root), file)
-                    creation_time = os.path.getctime(file_path)
-                    video_files.append((file_path, creation_time))
-        video_files.sort(key=lambda x: x[1])  # Sort files based on creation time
-        return [file_path for file_path, _ in video_files]
+        for f in self.folder_dir.iterdir():
+            if f.suffix.lower() == ".avi":
+                stem = f.stem  # basename without extension
+                if stem.isdigit():   # keep only integer basenames
+                    video_files.append((int(stem), f))
+        video_files.sort(key=lambda x: x[0])  # Sort files based on integer basename
+        return [file for _, file in video_files]
 
     def update_progress(self, progress):
         self.progress_bar.setValue(progress)
