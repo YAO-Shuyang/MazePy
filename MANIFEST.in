@@ -1,0 +1,7 @@
+include README.md CHANGELOG.md CONTRIBUTING.md LICENSE .gitignore .gitattributes
+recursive-include tests *.py
+recursive-include src/mazepy .gitkeep
+recursive-include docs .gitkeep
+recursive-include examples .gitkeep
+recursive-include benchmarks .gitkeep
+recursive-include .github .gitkeep

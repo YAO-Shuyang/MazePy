@@ -1,22 +1,40 @@
 [build-system]
-requires = ["setuptools>=61.0","numpy>=1.22.2","matplotlib>=3.2.2","seaborn>=0.11.2", "scipy>=1.7.3", "opencv>=4.0.1", "h5py>=3.6.0", "pyglet>=2.0.5", "networkx>=2.7.1"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "mazepy"
-version = "0.0.1"
-authors = [
-  { name="Shuyang Yao", email="qzyaoshuyang3@pku.edu.cn" },
-]
-description = "This package is developed for analyzing data recorded in system neuroscience research. It provides a tool to effectively process behavioral data and neural activities."
+version = "0.1.0.dev0"
+description = "Geometry foundations for spatial navigation and neuroscience."
 readme = "README.md"
-requires-python = ">=3.8"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-]
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "Shuyang Yao"}]
+dependencies = ["numpy>=1.23", "shapely>=2.0,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "ruff>=0.6", "build>=1"]
 
 [project.urls]
-"Homepage" = "https://github.com/YAO-Shuyang/MazePy"
-"Bug Tracker" = "https://github.com/YAO-Shuyang/MazePy"
+Repository = "https://github.com/YAO-Shuyang/MazePy"
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["mazepy", "mazepy.geometry", "mazepy.geometry.*"]
+namespaces = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
