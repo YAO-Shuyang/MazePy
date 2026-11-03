@@ -46,7 +46,7 @@ jobs:
         run: >-
           python -c "import pathlib, subprocess, sys; wheel=next(pathlib.Path('dist').glob('*.whl')); subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--force-reinstall', '--no-deps', str(wheel)])"
       - name: Verify installed wheel against recorded data
-        run: python -m pytest tests/data tests/real_data/test_signal_containers.py -q
+        run: python -m pytest tests/data tests/neural tests/real_data -q
       - name: Retain validation evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

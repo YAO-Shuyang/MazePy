@@ -14,7 +14,7 @@ For deterministic calculations use exact counts or explicit numerical tolerances
 
 ## Current implemented API
 
-The source now contains geometry and the shared `mazepy.data` signal containers. The geometry baseline above is unchanged. The data foundation has method-specific checks on the published calcium/spike fixture. Neural analysis algorithms and native pipeline importers remain planned. GUI/simulation archives outside this source inventory require a separate audit when integrated.
+The source contains geometry, shared `mazepy.data` containers, and spike binning/rate normalization in `mazepy.neural`. The geometry baseline above is unchanged. Containers and spike processing have method-specific checks on the published calcium/spike fixture. Other neural algorithms and native pipeline importers remain planned. GUI/simulation archives outside this source inventory require a separate audit when integrated.
 
 | Public API | Implementation | Analytical example tests | Real-data validation | Test location |
 |---|---|---|---|---|
@@ -100,14 +100,48 @@ The abstract `NeuralRecording` interface is exercised through concrete subclasse
 
 [Local and installed-wheel evidence](../benchmarks/evidence/2026-11-03-signals-local.json) records 174 passing tests with zero skips, Python/dependency versions, exact source hashes, fixture identity, oracles, and acceptance criteria. Native source values and selected event counts match independent references. The command-line example also passes on the recorded fixture.
 
-[Cross-platform CI evidence](../benchmarks/evidence/2026-11-03-signals-ci.json) verifies commit `65e9e531da16bc6ae346d0b85aadb97fe5bd62a0`: all 174 tests passed with zero skips on Linux Python 3.10/3.12 and Windows Python 3.12. Each job additionally installed its built wheel and passed all 87 signal/example tests. Lint and formatting passed. [Workflow run](https://github.com/YAO-Shuyang/MazePy/actions/runs/41588588818) retains dependency versions and JUnit reports. These results cover the stated container contracts; native pipeline readers and analysis algorithms remain planned.
+[Cross-platform CI evidence](../benchmarks/evidence/2026-11-03-signals-ci.json) verifies commit `65e9e531da16bc6ae346d0b85aadb97fe5bd62a0`: all 174 tests passed with zero skips on Linux Python 3.10/3.12 and Windows Python 3.12. Each job additionally installed its built wheel and passed all 87 signal/example tests. Lint and formatting passed. [Workflow run](https://github.com/YAO-Shuyang/MazePy/actions/runs/41588588818) retains dependency versions and JUnit reports. These historical results cover the stated container contracts at that revision; the current package is rechecked in the spike-processing evidence below.
+
+## Spike processing API
+
+| Public API | Analytical/seeded examples | Recorded-data checks | Test source |
+|---|---|---|---|
+| `mazepy.neural.bin_spikes` | Passed | Passed (counting and exposure) | [Cases](../tests/real_data/test_spike_binning.py) |
+| `mazepy.neural.to_rate` | Passed | Passed (count/time normalization) | [Cases](../tests/real_data/test_spike_binning.py) |
+
+[Local source and installed-wheel evidence](../benchmarks/evidence/2026-11-03-spike-processing-local.json)
+records **211 passing tests, zero skips**, in each environment, plus passing lint
+and formatting. The active registry covers 74 APIs: 31 geometry, 41 concrete data
+APIs, and these 2 processing functions. Container checks were rerun against the
+current package; the historical source fingerprints above remain unchanged.
+
+The pinned CASCADE native AP timestamps retain 43 of 44 spikes within explicit
+half-open imaging support. Counts match independently filtered `numpy.histogram`
+results on uniform, irregular, and native event-edge bins. Exposure matches direct
+scalar segment/bin intersections. Independently counted APs provide the rate
+oracle; integrating example rates over exposure recovers exactly 43 spikes.
+Counts/masks are exact; exposure tolerance is 1e-12 seconds; rates use rtol=1e-12,
+atol=1e-12 Hz. A controlled recorded-event subset tests per-unit gaps without
+claiming those gaps existed in the native acquisition. Multi-unit, silent-unit,
+boundary, missing-exposure, and numerical-limit examples are labeled synthetic.
+Source/fixture hashes, parameters, seed, environments, test nodes, and limitations
+are recorded in the evidence file. Large-scale performance remains **not run**.
+
+[Cross-platform spike-processing evidence](../benchmarks/evidence/2026-11-03-spike-processing-ci.json)
+records [run 41659629914](https://github.com/YAO-Shuyang/MazePy/actions/runs/41659629914)
+on commit `380b6116bf1605ba5782a9c2697a01834788312b`. Linux Python 3.10/3.12 and
+Windows Python 3.12 each passed all **211 source tests**, with zero skips, and
+**126 installed-wheel checks**. Lint, formatting, wheel build, and installation
+passed on every target. Dependency versions and JUnit reports are retained as
+workflow artifacts. This evidence covers the scoped deterministic processing
+checks above, with no large-recording performance claim.
 
 ## Planned neural capabilities
 
 | Capability | Implementation | Real fixture/reference still needed |
 |---|---|---|
 | neural alignment and timestamp conversion | Planned | cascade_ds01_theis16_cell21 |
-| event counting and neural trajectories | Planned | cascade_ds01_theis16_cell21 |
+| neural trajectories | Planned | cascade_ds01_theis16_cell21 |
 | calcium preprocessing and inference | Planned | cascade_ds01_theis16_cell21; additional_held_out_calcium_records_required |
 | spatial occupancy and tuning | Planned | published_spikes_and_recorded_behavior_required |
 | Suite2p importer | Planned | native_suite2p_fixture_required |
@@ -127,7 +161,7 @@ The abstract `NeuralRecording` interface is exercised through concrete subclasse
 
 [CI run 41584441651](https://github.com/YAO-Shuyang/MazePy/actions/runs/41584441651) tested commit `199b49e5b32089641df6330ddd778c774d4c42fc` on Linux and Windows. Both passed all 87 tests and lint checks, with no skipped tests. The unchanged geometry implementation is the inventory baseline above. Fixture-schema checks observed one record with 1,164 samples, 44 native spikes, and 43 spikes within the inclusive first-to-last fluorescence sample span (96.73931126268508 seconds).
 
-This evidence establishes the recorded fixture's integrity/schema and the analytical example suite. It does not establish neural analysis/inference algorithms. New container-contract evidence is recorded separately above; planned analysis rows remain unimplemented, and geometry recorded-trajectory replay remains not run.
+This initial evidence establishes the recorded fixture's integrity/schema and the analytical example suite. Container-contract and spike-processing evidence is recorded separately above. Planned analysis rows remain unimplemented, and geometry recorded-trajectory replay remains not run.
 
 ## Updating the ledger
 

@@ -1,11 +1,13 @@
 # MazePy
 
-Geometry and neural signal containers for spatial navigation and neuroscience.
+Geometry and neural data processing for spatial navigation and neuroscience.
 
-This development version implements **`mazepy.geometry` and `mazepy.data`**.
+This development version implements **`mazepy.geometry`, `mazepy.data`, and
+`mazepy.neural`**.
 Geometry defines physical arenas and paths. The data module provides NumPy-backed
 sampled signals, calcium traces, sparse spikes, binned activity, and explicit time
-support. The other analysis and application modules remain placeholders.
+support. Neural processing provides spike binning and exposure-normalized rates.
+The other analysis and application modules remain placeholders.
 
 Start with the [signal guide](docs/SIGNALS.md) or the geometry example below.
 The [validation checklist](docs/VALIDATION_CHECKLIST.md) records real-data evidence
@@ -37,6 +39,7 @@ fixture, along with test and build tools.
 ```python
 import numpy as np
 from mazepy.data import CalciumTrace, SpikeEvents
+from mazepy.neural import bin_spikes, to_rate
 
 calcium = CalciumTrace(
     values=np.array([[0.02, 0.4, np.nan], [0.1, 0.2, 0.3]]),
@@ -58,17 +61,22 @@ spikes = SpikeEvents.from_unit_ids(
 )
 assert spikes.n_events == 3
 assert spikes.select_signals(105).n_events == 0
+
+counts = bin_spikes(spikes, bin_edges=[0.0, 1.0, 5.0, 10.0])
+rates = to_rate(counts)  # Hz; preserves observed silence and missing exposure.
 ```
 
 Run the included published-data example after installing the development extra:
 
 ```bash
 python examples/signals_from_published_data.py
+python examples/spike_rates_from_published_data.py
 ```
 
 It uses paired calcium and cell-attached spike measurements with pinned source
-provenance. Processing algorithms and native recording-format adapters follow
-the [neural support plan](docs/NEURAL_SUPPORT_PLAN.md).
+provenance. See [spike counts and rates](docs/SPIKE_PROCESSING.md) for processing
+semantics. Further algorithms and native recording-format adapters follow the
+[neural support plan](docs/NEURAL_SUPPORT_PLAN.md).
 
 ## First geometry example
 
@@ -189,7 +197,7 @@ Graph construction has a quadratic number of candidate corner pairs. This
 version is intended for modest, static polygonal mazes. Large maps and changing
 walls should be benchmarked before a real-time workload is assumed.
 
-## Verification snapshot
+## Initial geometry verification snapshot
 
 The implementation passed 82 tests, including analytic shortest-path distances,
 wall junctions, disconnected regions, rotation/translation/scale invariance,
@@ -214,15 +222,16 @@ are measurements from one execution environment, not performance guarantees.
 | `spatial/` | Empty placeholder |
 | `data/` | Shared signal, event, binned-activity, and time containers |
 | `behavior/` | Empty placeholder |
-| `neural/` | Empty placeholder |
+| `neural/` | Spike binning and exposure-normalized firing rates |
 | `simulation/` | Empty placeholder |
 | `rl/` | Empty placeholder |
 | `plotting/` | Empty placeholder |
 | `io/` | Empty placeholder |
 
 The root also retains `tests/`, `docs/`, `examples/`, `benchmarks/`, and
-`.github/workflows/`. Only geometry tests are implemented. The other support
-directories contain `.gitkeep` files. Geometry imports no future module.
+`.github/workflows/`. Tests cover geometry, signal containers, neural processing,
+and pinned published examples. Other future modules retain `.gitkeep` files.
+Geometry imports no future module.
 
 The wheel intentionally installs only the implemented package; the source
 archive retains the complete repository scaffold. No compatibility claim is

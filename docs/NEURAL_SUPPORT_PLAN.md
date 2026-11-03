@@ -1,6 +1,6 @@
 # MazePy neural data: support and implementation plan
 
-Research checked: November 2, 2026. The shared signal containers in [SIGNALS.md](SIGNALS.md) are implemented. Analysis functions, pipeline adapters, and other interfaces in this document remain proposals unless the validation checklist explicitly records implementation and test evidence. Upstream compatibility must be checked against the versions selected during implementation.
+Research checked: November 2, 2026. The shared signal containers in [SIGNALS.md](SIGNALS.md) and spike binning/rate normalization in [SPIKE_PROCESSING.md](SPIKE_PROCESSING.md) are implemented. Other analysis functions, pipeline adapters, and interfaces in this document remain proposals unless the validation checklist explicitly records implementation and test evidence. Upstream compatibility must be checked against the versions selected during implementation.
 
 MazePy should provide a common route from cellular activity and electrical recordings to behavior-aligned population activity, tuning curves, and spatial analyses. Broad coverage is best achieved through a small internal model, dedicated readers for frequently used processed outputs, and adapters to established format libraries. Acquisition hardware, file format, processing method, and signal meaning must remain separate concepts.
 

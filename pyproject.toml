@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mazepy"
 version = "0.1.0.dev0"
-description = "Geometry and neural signal containers for spatial neuroscience."
+description = "Geometry, neural signal containers, and spike processing for neuroscience."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
@@ -24,7 +24,7 @@ include-package-data = false
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["mazepy", "mazepy.geometry", "mazepy.geometry.*", "mazepy.data", "mazepy.data.*"]
+include = ["mazepy", "mazepy.geometry", "mazepy.geometry.*", "mazepy.data", "mazepy.data.*", "mazepy.neural", "mazepy.neural.*"]
 namespaces = false
 
 [tool.pytest.ini_options]
