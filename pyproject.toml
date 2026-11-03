@@ -14,7 +14,7 @@ authors = [{name = "Shuyang Yao"}]
 dependencies = ["numpy>=1.23", "shapely>=2.0,<3"]
 
 [project.optional-dependencies]
-dev = ["pytest>=7", "ruff>=0.6", "build>=1"]
+dev = ["pytest>=7", "ruff>=0.6", "build>=1", "scipy>=1.10"]
 
 [project.urls]
 Repository = "https://github.com/YAO-Shuyang/MazePy"
@@ -30,6 +30,7 @@ namespaces = false
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra"
+markers = ["real_data: checks using a pinned published recorded-data fixture"]
 
 [tool.ruff]
 target-version = "py310"

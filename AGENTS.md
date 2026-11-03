@@ -1,0 +1,10 @@
+# MazePy development rules
+
+- Keep [docs/VALIDATION_CHECKLIST.md](docs/VALIDATION_CHECKLIST.md) and [benchmarks/validation_registry.json](benchmarks/validation_registry.json) current with every scientific API implementation/change.
+- Every implemented scientific method must pass applicable executable example tests (样例测试). Neural/behavior processing and import/export methods require published recorded-data fixtures, plus synthetic edge cases and an independent reference/ground truth.
+- Preserve distinct states for implementation, fixture acquisition, fixture loading, analytical checks, method-specific real-data checks, and benchmark performance. Downloading or loading a recording does not validate a method. Synthetic, hybrid, and recorded datasets must be labeled separately.
+- For each check retain source version/DOI, source and fixture checksums, any subsetting, units/time support, test identifiers, acceptance criteria, parameters/seeds, tested commit, environment, and observed run evidence. Skipped/missing/not-run checks do not pass. Statistical thresholds must be specified before tuning; tiny regression demos do not establish generalization.
+- Geometry uses analytic path/intersection examples as its correctness oracle, with recorded-trajectory integration tracked separately. Simulation examples must be seeded; they are never recorded-data validation.
+- Add newly introduced public API modules to the registry's API inventory and give each method appropriate test files. Expose methods with `__all__` to support inventory checks.
+- Run `python -m pytest -q`, including `tests/real_data`, and the relevant lint checks. Update the ledger only from observed outcomes; state clearly when an execution environment or dataset is unavailable.
+- Keep raw third-party demo bytes unchanged and preserve source attribution/license notices. Prefer small pinned fixtures; use reproducible subset/fetch descriptions for large recordings. Avoid heavy upstream pipeline dependencies merely to read saved results.

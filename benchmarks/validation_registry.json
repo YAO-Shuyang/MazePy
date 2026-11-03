@@ -1,0 +1,469 @@
+{
+  "schema_version": 1,
+  "updated_on": "2026-11-03",
+  "baseline_source_commit": "37c876867b23595b1bfc2cc71afebe31585f5623",
+  "api_modules": [
+    "mazepy.geometry"
+  ],
+  "policy": "Every implemented public scientific API must have applicable executable example tests. Data-processing APIs additionally require recorded-data fixtures and an independent oracle. A downloaded/loaded fixture or green synthetic suite alone never establishes real-data validation.",
+  "methods": [
+    {
+      "api": "mazepy.geometry.Arena2D.__init__",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_arena.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.boundary",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_arena.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.walls",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_arena.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.obstacles",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_arena.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.bounds",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_public_examples.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.area",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_public_examples.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.contains",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_arena.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.collision_checker",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_public_examples.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.planner",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_public_examples.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.segment_is_valid",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_collision.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.path_is_valid",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_collision.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.shortest_path",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_pathfinding.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.distance",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_pathfinding.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.with_wall",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_arena.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Arena2D.without_wall",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_arena.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.CollisionChecker.__init__",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_collision.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.CollisionChecker.segment_is_valid",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_collision.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.CollisionChecker.path_is_valid",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_collision.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Path.__init__",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_public_examples.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.Path.sample",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_pathfinding.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.PathPlanner.__init__",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_pathfinding.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.PathPlanner.graph",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_pathfinding.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.PathPlanner.shortest_path",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_pathfinding.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.PathPlanner.distance",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_pathfinding.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.PathPlanner.distances",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_pathfinding.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.PathPlanner.clear_cache",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_pathfinding.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.PathPlanner.cache_info",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_pathfinding.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.VisibilityGraph.__init__",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_public_examples.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.VisibilityGraph.n_nodes",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_public_examples.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.VisibilityGraph.n_edges",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_public_examples.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+    },
+    {
+      "api": "mazepy.geometry.build_visibility_graph",
+      "implementation_status": "implemented",
+      "required_example": "analytic",
+      "example_test_files": [
+        "tests/geometry/test_pathfinding.py",
+        "tests/geometry/test_public_examples.py"
+      ],
+      "example_status": "not_run",
+      "real_data_test_files": [],
+      "real_data_status": "not_run",
+      "real_data_scope": "No recorded-trajectory replay performed."
+    }
+  ],
+  "planned_capabilities": [
+    {
+      "capability": "neural alignment and timestamp conversion",
+      "implementation_status": "planned",
+      "example_status": "not_implemented",
+      "real_data_status": "not_implemented",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ]
+    },
+    {
+      "capability": "event counting and neural trajectories",
+      "implementation_status": "planned",
+      "example_status": "not_implemented",
+      "real_data_status": "not_implemented",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ]
+    },
+    {
+      "capability": "calcium preprocessing and inference",
+      "implementation_status": "planned",
+      "example_status": "not_implemented",
+      "real_data_status": "not_implemented",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21",
+        "additional_held_out_calcium_records_required"
+      ]
+    },
+    {
+      "capability": "spatial occupancy and tuning",
+      "implementation_status": "planned",
+      "example_status": "not_implemented",
+      "real_data_status": "not_implemented",
+      "required_fixtures": [
+        "published_spikes_and_recorded_behavior_required"
+      ]
+    },
+    {
+      "capability": "Suite2p importer",
+      "implementation_status": "planned",
+      "example_status": "not_implemented",
+      "real_data_status": "not_implemented",
+      "required_fixtures": [
+        "native_suite2p_fixture_required"
+      ]
+    },
+    {
+      "capability": "CaImAn/CNMF-E importer",
+      "implementation_status": "planned",
+      "example_status": "not_implemented",
+      "real_data_status": "not_implemented",
+      "required_fixtures": [
+        "native_caiman_and_matlab_fixtures_required"
+      ]
+    },
+    {
+      "capability": "Kilosort/Phy importer",
+      "implementation_status": "planned",
+      "example_status": "not_implemented",
+      "real_data_status": "not_implemented",
+      "required_fixtures": [
+        "native_curated_sorting_fixture_required"
+      ]
+    },
+    {
+      "capability": "NWB importer/exporter",
+      "implementation_status": "planned",
+      "example_status": "not_implemented",
+      "real_data_status": "not_implemented",
+      "required_fixtures": [
+        "published_nwb_fixture_required"
+      ]
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "cascade_ds01_theis16_cell21",
+      "manifest": "examples/data/cascade_ds01/manifest.json",
+      "download_status": "acquired_and_digest_verified",
+      "fixture_tests": "tests/real_data/test_cascade_fixture.py",
+      "execution_status": "not_run"
+    }
+  ],
+  "evidence": []
+}

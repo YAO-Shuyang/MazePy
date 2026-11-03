@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "fixture_id": "cascade_ds01_theis16_cell21",
+  "data_origin": "recorded",
+  "description": "One published DS01 mouse V1 OGB-1 calcium recording with cell-attached action-potential timestamps; unmodified CASCADE mini MAT file.",
+  "file": "cell21.mat",
+  "size_bytes": 16046,
+  "sha256": "f79469ed0863a76e9756a56b88e19f2fa63dcbcdf7c3eccb2ca3dfb91f5ff8db",
+  "source": {
+    "repository": "https://github.com/HelmchenLabSoftware/Cascade",
+    "commit": "5c5ccef3e45e1bf8b9bf0ae62a23a0f5d1550299",
+    "path": "Ground_truth/DS01-OGB1-m-V1/CAttached_Theis16_set2_OGB_V1_cell_21_mini.mat",
+    "url": "https://raw.githubusercontent.com/HelmchenLabSoftware/Cascade/5c5ccef3e45e1bf8b9bf0ae62a23a0f5d1550299/Ground_truth/DS01-OGB1-m-V1/CAttached_Theis16_set2_OGB_V1_cell_21_mini.mat",
+    "git_blob_sha1": "527a3be0b1285b02d999e9736ace674a23cf693f"
+  },
+  "publications": [
+    {
+      "doi": "10.1016/j.neuron.2016.04.014",
+      "role": "Original Theis et al. benchmark"
+    },
+    {
+      "doi": "10.1371/journal.pcbi.1006157",
+      "role": "Spikefinder community benchmark; CASCADE attributes DS01 to this study"
+    },
+    {
+      "doi": "10.1038/s41593-021-00895-5",
+      "role": "CASCADE database and representation"
+    }
+  ],
+  "source_license": {
+    "notice": "The upstream repository carries GPL-3.0; its license is retained alongside this unchanged fixture. Original dataset provenance remains separately cited.",
+    "file": "LICENSE.upstream"
+  },
+  "schema": {
+    "root": "CAttached",
+    "records": "Separate recordings from the same neuron; keep intervals separate.",
+    "time_field": "fluo_time",
+    "time_unit": "s",
+    "signal_field": "fluo_mean",
+    "signal_kind": "dff",
+    "events_field": "events_AP",
+    "events_native_unit": "0.1 ms",
+    "events_to_seconds": 0.0001
+  },
+  "acquired_on": "2026-11-03",
+  "execution_status": "not_run",
+  "covers": [
+    "MAT fixture loading",
+    "source checksums",
+    "native timestamp units",
+    "paired calcium and spike-event structure"
+  ],
+  "does_not_establish": [
+    "Suite2p/CaImAn result-folder compatibility",
+    "raw extracellular voltage or spike sorting accuracy",
+    "spatial or head-direction tuning",
+    "inference generalization across neurons or datasets"
+  ]
+}
