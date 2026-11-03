@@ -2,7 +2,8 @@
 
 `mazepy.data` supplies shared, NumPy-backed structures for recorded and simulated
 activity. They are dataclasses containing arrays. Analysis functions and native
-pipeline importers are separate parts of the implementation plan.
+pipeline importers live separately. [Spike processing](SPIKE_PROCESSING.md)
+provides the first numerical functions: `bin_spikes` and `to_rate`.
 
 | Type | Content | Important fields |
 |---|---|---|
@@ -131,7 +132,7 @@ its raw buffer value. Supplied masks and source NaNs are retained independently.
 it raises an error if a boundary cuts a bin. This prevents a whole-bin count or
 mean from being relabeled as a partial-bin measurement. Rebin original events or
 samples when different edges are needed. Binning and rate-estimation algorithms
-are not implemented by this container.
+live in `mazepy.neural`; the container stores their explicit results.
 
 ## Identity, metadata, and memory
 

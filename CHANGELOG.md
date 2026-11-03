@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Add `mazepy.neural.bin_spikes` and `to_rate` with half-open bins, explicit
+  per-unit observation exposure, and a distinction between silence and gaps.
+- Add published-data processing examples and independent count/rate checks;
+  include neural processing in built-wheel CI checks.
 - Add the `mazepy.data` shared recording interface and sampled, calcium, sparse
   spike-event, binned-activity, timestamp, and observation-interval containers.
 - Preserve signal IDs, units, clocks, per-signal masks, floating amplitudes,
@@ -24,4 +28,4 @@
 - Add analytic, numerical-invariance, and independent grid-connectivity tests.
 
 This development scaffold does not include the previous experiment pipelines,
-binning, neural analysis, simulation, RL, plotting, or a graphical editor.
+calcium preprocessing, tuning analysis, simulation, RL, plotting, or a graphical editor.
