@@ -1,6 +1,6 @@
 # MazePy neural data: support and implementation plan
 
-Research checked: November 2, 2026. All MazePy interfaces, milestones, and support tiers in this document are proposals, not implemented capabilities. Upstream compatibility must be checked against the versions selected during implementation.
+Research checked: November 2, 2026. The shared signal containers in [SIGNALS.md](SIGNALS.md) are implemented. Analysis functions, pipeline adapters, and other interfaces in this document remain proposals unless the validation checklist explicitly records implementation and test evidence. Upstream compatibility must be checked against the versions selected during implementation.
 
 MazePy should provide a common route from cellular activity and electrical recordings to behavior-aligned population activity, tuning curves, and spatial analyses. Broad coverage is best achieved through a small internal model, dedicated readers for frequently used processed outputs, and adapters to established format libraries. Acquisition hardware, file format, processing method, and signal meaning must remain separate concepts.
 
@@ -194,15 +194,11 @@ session = io.read_phy("phy/", observation_intervals=[(0.0, 1800.0)])
 spikes = session.signals["spikes"]
 
 # Any compatible sorting object can enter through the same bridge.
-spikes = io.from_spikeinterface_sorting(
-    sorting, recording=recording, clock="ephys"
-)
+spikes = io.from_spikeinterface_sorting(sorting, recording=recording, clock="ephys")
 
 # The statistical engine accepts the shared representation.
 trajectory = neural.to_neural_trajectory(spikes, bin_edges=time_edges)
-tuning = neural.tuning_curve(
-    activity, covariate=position, bins=spatial_bins
-)
+tuning = neural.tuning_curve(activity, covariate=position, bins=spatial_bins)
 ```
 
 Convenient object methods may delegate to these numerical functions. Source-specific keywords should be handled by readers; tuning functions should not need to know whether an event came from Kilosort or a different sorter.

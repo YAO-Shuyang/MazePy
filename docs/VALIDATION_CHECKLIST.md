@@ -14,7 +14,7 @@ For deterministic calculations use exact counts or explicit numerical tolerances
 
 ## Current implemented API
 
-The current GitHub baseline contains geometry only. No neural algorithms or importers have been implemented on that baseline. GUI/simulation archives from earlier work are outside this source inventory and need a separate audit when integrated.
+The source now contains geometry and the shared `mazepy.data` signal containers. The geometry baseline above is unchanged. The data foundation has method-specific checks on the published calcium/spike fixture. Neural analysis algorithms and native pipeline importers remain planned. GUI/simulation archives outside this source inventory require a separate audit when integrated.
 
 | Public API | Implementation | Analytical example tests | Real-data validation | Test location |
 |---|---|---|---|---|
@@ -50,6 +50,58 @@ The current GitHub baseline contains geometry only. No neural algorithms or impo
 | `VisibilityGraph.n_edges` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_public_examples.py) |
 | `build_visibility_graph` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
 
+## Shared signal-container API
+
+The abstract `NeuralRecording` interface is exercised through concrete subclasses. Inherited methods are included for each concrete public class. All 41 entries below have both structural edge cases and recorded-data tests. Validation scope is storage/selection and declared time support, rather than scientific signal inference or native pipeline compatibility. `TimeAxis.regular` is a generator checked with fixture-derived dimensions/rate; native timestamps remain unchanged.
+
+| Public API | Example tests | Recorded-data tests | Test source |
+|---|---|---|---|
+| `TimeAxis.__init__` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `TimeAxis.indices_between` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `TimeAxis.n_samples` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `TimeAxis.regular` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `TimeAxis.select_samples` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `TimeIntervals.__init__` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `TimeIntervals.clip` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `TimeIntervals.contains` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `TimeIntervals.duration` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SampledActivity.__init__` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SampledActivity.n_samples` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SampledActivity.n_signals` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SampledActivity.select_samples` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SampledActivity.select_signals` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SampledActivity.time_slice` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SampledActivity.to_numpy` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SampledActivity.with_metadata` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `CalciumTrace.__init__` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `CalciumTrace.n_samples` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `CalciumTrace.n_signals` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `CalciumTrace.select_samples` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `CalciumTrace.select_signals` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `CalciumTrace.time_slice` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `CalciumTrace.to_numpy` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `CalciumTrace.with_metadata` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SpikeEvents.__init__` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SpikeEvents.from_unit_ids` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SpikeEvents.n_events` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SpikeEvents.n_signals` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SpikeEvents.select_signals` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SpikeEvents.time_slice` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `SpikeEvents.with_metadata` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `BinnedActivity.__init__` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `BinnedActivity.n_bins` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `BinnedActivity.n_signals` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `BinnedActivity.select_bins` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `BinnedActivity.select_signals` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `BinnedActivity.time` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `BinnedActivity.time_slice` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `BinnedActivity.to_numpy` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+| `BinnedActivity.with_metadata` | Passed | Passed (container contract) | [Case](../tests/real_data/test_signal_containers.py) |
+
+[Local and installed-wheel evidence](../benchmarks/evidence/2026-11-03-signals-local.json) records 174 passing tests with zero skips, Python/dependency versions, exact source hashes, fixture identity, oracles, and acceptance criteria. Native source values and selected event counts match independent references. The command-line example also passes on the recorded fixture.
+
+[Cross-platform CI evidence](../benchmarks/evidence/2026-11-03-signals-ci.json) verifies commit `65e9e531da16bc6ae346d0b85aadb97fe5bd62a0`: all 174 tests passed with zero skips on Linux Python 3.10/3.12 and Windows Python 3.12. Each job additionally installed its built wheel and passed all 87 signal/example tests. Lint and formatting passed. [Workflow run](https://github.com/YAO-Shuyang/MazePy/actions/runs/41588588818) retains dependency versions and JUnit reports. These results cover the stated container contracts; native pipeline readers and analysis algorithms remain planned.
+
 ## Planned neural capabilities
 
 | Capability | Implementation | Real fixture/reference still needed |
@@ -68,14 +120,14 @@ The current GitHub baseline contains geometry only. No neural algorithms or impo
 - [CASCADE DS01 cell 21](../examples/data/cascade_ds01/README.md): **16,046 bytes**, original MAT file, one mouse V1 OGB-1 neuron, paired fluorescence and cell-attached spike timestamps. [Manifest](../examples/data/cascade_ds01/manifest.json).
 - Acquisition, SHA-256 verification, and MAT/schema checks passed on Linux and Windows, Python 3.12. The complete suite passed **87 tests with zero skips** on each platform. [Run evidence](../benchmarks/evidence/2026-11-03-ci.json).
 - This is recorded data; it is not a simulated MEArec recording. It contains extracted spike timestamps rather than raw ephys voltage.
-- Its fixture tests establish file integrity, schema, and timing assumptions only. They do not establish that a MazePy neural method is correct.
+- The original fixture tests establish file integrity/schema. The additional `test_signal_containers.py` cases invoke actual public container methods and establish the narrowly stated storage/selection contracts. They do not establish inference accuracy or native pipeline compatibility.
 - A published recording with measured position/heading must be acquired separately before validating spatial/head-direction tuning. Native Suite2p, CaImAn/CNMF-E, Kilosort/Phy, and NWB readers each need an actual source-format fixture.
 
 ## Observed evidence
 
 [CI run 41584441651](https://github.com/YAO-Shuyang/MazePy/actions/runs/41584441651) tested commit `199b49e5b32089641df6330ddd778c774d4c42fc` on Linux and Windows. Both passed all 87 tests and lint checks, with no skipped tests. The unchanged geometry implementation is the inventory baseline above. Fixture-schema checks observed one record with 1,164 samples, 44 native spikes, and 43 spikes within the inclusive first-to-last fluorescence sample span (96.73931126268508 seconds).
 
-This evidence establishes the recorded fixture's integrity/schema and the analytical example suite. It does not establish any neural algorithm's real-data validation; planned neural rows remain unimplemented, and geometry recorded-trajectory replay remains not run.
+This evidence establishes the recorded fixture's integrity/schema and the analytical example suite. It does not establish neural analysis/inference algorithms. New container-contract evidence is recorded separately above; planned analysis rows remain unimplemented, and geometry recorded-trajectory replay remains not run.
 
 ## Updating the ledger
 

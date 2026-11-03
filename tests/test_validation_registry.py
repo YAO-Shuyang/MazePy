@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import importlib
 import inspect
 import json
@@ -27,7 +28,9 @@ def test_validation_registry_covers_public_api():
         for name in module.__all__:
             obj = getattr(module, name)
             if inspect.isclass(obj) and not issubclass(obj, BaseException):
-                for method_name, member in vars(obj).items():
+                if inspect.isabstract(obj):
+                    continue
+                for method_name, member in inspect.getmembers(obj):
                     public = (
                         not method_name.startswith("_") or method_name == "__init__"
                     )
@@ -48,3 +51,16 @@ def test_validation_registry_covers_public_api():
         if entry["real_data_status"] == "passed":
             assert entry["real_data_test_files"], entry["api"]
             assert entry.get("evidence"), "A real-data PASS needs observed run evidence"
+            references = {item["id"]: item for item in registry["evidence"]}
+            for evidence_id in entry["evidence"]:
+                assert evidence_id in references, "Unknown validation evidence ID"
+                evidence = json.loads(
+                    (ROOT / references[evidence_id]["path"]).read_text(encoding="utf-8")
+                )
+                for path, expected in evidence.get("source_file_sha256", {}).items():
+                    # Git may check out CRLF on Windows. Hash source text using
+                    # UTF-8 with universal newline normalization, not raw bytes.
+                    source = (ROOT / path).read_text(encoding="utf-8").encode("utf-8")
+                    assert hashlib.sha256(source).hexdigest() == expected, (
+                        f"Stale validation evidence for {path}; rerun example tests"
+                    )
