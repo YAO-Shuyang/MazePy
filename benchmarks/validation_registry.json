@@ -3,7 +3,8 @@
   "updated_on": "2026-11-03",
   "baseline_source_commit": "37c876867b23595b1bfc2cc71afebe31585f5623",
   "api_modules": [
-    "mazepy.geometry"
+    "mazepy.geometry",
+    "mazepy.data"
   ],
   "policy": "Every implemented public scientific API must have applicable executable example tests. Data-processing APIs additionally require recorded-data fixtures and an independent oracle. A downloaded/loaded fixture or green synthetic suite alone never establishes real-data validation.",
   "methods": [
@@ -472,6 +473,1113 @@
       "example_evidence": [
         "ci-41584441651"
       ]
+    },
+    {
+      "api": "mazepy.data.TimeAxis.__init__",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_time.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_time_axis_and_support_against_recorded_timestamps"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.TimeAxis.indices_between",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_time.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_time_axis_and_support_against_recorded_timestamps"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.TimeAxis.n_samples",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_time.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_time_axis_and_support_against_recorded_timestamps"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.TimeAxis.regular",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_time.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_time_axis_and_support_against_recorded_timestamps"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.TimeAxis.select_samples",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_time.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_time_axis_and_support_against_recorded_timestamps"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.TimeIntervals.__init__",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_time.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_time_axis_and_support_against_recorded_timestamps"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.TimeIntervals.clip",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_time.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_time_axis_and_support_against_recorded_timestamps"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.TimeIntervals.contains",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_time.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_time_axis_and_support_against_recorded_timestamps"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.TimeIntervals.duration",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_time.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_time_axis_and_support_against_recorded_timestamps"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SampledActivity.__init__",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SampledActivity.n_samples",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SampledActivity.n_signals",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SampledActivity.select_samples",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SampledActivity.select_signals",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SampledActivity.time_slice",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SampledActivity.to_numpy",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SampledActivity.with_metadata",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.CalciumTrace.__init__",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.CalciumTrace.n_samples",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.CalciumTrace.n_signals",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.CalciumTrace.select_samples",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.CalciumTrace.select_signals",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.CalciumTrace.time_slice",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.CalciumTrace.to_numpy",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.CalciumTrace.with_metadata",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sampled_public_operations_preserve_recorded_signal"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SpikeEvents.__init__",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sparse_spike_public_operations_against_native_times"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SpikeEvents.from_unit_ids",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sparse_spike_public_operations_against_native_times"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SpikeEvents.n_events",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sparse_spike_public_operations_against_native_times"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SpikeEvents.n_signals",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sparse_spike_public_operations_against_native_times"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SpikeEvents.select_signals",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sparse_spike_public_operations_against_native_times"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SpikeEvents.time_slice",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sparse_spike_public_operations_against_native_times"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.SpikeEvents.with_metadata",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_sparse_spike_public_operations_against_native_times"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.BinnedActivity.__init__",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_binned_container_against_independent_native_event_histogram"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.BinnedActivity.n_bins",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_binned_container_against_independent_native_event_histogram"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.BinnedActivity.n_signals",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_binned_container_against_independent_native_event_histogram"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.BinnedActivity.select_bins",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_binned_container_against_independent_native_event_histogram"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.BinnedActivity.select_signals",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_binned_container_against_independent_native_event_histogram"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.BinnedActivity.time",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_binned_container_against_independent_native_event_histogram"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.BinnedActivity.time_slice",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_binned_container_against_independent_native_event_histogram"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.BinnedActivity.to_numpy",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_binned_container_against_independent_native_event_histogram"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
+    },
+    {
+      "api": "mazepy.data.BinnedActivity.with_metadata",
+      "implementation_status": "implemented",
+      "required_example": "recorded",
+      "example_test_files": [
+        "tests/data/test_signals.py"
+      ],
+      "example_status": "passed",
+      "real_data_test_files": [
+        "tests/real_data/test_signal_containers.py"
+      ],
+      "real_data_test_nodes": [
+        "tests/real_data/test_signal_containers.py::test_binned_container_against_independent_native_event_histogram"
+      ],
+      "real_data_status": "passed",
+      "required_fixtures": [
+        "cascade_ds01_theis16_cell21"
+      ],
+      "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
+      "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
+      "example_evidence": [
+        "local-signal-contracts-20261103"
+      ],
+      "evidence": [
+        "local-signal-contracts-20261103"
+      ]
     }
   ],
   "planned_capabilities": [
@@ -558,7 +1666,14 @@
       "execution_status": "fixture_schema_passed",
       "evidence": [
         "ci-41584441651"
-      ]
+      ],
+      "container_contract_tests": {
+        "status": "passed",
+        "evidence": [
+          "local-signal-contracts-20261103"
+        ],
+        "test_file": "tests/real_data/test_signal_containers.py"
+      }
     }
   ],
   "evidence": [
@@ -567,6 +1682,25 @@
       "path": "benchmarks/evidence/2026-11-03-ci.json",
       "run_url": "https://github.com/YAO-Shuyang/MazePy/actions/runs/41584441651",
       "tested_commit": "199b49e5b32089641df6330ddd778c774d4c42fc"
+    },
+    {
+      "id": "local-signal-contracts-20261103",
+      "path": "benchmarks/evidence/2026-11-03-signals-local.json",
+      "source_snapshot_sha256": "a3005594e2e0f70104fbc8b05787fc864fa4fac929217fa276ffdab3cdf68a11"
     }
-  ]
+  ],
+  "data_structure_scope": {
+    "implemented": [
+      "TimeAxis",
+      "TimeIntervals",
+      "SampledActivity",
+      "CalciumTrace",
+      "SpikeEvents",
+      "BinnedActivity"
+    ],
+    "abstract_interface": "NeuralRecording",
+    "storage": "eager NumPy arrays",
+    "processing_algorithms": "planned",
+    "native_pipeline_adapters": "planned"
+  }
 }

@@ -63,9 +63,7 @@ def test_recorded_calcium_spike_schema(recorded_segments, source_manifest):
         seconds = native_events / 10_000.0
         duration = float(time[-1] - time[0])
         assert duration > 0
-        in_support = int(
-            np.count_nonzero((seconds >= time[0]) & (seconds <= time[-1]))
-        )
+        in_support = int(np.count_nonzero((seconds >= time[0]) & (seconds <= time[-1])))
         overlapping_events += in_support
         summaries.append(
             {

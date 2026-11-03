@@ -9,8 +9,8 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-Keep all implementation in `src/mazepy/geometry/` until another module is
-explicitly started. Future module folders currently contain only `.gitkeep`.
+Implementation currently lives in `src/mazepy/geometry/` and `src/mazepy/data/`.
+Future module folders contain only `.gitkeep` until explicitly started.
 Use PEP 8 style, descriptive names, type annotations, and docstrings for public
 behavior. Geometric calculations use explicit physical units and `(x, y)` pairs.
 
@@ -21,7 +21,12 @@ shortest distances with analytic examples. Avoid introducing dependencies on
 simulation, neural analysis, plotting, or GUI tools into geometry.
 
 To build distributions, run `python -m build`. The repository source archive
-retains the empty future-module scaffold; the wheel installs the geometry code.
+retains the future-module scaffold; the wheel installs geometry and signal data.
+
+Data containers must stay independent of analysis, IO, Qt, and GPU frameworks.
+Preserve N-by-T orientation, signal identities, clock labels, units, valid masks,
+and explicit observation support. Do not silently round inferred activity, remove
+missing frames, guess a spike recording's duration, or truncate a count bin.
 
 
 ## Scientific example validation

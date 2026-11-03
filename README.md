@@ -1,12 +1,15 @@
 # MazePy
 
-Reusable geometry foundations for spatial navigation and neuroscience.
+Geometry and neural signal containers for spatial navigation and neuroscience.
 
-This development version implements **only `mazepy.geometry`**. The agreed
-repository architecture is retained; all other application modules contain only
-empty `.gitkeep` placeholders, so Git preserves their directories. This is a
-clean scaffold for the new architecture, rather than an in-place migration of
-the original MazePy or MazeProject code.
+This development version implements **`mazepy.geometry` and `mazepy.data`**.
+Geometry defines physical arenas and paths. The data module provides NumPy-backed
+sampled signals, calcium traces, sparse spikes, binned activity, and explicit time
+support. The other analysis and application modules remain placeholders.
+
+Start with the [signal guide](docs/SIGNALS.md) or the geometry example below.
+The [validation checklist](docs/VALIDATION_CHECKLIST.md) records real-data evidence
+separately from analytical tests and planned capabilities.
 
 ## Install
 
@@ -25,10 +28,49 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-The geometry implementation needs NumPy and Shapely. No GUI, GPU, SciPy,
-simulation, RL, or recording-format dependency is required.
+The computational installation needs NumPy and Shapely. Signal containers add no
+GUI or GPU dependency. The development extra includes SciPy for the published MAT
+fixture, along with test and build tools.
 
-## First example
+## First signal example
+
+```python
+import numpy as np
+from mazepy.data import CalciumTrace, SpikeEvents
+
+calcium = CalciumTrace(
+    values=np.array([[0.02, 0.4, np.nan], [0.1, 0.2, 0.3]]),
+    time=[0.0, 0.05, 0.1],
+    unit="dF/F",
+    signal_kind="dff",
+    signal_ids=["roi-a", "roi-b"],
+    clock="imaging",
+)
+selected = calcium.select_signals("roi-b").time_slice(0.0, 0.1)
+assert selected.values.shape == (1, 2)
+
+spikes = SpikeEvents.from_unit_ids(
+    times=[0.1, 0.2, 0.2],
+    unit_ids=[21, 99, 21],
+    signal_ids=[21, 99, 105],  # Retain unit 105 even though it has no spikes.
+    observation_intervals=[[0.0, 10.0]],
+    clock="ephys",
+)
+assert spikes.n_events == 3
+assert spikes.select_signals(105).n_events == 0
+```
+
+Run the included published-data example after installing the development extra:
+
+```bash
+python examples/signals_from_published_data.py
+```
+
+It uses paired calcium and cell-attached spike measurements with pinned source
+provenance. Processing algorithms and native recording-format adapters follow
+the [neural support plan](docs/NEURAL_SUPPORT_PLAN.md).
+
+## First geometry example
 
 ```python
 from mazepy.geometry import Arena2D
@@ -170,7 +212,7 @@ are measurements from one execution environment, not performance guarantees.
 | `geometry/` | Implemented and tested |
 | `environments/` | Empty placeholder |
 | `spatial/` | Empty placeholder |
-| `data/` | Empty placeholder |
+| `data/` | Shared signal, event, binned-activity, and time containers |
 | `behavior/` | Empty placeholder |
 | `neural/` | Empty placeholder |
 | `simulation/` | Empty placeholder |

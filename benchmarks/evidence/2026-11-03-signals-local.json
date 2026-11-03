@@ -1,0 +1,69 @@
+{
+  "evidence_id": "local-signal-contracts-20261103",
+  "recorded_on": "2026-11-03",
+  "base_commit": "aa9814999ba4e6f1116b78b158265f0964355917",
+  "source_snapshot_sha256": "a3005594e2e0f70104fbc8b05787fc864fa4fac929217fa276ffdab3cdf68a11",
+  "source_file_sha256": {
+    "examples/signals_from_published_data.py": "5abbd1c070662b2eb6c7f70cbe0dc86e8c0ded0fb86301addb120156bc391612",
+    "pyproject.toml": "3fe029093e6a13cdd1f72cc71ab4ad8544520e38912044b7a593619e4f11628d",
+    "src/mazepy/data/__init__.py": "3619582a12405825843617c3a44603d474038e4679b11967623ff87b69b009ca",
+    "src/mazepy/data/_validation.py": "1dcf465058d6f015944c41991a53a31357e60e4e8463afe072a38e3c7354a0c3",
+    "src/mazepy/data/neural.py": "2ada1ab2c2b28a8512c51533faa038827d09f5e187f4ab0517e69b41f5f79f13",
+    "src/mazepy/data/time.py": "b8c4fc1e6d2084e9ea90da255a57f4b2964a8b7cdaf06496e7017212519b38a1",
+    "tests/data/test_signals.py": "d12a04752b26b021d91c98101ca4b621f7fd232d79e0f538f26ab94dd9961701",
+    "tests/data/test_time.py": "d42c5a07645e144a7d5bf439ec6f17ee06879fce816b41f76276dd0fbed7747b",
+    "tests/real_data/test_signal_containers.py": "bb86b2b52171dc64dd3593af5a2804defd4b5fb9a22921d50e99baf793fd9164",
+    "tests/test_validation_registry.py": "40896569f11696d33808a1d171b277e03f62a0be50b6f34b30cd86e3b27877c9"
+  },
+  "snapshot_format": "SHA-256 of sorted compact JSON mapping source path to SHA-256 of UTF-8 text with LF newlines",
+  "environment": {
+    "platform": "Linux",
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "shapely": "2.2.0",
+    "pytest": "9.2.0",
+    "ruff": "0.17.3"
+  },
+  "commands": [
+    "python3 -m pytest -q --junitxml=validation-results-signals.xml",
+    "isolated installed wheel: python -m pytest -q --junitxml=validation-results-wheel.xml",
+    "python3 -m ruff check .",
+    "python3 -m ruff format --check .",
+    "python3 examples/signals_from_published_data.py"
+  ],
+  "reports": {
+    "validation-results-signals.xml": {
+      "tests": 174,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "validation-results-wheel.xml": {
+      "tests": 174,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "lint": "passed",
+  "formatting": "passed",
+  "wheel_installation": "passed",
+  "fixture_id": "cascade_ds01_theis16_cell21",
+  "fixture_sha256": "f79469ed0863a76e9756a56b88e19f2fa63dcbcdf7c3eccb2ca3dfb91f5ff8db",
+  "recorded_data_tests": [
+    "test_time_axis_and_support_against_recorded_timestamps",
+    "test_sampled_public_operations_preserve_recorded_signal[SampledActivity]",
+    "test_sampled_public_operations_preserve_recorded_signal[CalciumTrace]",
+    "test_sparse_spike_public_operations_against_native_times",
+    "test_binned_container_against_independent_native_event_histogram",
+    "test_published_example_runs_as_a_script"
+  ],
+  "reference": "Direct SciPy MAT fields; independent Boolean timestamp masks; numpy.histogram over native AP timestamps / 10000. Expected sizes 1164 samples, 44 native events, 43 in explicit imaging support.",
+  "acceptance": "Exact source arrays, signal identities, masks, and integer counts; explicit floating-time comparisons with atol=1e-12 seconds where specified in test nodes.",
+  "scope": "41 concrete public data-container APIs: storage, identity, masking, time selection, metadata, explicit observation support and bin boundaries. Fixture-derived regular-axis generator input and independently binned spike counts are identified as derived examples.",
+  "limitations": [
+    "No pipeline-reader compatibility, spike-inference accuracy, physiological voltage calibration, spatial tuning, or broad biological generalization established.",
+    "The published recording is one OGB-1 V1 neuron; synthetic cases additionally test multiple units, gaps, empty selections, missing values, and invalid inputs."
+  ]
+}

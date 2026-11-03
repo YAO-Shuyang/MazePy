@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+- Add the `mazepy.data` shared recording interface and sampled, calcium, sparse
+  spike-event, binned-activity, timestamp, and observation-interval containers.
+- Preserve signal IDs, units, clocks, per-signal masks, floating amplitudes,
+  silence, and immutable source data through explicit selection operations.
+- Require explicit spike observation time and reject ambiguous partial-bin slices.
+- Add per-method recorded-data checks, a runnable CASCADE example, and source
+  fingerprints in the maintained validation ledger.
+- Include the data package in wheels and verify it on Linux and Windows CI.
+
 ## 0.1.0.dev0
 
 - Establish the agreed repository architecture with empty future modules.
