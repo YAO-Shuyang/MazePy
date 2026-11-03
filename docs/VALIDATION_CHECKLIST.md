@@ -127,6 +127,15 @@ boundary, missing-exposure, and numerical-limit examples are labeled synthetic.
 Source/fixture hashes, parameters, seed, environments, test nodes, and limitations
 are recorded in the evidence file. Large-scale performance remains **not run**.
 
+[Cross-platform spike-processing evidence](../benchmarks/evidence/2026-11-03-spike-processing-ci.json)
+records [run 41659629914](https://github.com/YAO-Shuyang/MazePy/actions/runs/41659629914)
+on commit `380b6116bf1605ba5782a9c2697a01834788312b`. Linux Python 3.10/3.12 and
+Windows Python 3.12 each passed all **211 source tests**, with zero skips, and
+**126 installed-wheel checks**. Lint, formatting, wheel build, and installation
+passed on every target. Dependency versions and JUnit reports are retained as
+workflow artifacts. This evidence covers the scoped deterministic processing
+checks above, with no large-recording performance claim.
+
 ## Planned neural capabilities
 
 | Capability | Implementation | Real fixture/reference still needed |

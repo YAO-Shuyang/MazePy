@@ -1,0 +1,121 @@
+{
+  "evidence_id": "ci-spike-processing-41659629914",
+  "recorded_on": "2026-11-03",
+  "tested_commit": "380b6116bf1605ba5782a9c2697a01834788312b",
+  "run_url": "https://github.com/YAO-Shuyang/MazePy/actions/runs/41659629914",
+  "source_snapshot_sha256": "b2adc32a5add13186a96cb0f069793ec73f55d580260b55170fc7faf50c44706",
+  "source_file_sha256": {
+    "examples/data/cascade_ds01/manifest.json": "48b84dd19dfa3007ce65f08e9e70bfda71b6e93c9ec24515a1ed273326cf6df6",
+    "examples/signals_from_published_data.py": "5abbd1c070662b2eb6c7f70cbe0dc86e8c0ded0fb86301addb120156bc391612",
+    "examples/spike_rates_from_published_data.py": "b3f33529b69646a92e37f0f4bbaed48c42161c00e1da615a28e6ce2a0a312cd4",
+    "pyproject.toml": "a6657ee509ac4040ea0ab5e2ade5ec03ca0bb1aab881a86de7c727d1c2962d75",
+    "src/mazepy/data/__init__.py": "3619582a12405825843617c3a44603d474038e4679b11967623ff87b69b009ca",
+    "src/mazepy/data/_validation.py": "1dcf465058d6f015944c41991a53a31357e60e4e8463afe072a38e3c7354a0c3",
+    "src/mazepy/data/neural.py": "2ada1ab2c2b28a8512c51533faa038827d09f5e187f4ab0517e69b41f5f79f13",
+    "src/mazepy/data/time.py": "b8c4fc1e6d2084e9ea90da255a57f4b2964a8b7cdaf06496e7017212519b38a1",
+    "src/mazepy/neural/__init__.py": "331379a292e7b6092c50d6623da0a76fcaf2a430ee9fd89310fac45c477d291a",
+    "src/mazepy/neural/binning.py": "a5d12bdec9452c452bb659aa7530631748a1cabbcaad6e60157ed5e45a2b3bf6",
+    "tests/data/test_signals.py": "d12a04752b26b021d91c98101ca4b621f7fd232d79e0f538f26ab94dd9961701",
+    "tests/data/test_time.py": "d42c5a07645e144a7d5bf439ec6f17ee06879fce816b41f76276dd0fbed7747b",
+    "tests/neural/test_binning.py": "67df0c92d47d28e11619b49df7686ead8db8dd458b6b063f0dca0f79204fb2a2",
+    "tests/real_data/test_cascade_fixture.py": "9552634a69154ad0170cbdd84b3ab1e5a0142cbf34fab6305baae2e9670ba365",
+    "tests/real_data/test_signal_containers.py": "bb86b2b52171dc64dd3593af5a2804defd4b5fb9a22921d50e99baf793fd9164",
+    "tests/real_data/test_spike_binning.py": "c91ea9b68518be64f6c9912e7bccc46844e68f81e0f7c383ab64c9960f02723a",
+    "tests/test_validation_registry.py": "40896569f11696d33808a1d171b277e03f62a0be50b6f34b30cd86e3b27877c9"
+  },
+  "snapshot_format": "SHA-256 of sorted compact JSON mapping source path to SHA-256 of UTF-8 text with LF newlines",
+  "results": [
+    {
+      "job_id": 125999087017,
+      "name": "Examples on ubuntu-latest / Python 3.10",
+      "conclusion": "success",
+      "source_suite_passed": 211,
+      "installed_wheel_suite_passed": 126,
+      "skipped": 0,
+      "job_url": "https://github.com/YAO-Shuyang/MazePy/actions/runs/41659629914/job/125999087017"
+    },
+    {
+      "job_id": 125999087053,
+      "name": "Examples on windows-latest / Python 3.12",
+      "conclusion": "success",
+      "source_suite_passed": 211,
+      "installed_wheel_suite_passed": 126,
+      "skipped": 0,
+      "job_url": "https://github.com/YAO-Shuyang/MazePy/actions/runs/41659629914/job/125999087053"
+    },
+    {
+      "job_id": 125999087889,
+      "name": "Examples on ubuntu-latest / Python 3.12",
+      "conclusion": "success",
+      "source_suite_passed": 211,
+      "installed_wheel_suite_passed": 126,
+      "skipped": 0,
+      "job_url": "https://github.com/YAO-Shuyang/MazePy/actions/runs/41659629914/job/125999087889"
+    }
+  ],
+  "retained_artifacts": [
+    "validation-ubuntu-latest-python3.10",
+    "validation-ubuntu-latest-python3.12",
+    "validation-windows-latest-python3.12"
+  ],
+  "artifact_files": [
+    "validation-results.xml",
+    "validation-environment.txt",
+    "examples/data/cascade_ds01/manifest.json",
+    "benchmarks/validation_registry.json"
+  ],
+  "environment": "Linux Python 3.10/3.12 and Windows Python 3.12. Exact resolved dependencies are retained in each job's validation-environment.txt artifact.",
+  "lint": "passed_all_three_targets",
+  "formatting": "passed_all_three_targets",
+  "wheel_installation": "passed_all_three_targets",
+  "fixture_id": "cascade_ds01_theis16_cell21",
+  "fixture_sha256": "f79469ed0863a76e9756a56b88e19f2fa63dcbcdf7c3eccb2ca3dfb91f5ff8db",
+  "fixture_manifest": "examples/data/cascade_ds01/manifest.json",
+  "source_version": {
+    "repository": "https://github.com/HelmchenLabSoftware/Cascade",
+    "commit": "5c5ccef3e45e1bf8b9bf0ae62a23a0f5d1550299",
+    "path": "Ground_truth/DS01-OGB1-m-V1/CAttached_Theis16_set2_OGB_V1_cell_21_mini.mat",
+    "url": "https://raw.githubusercontent.com/HelmchenLabSoftware/Cascade/5c5ccef3e45e1bf8b9bf0ae62a23a0f5d1550299/Ground_truth/DS01-OGB1-m-V1/CAttached_Theis16_set2_OGB_V1_cell_21_mini.mat",
+    "git_blob_sha1": "527a3be0b1285b02d999e9736ace674a23cf693f"
+  },
+  "publications": [
+    {
+      "doi": "10.1016/j.neuron.2016.04.014",
+      "role": "Original Theis et al. benchmark"
+    },
+    {
+      "doi": "10.1371/journal.pcbi.1006157",
+      "role": "Spikefinder community benchmark; CASCADE attributes DS01 to this study"
+    },
+    {
+      "doi": "10.1038/s41593-021-00895-5",
+      "role": "CASCADE database and representation"
+    }
+  ],
+  "subsetting_and_units": "Unmodified native MAT; record 0. events_AP / 10000 converts 0.1 ms to seconds. Explicit [first fluo_time, last fluo_time) imaging support retains 43 of 44 APs. Uniform, native irregular, and native event-edge bins; one controlled subset removes declared intervals without adding events.",
+  "recorded_data_tests": [
+    "tests/real_data/test_spike_binning.py::test_bin_spikes_on_native_recorded_events[uniform]",
+    "tests/real_data/test_spike_binning.py::test_bin_spikes_on_native_recorded_events[irregular]",
+    "tests/real_data/test_spike_binning.py::test_bin_spikes_on_native_recorded_events[event_edges]",
+    "tests/real_data/test_spike_binning.py::test_to_rate_on_independently_counted_recorded_spikes",
+    "tests/real_data/test_spike_binning.py::test_processing_on_declared_subsets_of_recorded_spikes",
+    "tests/real_data/test_spike_binning.py::test_spike_rate_published_example_runs"
+  ],
+  "reference": "Independently filtered numpy.histogram; direct scalar segment/bin intersections; independently counted native APs divided by observation seconds. Expected values never produced by bin_spikes or to_rate.",
+  "acceptance": "Integer counts and masks exact. Exposure rtol=0, atol=1e-12 seconds. Rates rtol=1e-12, atol=1e-12 Hz; reconstructed counts atol=1e-12. Targeted synthetic overlap case uses atol=1e-14 seconds and seed 20261103.",
+  "observed_example": {
+    "native_spikes": 44,
+    "observed_spikes": 43,
+    "binned_spikes": 43,
+    "bins": 100,
+    "spikes_reconstructed_from_rates": 43,
+    "observation_duration_seconds": 96.73931126268508
+  },
+  "regression_scope": "All prior container contracts rerun on the current packaged source; 41 data APIs plus 2 new neural processing functions have active recorded-data evidence.",
+  "benchmark_performance": "not_run",
+  "limitations": [
+    "A small one-neuron published fixture establishes deterministic counting/normalization examples, not biological generalization or spike-sorting/inference accuracy.",
+    "Controlled gaps are declared exclusions of real recorded events, not native hardware dropout evidence. Multi-unit and numerical limits use labeled synthetic examples.",
+    "No smoothing, behavior alignment, sampled-signal aggregation, native readers, or large-scale performance claim."
+  ]
+}
