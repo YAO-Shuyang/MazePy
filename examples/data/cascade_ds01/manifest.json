@@ -43,7 +43,7 @@
     "events_to_seconds": 0.0001
   },
   "acquired_on": "2026-11-03",
-  "execution_status": "not_run",
+  "execution_status": "fixture_schema_passed",
   "covers": [
     "MAT fixture loading",
     "source checksums",
@@ -55,5 +55,20 @@
     "raw extracellular voltage or spike sorting accuracy",
     "spatial or head-direction tuning",
     "inference generalization across neurons or datasets"
-  ]
+  ],
+  "observed_summary": [
+    {
+      "median_sample_interval_seconds": 0.08318083513558605,
+      "native_spikes": 44,
+      "observed_time_span_seconds": 96.73931126268508,
+      "record": 0,
+      "samples": 1164,
+      "spikes_in_imaging_support": 43
+    }
+  ],
+  "observed_summary_note": "Observed through SciPy loading on both CI platforms; this is a fixture reference, not a MazePy neural algorithm output.",
+  "verification_evidence": {
+    "tested_commit": "199b49e5b32089641df6330ddd778c774d4c42fc",
+    "run_url": "https://github.com/YAO-Shuyang/MazePy/actions/runs/41584441651"
+  }
 }

@@ -33,3 +33,7 @@ python -m pytest tests/real_data -q -s
 ```
 
 The tests verify integrity and scientific schema. They do not run a calcium-extraction pipeline or validate a MazePy neural algorithm, because those methods are not yet implemented. Per-method validation must call the method on relevant real data and compare against an independent expected result. This recording has no spatial behavior and cannot validate place/head-direction tuning or raw ephys/spike-sorting accuracy.
+
+## Observed fixture check
+
+[Linux and Windows CI](https://github.com/YAO-Shuyang/MazePy/actions/runs/41584441651) loaded this exact fixture successfully: one record, 1,164 calcium samples, 44 native spike timestamps, and 43 spikes in the inclusive first-to-last imaging sample span. The observed span is 96.73931126268508 seconds. The differing spike counts illustrate why observation support must be explicit. Full dependency versions and JUnit results are retained with the run. No neural algorithm has been validated by these fixture-only checks.

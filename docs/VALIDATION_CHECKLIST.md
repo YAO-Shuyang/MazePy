@@ -18,37 +18,37 @@ The current GitHub baseline contains geometry only. No neural algorithms or impo
 
 | Public API | Implementation | Analytical example tests | Real-data validation | Test location |
 |---|---|---|---|---|
-| `Arena2D.__init__` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_arena.py) |
-| `Arena2D.boundary` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_arena.py) |
-| `Arena2D.walls` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_arena.py) |
-| `Arena2D.obstacles` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_arena.py) |
-| `Arena2D.bounds` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_public_examples.py) |
-| `Arena2D.area` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_public_examples.py) |
-| `Arena2D.contains` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_arena.py) |
-| `Arena2D.collision_checker` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_public_examples.py) |
-| `Arena2D.planner` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_public_examples.py) |
-| `Arena2D.segment_is_valid` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_collision.py) |
-| `Arena2D.path_is_valid` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_collision.py) |
-| `Arena2D.shortest_path` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
-| `Arena2D.distance` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
-| `Arena2D.with_wall` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_arena.py) |
-| `Arena2D.without_wall` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_arena.py) |
-| `CollisionChecker.__init__` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_collision.py) |
-| `CollisionChecker.segment_is_valid` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_collision.py) |
-| `CollisionChecker.path_is_valid` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_collision.py) |
-| `Path.__init__` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_public_examples.py) |
-| `Path.sample` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
-| `PathPlanner.__init__` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
-| `PathPlanner.graph` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
-| `PathPlanner.shortest_path` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
-| `PathPlanner.distance` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
-| `PathPlanner.distances` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
-| `PathPlanner.clear_cache` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
-| `PathPlanner.cache_info` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
-| `VisibilityGraph.__init__` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_public_examples.py) |
-| `VisibilityGraph.n_nodes` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_public_examples.py) |
-| `VisibilityGraph.n_edges` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_public_examples.py) |
-| `build_visibility_graph` | Implemented | Pending CI | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
+| `Arena2D.__init__` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_arena.py) |
+| `Arena2D.boundary` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_arena.py) |
+| `Arena2D.walls` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_arena.py) |
+| `Arena2D.obstacles` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_arena.py) |
+| `Arena2D.bounds` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_public_examples.py) |
+| `Arena2D.area` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_public_examples.py) |
+| `Arena2D.contains` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_arena.py) |
+| `Arena2D.collision_checker` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_public_examples.py) |
+| `Arena2D.planner` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_public_examples.py) |
+| `Arena2D.segment_is_valid` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_collision.py) |
+| `Arena2D.path_is_valid` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_collision.py) |
+| `Arena2D.shortest_path` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
+| `Arena2D.distance` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
+| `Arena2D.with_wall` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_arena.py) |
+| `Arena2D.without_wall` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_arena.py) |
+| `CollisionChecker.__init__` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_collision.py) |
+| `CollisionChecker.segment_is_valid` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_collision.py) |
+| `CollisionChecker.path_is_valid` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_collision.py) |
+| `Path.__init__` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_public_examples.py) |
+| `Path.sample` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
+| `PathPlanner.__init__` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
+| `PathPlanner.graph` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
+| `PathPlanner.shortest_path` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
+| `PathPlanner.distance` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
+| `PathPlanner.distances` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
+| `PathPlanner.clear_cache` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
+| `PathPlanner.cache_info` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
+| `VisibilityGraph.__init__` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_public_examples.py) |
+| `VisibilityGraph.n_nodes` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_public_examples.py) |
+| `VisibilityGraph.n_edges` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_public_examples.py) |
+| `build_visibility_graph` | Implemented | Passed (analytical suite) | Not run | [Examples](../tests/geometry/test_pathfinding.py) |
 
 ## Planned neural capabilities
 
@@ -66,10 +66,16 @@ The current GitHub baseline contains geometry only. No neural algorithms or impo
 ## Acquired published demo
 
 - [CASCADE DS01 cell 21](../examples/data/cascade_ds01/README.md): **16,046 bytes**, original MAT file, one mouse V1 OGB-1 neuron, paired fluorescence and cell-attached spike timestamps. [Manifest](../examples/data/cascade_ds01/manifest.json).
-- Acquisition and SHA-256 verification completed. MAT/schema execution is pending CI.
+- Acquisition, SHA-256 verification, and MAT/schema checks passed on Linux and Windows, Python 3.12. The complete suite passed **87 tests with zero skips** on each platform. [Run evidence](../benchmarks/evidence/2026-11-03-ci.json).
 - This is recorded data; it is not a simulated MEArec recording. It contains extracted spike timestamps rather than raw ephys voltage.
 - Its fixture tests establish file integrity, schema, and timing assumptions only. They do not establish that a MazePy neural method is correct.
 - A published recording with measured position/heading must be acquired separately before validating spatial/head-direction tuning. Native Suite2p, CaImAn/CNMF-E, Kilosort/Phy, and NWB readers each need an actual source-format fixture.
+
+## Observed evidence
+
+[CI run 41584441651](https://github.com/YAO-Shuyang/MazePy/actions/runs/41584441651) tested commit `199b49e5b32089641df6330ddd778c774d4c42fc` on Linux and Windows. Both passed all 87 tests and lint checks, with no skipped tests. The unchanged geometry implementation is the inventory baseline above. Fixture-schema checks observed one record with 1,164 samples, 44 native spikes, and 43 spikes within the inclusive first-to-last fluorescence sample span (96.73931126268508 seconds).
+
+This evidence establishes the recorded fixture's integrity/schema and the analytical example suite. It does not establish any neural algorithm's real-data validation; planned neural rows remain unimplemented, and geometry recorded-trajectory replay remains not run.
 
 ## Updating the ledger
 

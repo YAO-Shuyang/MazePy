@@ -14,10 +14,13 @@
       "example_test_files": [
         "tests/geometry/test_arena.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.boundary",
@@ -26,10 +29,13 @@
       "example_test_files": [
         "tests/geometry/test_arena.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.walls",
@@ -38,10 +44,13 @@
       "example_test_files": [
         "tests/geometry/test_arena.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.obstacles",
@@ -50,10 +59,13 @@
       "example_test_files": [
         "tests/geometry/test_arena.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.bounds",
@@ -62,10 +74,13 @@
       "example_test_files": [
         "tests/geometry/test_public_examples.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.area",
@@ -74,10 +89,13 @@
       "example_test_files": [
         "tests/geometry/test_public_examples.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.contains",
@@ -86,10 +104,13 @@
       "example_test_files": [
         "tests/geometry/test_arena.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.collision_checker",
@@ -98,10 +119,13 @@
       "example_test_files": [
         "tests/geometry/test_public_examples.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.planner",
@@ -110,10 +134,13 @@
       "example_test_files": [
         "tests/geometry/test_public_examples.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.segment_is_valid",
@@ -122,10 +149,13 @@
       "example_test_files": [
         "tests/geometry/test_collision.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.path_is_valid",
@@ -134,10 +164,13 @@
       "example_test_files": [
         "tests/geometry/test_collision.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.shortest_path",
@@ -146,10 +179,13 @@
       "example_test_files": [
         "tests/geometry/test_pathfinding.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.distance",
@@ -158,10 +194,13 @@
       "example_test_files": [
         "tests/geometry/test_pathfinding.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.with_wall",
@@ -170,10 +209,13 @@
       "example_test_files": [
         "tests/geometry/test_arena.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Arena2D.without_wall",
@@ -182,10 +224,13 @@
       "example_test_files": [
         "tests/geometry/test_arena.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.CollisionChecker.__init__",
@@ -194,10 +239,13 @@
       "example_test_files": [
         "tests/geometry/test_collision.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.CollisionChecker.segment_is_valid",
@@ -206,10 +254,13 @@
       "example_test_files": [
         "tests/geometry/test_collision.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.CollisionChecker.path_is_valid",
@@ -218,10 +269,13 @@
       "example_test_files": [
         "tests/geometry/test_collision.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Path.__init__",
@@ -230,10 +284,13 @@
       "example_test_files": [
         "tests/geometry/test_public_examples.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.Path.sample",
@@ -242,10 +299,13 @@
       "example_test_files": [
         "tests/geometry/test_pathfinding.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.PathPlanner.__init__",
@@ -254,10 +314,13 @@
       "example_test_files": [
         "tests/geometry/test_pathfinding.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.PathPlanner.graph",
@@ -266,10 +329,13 @@
       "example_test_files": [
         "tests/geometry/test_pathfinding.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.PathPlanner.shortest_path",
@@ -278,10 +344,13 @@
       "example_test_files": [
         "tests/geometry/test_pathfinding.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.PathPlanner.distance",
@@ -290,10 +359,13 @@
       "example_test_files": [
         "tests/geometry/test_pathfinding.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.PathPlanner.distances",
@@ -302,10 +374,13 @@
       "example_test_files": [
         "tests/geometry/test_pathfinding.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.PathPlanner.clear_cache",
@@ -314,10 +389,13 @@
       "example_test_files": [
         "tests/geometry/test_pathfinding.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.PathPlanner.cache_info",
@@ -326,10 +404,13 @@
       "example_test_files": [
         "tests/geometry/test_pathfinding.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.VisibilityGraph.__init__",
@@ -338,10 +419,13 @@
       "example_test_files": [
         "tests/geometry/test_public_examples.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.VisibilityGraph.n_nodes",
@@ -350,10 +434,13 @@
       "example_test_files": [
         "tests/geometry/test_public_examples.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.VisibilityGraph.n_edges",
@@ -362,10 +449,13 @@
       "example_test_files": [
         "tests/geometry/test_public_examples.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle."
+      "real_data_scope": "Recorded-trajectory integration remains pending; analytic checks are the mathematical correctness oracle.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     },
     {
       "api": "mazepy.geometry.build_visibility_graph",
@@ -375,10 +465,13 @@
         "tests/geometry/test_pathfinding.py",
         "tests/geometry/test_public_examples.py"
       ],
-      "example_status": "not_run",
+      "example_status": "passed",
       "real_data_test_files": [],
       "real_data_status": "not_run",
-      "real_data_scope": "No recorded-trajectory replay performed."
+      "real_data_scope": "No recorded-trajectory replay performed.",
+      "example_evidence": [
+        "ci-41584441651"
+      ]
     }
   ],
   "planned_capabilities": [
@@ -462,8 +555,18 @@
       "manifest": "examples/data/cascade_ds01/manifest.json",
       "download_status": "acquired_and_digest_verified",
       "fixture_tests": "tests/real_data/test_cascade_fixture.py",
-      "execution_status": "not_run"
+      "execution_status": "fixture_schema_passed",
+      "evidence": [
+        "ci-41584441651"
+      ]
     }
   ],
-  "evidence": []
+  "evidence": [
+    {
+      "id": "ci-41584441651",
+      "path": "benchmarks/evidence/2026-11-03-ci.json",
+      "run_url": "https://github.com/YAO-Shuyang/MazePy/actions/runs/41584441651",
+      "tested_commit": "199b49e5b32089641df6330ddd778c774d4c42fc"
+    }
+  ]
 }
