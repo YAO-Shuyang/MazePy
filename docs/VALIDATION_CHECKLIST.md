@@ -100,6 +100,8 @@ The abstract `NeuralRecording` interface is exercised through concrete subclasse
 
 [Local and installed-wheel evidence](../benchmarks/evidence/2026-11-03-signals-local.json) records 174 passing tests with zero skips, Python/dependency versions, exact source hashes, fixture identity, oracles, and acceptance criteria. Native source values and selected event counts match independent references. The command-line example also passes on the recorded fixture.
 
+[Cross-platform CI evidence](../benchmarks/evidence/2026-11-03-signals-ci.json) verifies commit `65e9e531da16bc6ae346d0b85aadb97fe5bd62a0`: all 174 tests passed with zero skips on Linux Python 3.10/3.12 and Windows Python 3.12. Each job additionally installed its built wheel and passed all 87 signal/example tests. Lint and formatting passed. [Workflow run](https://github.com/YAO-Shuyang/MazePy/actions/runs/41588588818) retains dependency versions and JUnit reports. These results cover the stated container contracts; native pipeline readers and analysis algorithms remain planned.
+
 ## Planned neural capabilities
 
 | Capability | Implementation | Real fixture/reference still needed |

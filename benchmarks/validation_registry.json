@@ -495,10 +495,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -522,10 +524,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -549,10 +553,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -576,10 +582,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -603,10 +611,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -630,10 +640,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -657,10 +669,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -684,10 +698,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -711,10 +727,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -738,10 +756,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -765,10 +785,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -792,10 +814,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -819,10 +843,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -846,10 +872,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -873,10 +901,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -900,10 +930,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -927,10 +959,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -954,10 +988,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -981,10 +1017,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1008,10 +1046,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1035,10 +1075,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1062,10 +1104,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1089,10 +1133,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1116,10 +1162,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1143,10 +1191,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1170,10 +1220,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1197,10 +1249,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1224,10 +1278,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1251,10 +1307,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1278,10 +1336,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1305,10 +1365,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1332,10 +1394,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1359,10 +1423,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1386,10 +1452,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1413,10 +1481,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1440,10 +1510,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1467,10 +1539,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1494,10 +1568,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1521,10 +1597,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1548,10 +1626,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     },
     {
@@ -1575,10 +1655,12 @@
       "real_data_scope": "Storage, identity, time support, and selection contracts on native calcium/spike fields and explicitly derived histogram inputs. TimeAxis.regular uses fixture-derived dimensions/rate for a generator example, not a replacement of native timestamps. No pipeline-reader, voltage-calibration, inference, or generalization claim.",
       "oracle": "Direct SciPy MAT fields; independent NumPy masks and event histogram; exact arrays/counts, float timing comparisons with atol=1e-12 seconds.",
       "example_evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ],
       "evidence": [
-        "local-signal-contracts-20261103"
+        "local-signal-contracts-20261103",
+        "ci-signals-41588588818"
       ]
     }
   ],
@@ -1670,7 +1752,8 @@
       "container_contract_tests": {
         "status": "passed",
         "evidence": [
-          "local-signal-contracts-20261103"
+          "local-signal-contracts-20261103",
+          "ci-signals-41588588818"
         ],
         "test_file": "tests/real_data/test_signal_containers.py"
       }
@@ -1686,6 +1769,13 @@
     {
       "id": "local-signal-contracts-20261103",
       "path": "benchmarks/evidence/2026-11-03-signals-local.json",
+      "source_snapshot_sha256": "a3005594e2e0f70104fbc8b05787fc864fa4fac929217fa276ffdab3cdf68a11"
+    },
+    {
+      "id": "ci-signals-41588588818",
+      "path": "benchmarks/evidence/2026-11-03-signals-ci.json",
+      "tested_commit": "65e9e531da16bc6ae346d0b85aadb97fe5bd62a0",
+      "run_url": "https://github.com/YAO-Shuyang/MazePy/actions/runs/41588588818",
       "source_snapshot_sha256": "a3005594e2e0f70104fbc8b05787fc864fa4fac929217fa276ffdab3cdf68a11"
     }
   ],
