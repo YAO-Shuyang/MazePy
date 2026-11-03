@@ -1,0 +1,52 @@
+{
+  "evidence_id": "ci-41584441651",
+  "recorded_on": "2026-11-03",
+  "tested_commit": "199b49e5b32089641df6330ddd778c774d4c42fc",
+  "run_url": "https://github.com/YAO-Shuyang/MazePy/actions/runs/41584441651",
+  "results": [
+    {
+      "platform": "ubuntu-latest",
+      "python": "3.12",
+      "job_id": 125746535002,
+      "conclusion": "success",
+      "tests_passed": 87,
+      "skipped": 0,
+      "lint": "passed",
+      "job_url": "https://github.com/YAO-Shuyang/MazePy/actions/runs/41584441651/job/125746535002"
+    },
+    {
+      "platform": "windows-latest",
+      "python": "3.12",
+      "job_id": 125746535218,
+      "conclusion": "success",
+      "tests_passed": 87,
+      "skipped": 0,
+      "lint": "passed",
+      "job_url": "https://github.com/YAO-Shuyang/MazePy/actions/runs/41584441651/job/125746535218"
+    }
+  ],
+  "fixture_id": "cascade_ds01_theis16_cell21",
+  "fixture_summary": [
+    {
+      "median_sample_interval_seconds": 0.08318083513558605,
+      "native_spikes": 44,
+      "observed_time_span_seconds": 96.73931126268508,
+      "record": 0,
+      "samples": 1164,
+      "spikes_in_imaging_support": 43
+    }
+  ],
+  "scope": "Existing geometry analytical examples, public API inventory, and published fixture integrity/schema checks.",
+  "method_specific_neural_real_data_validation": false,
+  "limitations": [
+    "No MazePy neural methods are implemented in the tested source.",
+    "No geometry replay on recorded spatial trajectories was performed.",
+    "A single calcium/spike fixture does not establish a native pipeline reader or generalization."
+  ],
+  "artifacts": [
+    "validation-results.xml",
+    "validation-environment.txt",
+    "fixture manifest",
+    "validation registry"
+  ]
+}
